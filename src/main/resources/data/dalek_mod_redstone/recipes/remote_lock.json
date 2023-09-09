@@ -1,7 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "T T",
     "C#C",
     "SSS"
   ],
@@ -13,13 +12,10 @@
       "item": "dalekmod:circuit"
     },
     "#": {
-      "item": "minecraft:note_block"
-    },
-    "T": {
-      "item": "minecraft:redstone_torch"
+      "item": "minecraft:iron_block"
     }
   },
   "result": {
-    "item": "dalek_mod_redstone:click_detector"
+    "item": "dalek_mod_redstone:remote_lock"
   }
 }

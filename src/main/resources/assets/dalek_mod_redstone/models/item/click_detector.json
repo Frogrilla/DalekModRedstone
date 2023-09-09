@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "click_detector:item/click_detector"
+    "layer0": "dalek_mod_redstone:item/click_detector"
   }
 }

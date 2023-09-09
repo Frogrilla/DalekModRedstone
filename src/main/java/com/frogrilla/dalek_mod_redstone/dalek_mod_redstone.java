@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 public class dalek_mod_redstone
 {
     private static final Logger LOGGER = LogManager.getLogger();
-    public static final String MOD_ID = "click_detector";
+    public static final String MOD_ID = "dalek_mod_redstone";
 
     public dalek_mod_redstone() {
 

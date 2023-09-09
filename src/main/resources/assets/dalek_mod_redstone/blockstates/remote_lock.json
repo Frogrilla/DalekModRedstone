@@ -1,7 +1,20 @@
 {
   "variants": {
-    "": {
-      "model": "dalek_mod_redstone:block/remote_lock"
+    "facing=north": {
+      "model": "dalek_mod_redstone:block/remote_lock",
+      "y": 0
+    },
+    "facing=east": {
+      "model": "dalek_mod_redstone:block/remote_lock",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "dalek_mod_redstone:block/remote_lock",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "dalek_mod_redstone:block/remote_lock",
+      "y": 270
     }
   }
 }

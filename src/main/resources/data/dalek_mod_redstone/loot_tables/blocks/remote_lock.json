@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "dalek_mod_redstone:click_detector"
+          "name": "dalek_mod_redstone:remote_lock"
         }
       ]
     }
