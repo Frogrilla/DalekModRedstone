@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "dalek_mod_redstone:block/remote_lock"
+    }
+  }
+}
