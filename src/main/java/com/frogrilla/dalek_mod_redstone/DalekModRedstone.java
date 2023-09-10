@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 @Mod(DalekModRedstone.MOD_ID)
 public class DalekModRedstone
 {
+    //test
     private static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "dalek_mod_redstone";
 
