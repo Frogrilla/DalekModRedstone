@@ -33,7 +33,6 @@ public class MixinPacketClickTardisDoors {
     @Inject(at = @At(value = "HEAD"), method = "handle", remap = false, cancellable = true)
     private static void handle(PacketClickTardisDoors msg, Supplier<NetworkEvent.Context> ctx, CallbackInfo info) {
         info.cancel();
-        System.out.println("MIXIN");
         ((NetworkEvent.Context) ctx.get()).enqueueWork(() -> {
             if (((NetworkEvent.Context) ctx.get()).getNetworkManager().getDirection() == PacketDirection.SERVERBOUND) {
                 PlayerEntity player = ((NetworkEvent.Context) ctx.get()).getSender();

@@ -3,10 +3,14 @@ package com.frogrilla.dalek_mod_redstone;
 import com.frogrilla.dalek_mod_redstone.common.init.ModBlocks;
 import com.frogrilla.dalek_mod_redstone.common.init.ModItems;
 import com.frogrilla.dalek_mod_redstone.common.init.ModTileEntities;
+import com.frogrilla.dalek_mod_redstone.common.tileentity.RemoteLockTile;
+import com.frogrilla.dalek_mod_redstone.render.RenderRemoteLock;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -36,6 +40,7 @@ public class DalekModRedstone
     private void doClientStuff(final FMLClientSetupEvent event){
         event.enqueueWork(() -> {
             RenderTypeLookup.setRenderLayer(ModBlocks.CLICK_DETECTOR.get(), RenderType.cutout());
+            ClientRegistry.bindTileEntityRenderer(ModTileEntities.REMOTE_LOCK_TILE.get(), RenderRemoteLock::new);
         });
     }
 }

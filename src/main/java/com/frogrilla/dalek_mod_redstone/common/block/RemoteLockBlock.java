@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -96,5 +97,18 @@ public class RemoteLockBlock extends HorizontalBlock {
         super.tick(p_225534_1_, p_225534_2_, p_225534_3_, p_225534_4_);
     }
 
-
+//    @Override
+//    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+//        Direction n = Direction.NORTH; Direction e = Direction.EAST; Direction s = Direction.SOUTH; Direction w = Direction.WEST;
+//
+//        BlockPos checkN = pos.offset(n.getStepX(), 0, n.getStepZ());
+//        BlockPos checkE = pos.offset(e.getStepX(), 0, e.getStepZ());
+//        BlockPos checkS = pos.offset(s.getStepX(), 0, s.getStepZ());
+//        BlockPos checkW = pos.offset(w.getStepX(), 0, w.getStepZ());
+//
+//        boolean powered = world.getSignal(checkN, n) > 0 || world.getSignal(checkE, e) > 0 || world.getSignal(checkS, s) > 0 || world.getSignal(checkW, w) > 0;
+//        if(powered){
+//            System.out.println("remote_lock powered");
+//        }
+//    }
 }
