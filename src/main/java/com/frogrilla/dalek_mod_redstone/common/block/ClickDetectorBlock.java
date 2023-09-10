@@ -1,5 +1,6 @@
-package com.frogrilla.dalek_mod_redstone.block;
+package com.frogrilla.dalek_mod_redstone.common.block;
 
+import com.frogrilla.dalek_mod_redstone.common.init.ModBlocks;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -25,7 +26,7 @@ import java.util.*;
 import java.util.stream.Stream;
 
 public class ClickDetectorBlock extends HorizontalBlock{
-    protected ClickDetectorBlock(Properties builder) {
+    public ClickDetectorBlock(Properties builder) {
         super(builder);
     }
     private boolean pulseChanged = false;

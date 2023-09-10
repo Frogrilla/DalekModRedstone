@@ -1,4 +1,4 @@
-package com.frogrilla.dalek_mod_redstone.block;
+package com.frogrilla.dalek_mod_redstone.common.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

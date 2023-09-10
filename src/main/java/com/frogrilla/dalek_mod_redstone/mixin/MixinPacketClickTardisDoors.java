@@ -1,6 +1,6 @@
 package com.frogrilla.dalek_mod_redstone.mixin;
 
-import com.frogrilla.dalek_mod_redstone.block.ClickDetectorBlock;
+import com.frogrilla.dalek_mod_redstone.common.block.ClickDetectorBlock;
 import com.swdteam.common.init.DMBlockEntities;
 import com.swdteam.common.init.DMSoundEvents;
 import com.swdteam.common.init.DMTardis;
@@ -103,7 +103,7 @@ public class MixinPacketClickTardisDoors {
             }
 
         });
-        ((NetworkEvent.Context) ctx.get()).setPacketHandled(true);
+        ctx.get().setPacketHandled(true);
 
     }
 }

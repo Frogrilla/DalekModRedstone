@@ -1,7 +1,9 @@
-package com.frogrilla.dalek_mod_redstone.block;
+package com.frogrilla.dalek_mod_redstone.common.init;
 
-import com.frogrilla.dalek_mod_redstone.dalek_mod_redstone;
-import com.frogrilla.dalek_mod_redstone.item.ModItems;
+import com.frogrilla.dalek_mod_redstone.DalekModRedstone;
+import com.frogrilla.dalek_mod_redstone.common.block.ClickDetectorBlock;
+import com.frogrilla.dalek_mod_redstone.common.block.RemoteLockBlock;
+import com.frogrilla.dalek_mod_redstone.common.init.ModItems;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -18,13 +20,18 @@ import java.util.function.Supplier;
 public class ModBlocks {
 
     public static final DeferredRegister<Block> BLOCKS
-            = DeferredRegister.create(ForgeRegistries.BLOCKS, dalek_mod_redstone.MOD_ID);
+            = DeferredRegister.create(ForgeRegistries.BLOCKS, DalekModRedstone.MOD_ID);
 
-    public static final RegistryObject<Block> CLICK_DETECTOR = registerBlock("click_detector",
-            () -> new ClickDetectorBlock(AbstractBlock.Properties.of(Material.STONE).instabreak()));
+    public static RegistryObject<Block>
 
-    public static final RegistryObject<Block> REMOTE_LOCK = registerBlock("remote_lock",
-            () -> new RemoteLockBlock(AbstractBlock.Properties.of(Material.STONE).instabreak()));
+
+            CLICK_DETECTOR = registerBlock("click_detector",
+            () -> new ClickDetectorBlock(AbstractBlock.Properties.of(Material.STONE).instabreak())),
+            REMOTE_LOCK = registerBlock("remote_lock",
+                    () -> new RemoteLockBlock(AbstractBlock.Properties.of(Material.STONE).instabreak())
+
+
+            );
 
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block){
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

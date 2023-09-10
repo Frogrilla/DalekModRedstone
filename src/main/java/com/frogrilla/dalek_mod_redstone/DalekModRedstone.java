@@ -1,7 +1,7 @@
 package com.frogrilla.dalek_mod_redstone;
 
-import com.frogrilla.dalek_mod_redstone.block.ModBlocks;
-import com.frogrilla.dalek_mod_redstone.item.ModItems;
+import com.frogrilla.dalek_mod_redstone.common.init.ModBlocks;
+import com.frogrilla.dalek_mod_redstone.common.init.ModItems;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.common.MinecraftForge;
@@ -12,13 +12,13 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(com.frogrilla.dalek_mod_redstone.dalek_mod_redstone.MOD_ID)
-public class dalek_mod_redstone
+@Mod(DalekModRedstone.MOD_ID)
+public class DalekModRedstone
 {
     private static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "dalek_mod_redstone";
 
-    public dalek_mod_redstone() {
+    public DalekModRedstone() {
 
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
