@@ -77,6 +77,11 @@ public class ClickDetectorBlock extends HorizontalBlock{
     }
 
     @Override
+    public boolean isSignalSource(BlockState p_149744_1_) {
+        return true;
+    }
+
+    @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(FACING);
         builder.add(PULSE);
