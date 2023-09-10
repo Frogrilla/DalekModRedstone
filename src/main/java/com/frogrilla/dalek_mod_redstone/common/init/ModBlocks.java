@@ -25,24 +25,28 @@ public class ModBlocks {
     public static RegistryObject<Block>
 
 
-            CLICK_DETECTOR = registerBlock("click_detector",
-            () -> new ClickDetectorBlock(AbstractBlock.Properties.of(Material.STONE).instabreak())),
-            REMOTE_LOCK = registerBlock("remote_lock",
-                    () -> new RemoteLockBlock(AbstractBlock.Properties.of(Material.STONE).instabreak())
+            CLICK_DETECTOR = registerBlock("click_detector", () -> new ClickDetectorBlock(AbstractBlock.Properties.of(Material.STONE).instabreak()), ModTabs.DMR_TAB),
+            REMOTE_LOCK = registerBlock("remote_lock", () -> new RemoteLockBlock(AbstractBlock.Properties.of(Material.STONE).instabreak()), ModTabs.DMR_TAB)
 
 
-            );
+                    ;
 
-    private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block){
+    private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block, ItemGroup tab){
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
-        registerBlockItem(name, toReturn);
+        registerBlockItem(name, toReturn, tab);
         return toReturn;
     }
 
-    private static <T extends Block> void registerBlockItem(String name, RegistryObject<T> block){
+    private static <T extends Block> void registerBlockItem(String name, RegistryObject<T> block, ItemGroup tab){
         ModItems.ITEMS.register(name, () -> new BlockItem(block.get(),
-                new Item.Properties().tab(ItemGroup.TAB_REDSTONE)));
+                new Item.Properties().tab(tab)));
     }
+
+
+    private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block){
+        return registerBlock(name, block, ItemGroup.TAB_REDSTONE);
+    }
+
     public static void register(IEventBus eventBus){
         BLOCKS.register(eventBus);
     }
