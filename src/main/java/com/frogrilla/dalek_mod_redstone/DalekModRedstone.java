@@ -2,6 +2,7 @@ package com.frogrilla.dalek_mod_redstone;
 
 import com.frogrilla.dalek_mod_redstone.common.init.ModBlocks;
 import com.frogrilla.dalek_mod_redstone.common.init.ModItems;
+import com.frogrilla.dalek_mod_redstone.common.init.ModTileEntities;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,6 +26,7 @@ public class DalekModRedstone
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModTileEntities.register(modEventBus);
 
         modEventBus.addListener(this::doClientStuff);
 
