@@ -6,9 +6,12 @@ import com.swdteam.common.init.DMItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.client.Minecraft;
+import net.minecraft.command.Commands;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -21,6 +24,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -30,6 +34,7 @@ import java.util.Random;
 public class RemoteLockBlock extends HorizontalBlock {
     public RemoteLockBlock(Properties builder) { super(builder); }
     private boolean allowInteract = true;
+    private boolean wasToggled = false;
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 2, 16);
     @Override
     public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
@@ -63,7 +68,7 @@ public class RemoteLockBlock extends HorizontalBlock {
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
-        if(!world.isClientSide && allowInteract){
+        if(!world.isClientSide && allowInteract && !wasToggled){
             TileEntity tileEntity = world.getBlockEntity(pos);
             if(tileEntity instanceof RemoteLockTile){
                 RemoteLockTile key = (RemoteLockTile)tileEntity;
@@ -84,7 +89,7 @@ public class RemoteLockBlock extends HorizontalBlock {
                 }
 
                 allowInteract = false;
-                world.getBlockTicks().scheduleTick(pos, state.getBlock(), 5);
+                world.getBlockTicks().scheduleTick(pos, state.getBlock(), 4);
                 return ActionResultType.CONSUME;
             }
         }
@@ -92,23 +97,24 @@ public class RemoteLockBlock extends HorizontalBlock {
     }
 
     @Override
-    public void tick(BlockState p_225534_1_, ServerWorld p_225534_2_, BlockPos p_225534_3_, Random p_225534_4_) {
-        if(!allowInteract) allowInteract = true;
-        super.tick(p_225534_1_, p_225534_2_, p_225534_3_, p_225534_4_);
+    public void tick(BlockState blockState, ServerWorld world, BlockPos blockPos, Random random) {
+        allowInteract = true;
+        super.tick(blockState, world, blockPos, random);
     }
 
-//    @Override
-//    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
-//        Direction n = Direction.NORTH; Direction e = Direction.EAST; Direction s = Direction.SOUTH; Direction w = Direction.WEST;
-//
-//        BlockPos checkN = pos.offset(n.getStepX(), 0, n.getStepZ());
-//        BlockPos checkE = pos.offset(e.getStepX(), 0, e.getStepZ());
-//        BlockPos checkS = pos.offset(s.getStepX(), 0, s.getStepZ());
-//        BlockPos checkW = pos.offset(w.getStepX(), 0, w.getStepZ());
-//
-//        boolean powered = world.getSignal(checkN, n) > 0 || world.getSignal(checkE, e) > 0 || world.getSignal(checkS, s) > 0 || world.getSignal(checkW, w) > 0;
-//        if(powered){
-//            System.out.println("remote_lock powered");
-//        }
-//    }
+    public void neighborChanged(BlockState state, World world, BlockPos blockPos, Block block, BlockPos blockPos1, boolean isMoving) {
+        if (!world.isClientSide) {
+            if (wasToggled != world.hasNeighborSignal(blockPos)) {
+                if (wasToggled) {
+                    // turned off
+                    wasToggled = false;
+                    System.out.println("OFF");
+                } else {
+                    // turned on
+                    wasToggled = true;
+                    System.out.println("TOGGLED");
+                }
+            }
+        }
+    }
 }
