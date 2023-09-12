@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "particle": "minecraft:block/lapis_block",
+    "north": "dalek_mod_redstone:block/tardis_detector/tardis_detector_side",
+    "south": "dalek_mod_redstone:block/tardis_detector/tardis_detector_side",
+    "east": "dalek_mod_redstone:block/tardis_detector/tardis_detector_side",
+    "west": "dalek_mod_redstone:block/tardis_detector/tardis_detector_side",
+    "up": "dalek_mod_redstone:block/tardis_detector/tardis_detector_up",
+    "down": "dalek_mod_redstone:block/tardis_detector/tardis_detector_down"
+  }
+}
