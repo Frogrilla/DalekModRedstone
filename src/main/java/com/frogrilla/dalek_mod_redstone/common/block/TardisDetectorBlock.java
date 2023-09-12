@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 public class TardisDetectorBlock extends Block {
     public TardisDetectorBlock(Properties builder) { super(builder); }
 
-    private static BooleanProperty DETECTED = BooleanProperty.create("detected");
+    static final BooleanProperty DETECTED = BooleanProperty.create("detected");
 
     @Override
     public boolean canConnectRedstone(BlockState state, IBlockReader world, BlockPos pos, @Nullable Direction side) {

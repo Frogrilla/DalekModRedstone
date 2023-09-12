@@ -2,7 +2,11 @@ package com.frogrilla.dalek_mod_redstone.common.block;
 
 import com.frogrilla.dalek_mod_redstone.common.init.ModTileEntities;
 import com.frogrilla.dalek_mod_redstone.common.tileentity.RemoteLockTile;
+import com.swdteam.common.init.DMDimensions;
 import com.swdteam.common.init.DMItems;
+import com.swdteam.common.init.DMTardis;
+import com.swdteam.common.tardis.TardisData;
+import com.swdteam.common.tileentity.TardisTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
@@ -23,18 +27,20 @@ import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.Dimension;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
+import java.security.Key;
 import java.util.Random;
 
 public class RemoteLockBlock extends HorizontalBlock {
     public RemoteLockBlock(Properties builder) { super(builder); }
     private boolean allowInteract = true;
-    private boolean wasToggled = false;
+    private boolean powered = false;
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 2, 16);
     @Override
     public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
@@ -68,7 +74,7 @@ public class RemoteLockBlock extends HorizontalBlock {
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
-        if(!world.isClientSide && allowInteract && !wasToggled){
+        if(!world.isClientSide && allowInteract && !powered){
             TileEntity tileEntity = world.getBlockEntity(pos);
             if(tileEntity instanceof RemoteLockTile){
                 RemoteLockTile key = (RemoteLockTile)tileEntity;
@@ -102,19 +108,22 @@ public class RemoteLockBlock extends HorizontalBlock {
         super.tick(blockState, world, blockPos, random);
     }
 
+    // I don't know why this doesn't work. I suppose .equals isn't working correctly... but I can't cast .get() to an int or getGlobalID() to a string :/
     public void neighborChanged(BlockState state, World world, BlockPos blockPos, Block block, BlockPos blockPos1, boolean isMoving) {
         if (!world.isClientSide) {
-            if (wasToggled != world.hasNeighborSignal(blockPos)) {
-                if (wasToggled) {
-                    // turned off
-                    wasToggled = false;
-                    System.out.println("OFF");
-                } else {
-                    // turned on
-                    wasToggled = true;
-                    System.out.println("TOGGLED");
+            boolean nPower = world.hasNeighborSignal(blockPos);
+
+            if(powered != nPower && nPower && world.dimension() == DMDimensions.TARDIS){
+                RemoteLockTile key = (RemoteLockTile)world.getBlockEntity(blockPos);
+                TardisData t = DMTardis.getTardis(DMTardis.getIDForXZ(blockPos.getX(), blockPos.getZ()));
+
+                if(key.hasKey() && key.getKey().getTag().get("LinkedID").equals(t.getGlobalID())){
+                    t.setLocked(!t.isLocked());
                 }
+
             }
+
+            powered = nPower;
         }
     }
 }
