@@ -74,7 +74,7 @@ public class RemoteLockBlock extends HorizontalBlock {
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
-        if(!world.isClientSide && allowInteract && !powered){
+        if(!world.isClientSide && allowInteract && !powered && world.dimension() == DMDimensions.TARDIS){
             TileEntity tileEntity = world.getBlockEntity(pos);
             if(tileEntity instanceof RemoteLockTile){
                 RemoteLockTile key = (RemoteLockTile)tileEntity;
@@ -86,8 +86,15 @@ public class RemoteLockBlock extends HorizontalBlock {
                 }
                 else if(!key.hasKey() && key.isKey(player.getItemInHand(hand).getItem())){
                     // insert key
-                    key.setKey(player.getItemInHand(hand));
-                    player.setItemInHand(hand, ItemStack.EMPTY);
+                    int id = player.getItemInHand(hand).getTag().getInt("LinkedID");
+                    TardisData t = DMTardis.getTardis(DMTardis.getIDForXZ(pos.getX(), pos.getZ()));
+                    if(id == t.getGlobalID()){
+                        key.setKey(player.getItemInHand(hand));
+                        player.setItemInHand(hand, ItemStack.EMPTY);
+                    }
+                    else{
+                        return ActionResultType.FAIL;
+                    }
                 }
                 else{
                     // can't give or remove
@@ -108,8 +115,7 @@ public class RemoteLockBlock extends HorizontalBlock {
         super.tick(blockState, world, blockPos, random);
     }
 
-    // I don't know why this doesn't work. I suppose .equals isn't working correctly... but I can't cast .get() to an int or getGlobalID() to a string :/
-    public void neighborChanged(BlockState state, World world, BlockPos blockPos, Block block, BlockPos blockPos1, boolean isMoving) {
+   public void neighborChanged(BlockState state, World world, BlockPos blockPos, Block block, BlockPos blockPos1, boolean isMoving) {
         if (!world.isClientSide) {
             boolean nPower = world.hasNeighborSignal(blockPos);
 
@@ -117,7 +123,7 @@ public class RemoteLockBlock extends HorizontalBlock {
                 RemoteLockTile key = (RemoteLockTile)world.getBlockEntity(blockPos);
                 TardisData t = DMTardis.getTardis(DMTardis.getIDForXZ(blockPos.getX(), blockPos.getZ()));
 
-                if(key.hasKey() && key.getKey().getTag().get("LinkedID").equals(t.getGlobalID())){
+                if(key.hasKey()){
                     t.setLocked(!t.isLocked());
                 }
 
