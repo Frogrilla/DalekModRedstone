@@ -2,6 +2,7 @@
   "block.dalek_mod_redstone.click_detector": "Click Detector",
   "block.dalek_mod_redstone.remote_lock": "Remote Lock",
   "block.dalek_mod_redstone.tardis_detector": "TARDIS Detector",
+  "block.dalek_mod_redstone.stattenheim_block": "Stattenheim Block",
 
   "itemGroup.dmr_tab": "Dalek Mod Redstone"
 }

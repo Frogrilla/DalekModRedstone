@@ -5,7 +5,10 @@ import com.frogrilla.dalek_mod_redstone.common.tileentity.RemoteLockTile;
 import com.swdteam.common.init.DMDimensions;
 import com.swdteam.common.init.DMItems;
 import com.swdteam.common.init.DMTardis;
+import com.swdteam.common.tardis.Tardis;
 import com.swdteam.common.tardis.TardisData;
+import com.swdteam.common.tardis.TardisDoor;
+import com.swdteam.common.tardis.actions.TardisActionList;
 import com.swdteam.common.tileentity.TardisTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -21,6 +24,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.IBooleanFunction;
@@ -77,19 +81,19 @@ public class RemoteLockBlock extends HorizontalBlock {
         if(!world.isClientSide && allowInteract && !powered && world.dimension() == DMDimensions.TARDIS){
             TileEntity tileEntity = world.getBlockEntity(pos);
             if(tileEntity instanceof RemoteLockTile){
-                RemoteLockTile key = (RemoteLockTile)tileEntity;
+                RemoteLockTile lockTile = (RemoteLockTile)tileEntity;
 
-                if(key.hasKey() && player.getItemInHand(hand).isEmpty()){
+                if(lockTile.hasKey() && hand == Hand.MAIN_HAND && player.getItemInHand(hand).isEmpty()){
                     // take key
-                    player.setItemInHand(hand, key.getKey());
-                    key.setKey(ItemStack.EMPTY);
+                    player.setItemInHand(hand, lockTile.getKey());
+                    lockTile.setKey(ItemStack.EMPTY);
                 }
-                else if(!key.hasKey() && key.isKey(player.getItemInHand(hand).getItem())){
+                else if(!lockTile.hasKey() && lockTile.isKey(player.getItemInHand(hand).getItem())){
                     // insert key
                     int id = player.getItemInHand(hand).getTag().getInt("LinkedID");
                     TardisData t = DMTardis.getTardis(DMTardis.getIDForXZ(pos.getX(), pos.getZ()));
                     if(id == t.getGlobalID()){
-                        key.setKey(player.getItemInHand(hand));
+                        lockTile.setKey(player.getItemInHand(hand));
                         player.setItemInHand(hand, ItemStack.EMPTY);
                     }
                     else{
@@ -121,10 +125,24 @@ public class RemoteLockBlock extends HorizontalBlock {
 
             if(powered != nPower && nPower && world.dimension() == DMDimensions.TARDIS){
                 RemoteLockTile key = (RemoteLockTile)world.getBlockEntity(blockPos);
-                TardisData t = DMTardis.getTardis(DMTardis.getIDForXZ(blockPos.getX(), blockPos.getZ()));
 
                 if(key.hasKey()){
-                    t.setLocked(!t.isLocked());
+                    TardisData data = DMTardis.getTardis(DMTardis.getIDForXZ(blockPos.getX(), blockPos.getZ()));
+                    BlockPos pos = data.getCurrentLocation().getBlockPosition();
+                    ServerWorld serverWorld = world.getServer().getLevel(data.getCurrentLocation().dimensionWorldKey());
+                    if (serverWorld != null) {
+                        TileEntity t_entity = serverWorld.getBlockEntity(pos);
+                        TardisTileEntity tardis = (TardisTileEntity) t_entity;
+
+                        boolean locked = data.isLocked();
+                        data.setLocked(!locked);
+
+                        if (!locked && tardis.doorOpenLeft || tardis.doorOpenRight){
+                            tardis.closeDoor(TardisDoor.BOTH, TardisTileEntity.DoorSource.INTERIOR);
+                            tardis.closeDoor(TardisDoor.BOTH, TardisTileEntity.DoorSource.TARDIS);
+                            world.playSound((PlayerEntity) null, blockPos, tardis.getCloseSound(), SoundCategory.BLOCKS, 0.5F, 1.0F);
+                        }
+                    }
                 }
 
             }
