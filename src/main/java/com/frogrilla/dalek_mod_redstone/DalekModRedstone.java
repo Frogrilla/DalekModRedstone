@@ -40,6 +40,7 @@ public class DalekModRedstone
     private void doClientStuff(final FMLClientSetupEvent event){
         event.enqueueWork(() -> {
             RenderTypeLookup.setRenderLayer(ModBlocks.CLICK_DETECTOR.get(), RenderType.cutout());
+            RenderTypeLookup.setRenderLayer(ModBlocks.REMOTE_LOCK.get(), RenderType.cutout());
             ClientRegistry.bindTileEntityRenderer(ModTileEntities.REMOTE_LOCK_TILE.get(), RenderRemoteLock::new);
         });
     }

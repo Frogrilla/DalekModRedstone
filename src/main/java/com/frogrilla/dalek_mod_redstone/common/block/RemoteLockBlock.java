@@ -46,6 +46,8 @@ public class RemoteLockBlock extends HorizontalBlock {
     private boolean allowInteract = true;
     private boolean powered = false;
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 2, 16);
+    static final BooleanProperty HAS_KEY = BooleanProperty.create("key");
+    static final BooleanProperty LOCKED = BooleanProperty.create("locked");
     @Override
     public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
         return SHAPE;
@@ -54,6 +56,8 @@ public class RemoteLockBlock extends HorizontalBlock {
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(FACING);
+        builder.add(HAS_KEY);
+        builder.add(LOCKED);
         super.createBlockStateDefinition(builder);
     }
 
@@ -61,7 +65,9 @@ public class RemoteLockBlock extends HorizontalBlock {
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         return this.defaultBlockState()
-                .setValue(FACING, context.getHorizontalDirection().getOpposite());
+                .setValue(FACING, context.getHorizontalDirection().getOpposite())
+                .setValue(HAS_KEY, false)
+                .setValue(LOCKED, false);
     }
 
     @Override
@@ -76,6 +82,18 @@ public class RemoteLockBlock extends HorizontalBlock {
     }
 
     @Override
+    public boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getAnalogOutputSignal(BlockState state, World world, BlockPos pos) {
+        if(!state.getValue(HAS_KEY)) return 0;
+        if(state.getValue(LOCKED)) return 15;
+        return 1;
+    }
+
+    @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
         if(!world.isClientSide && allowInteract && !powered && world.dimension() == DMDimensions.TARDIS){
@@ -87,6 +105,9 @@ public class RemoteLockBlock extends HorizontalBlock {
                     // take key
                     player.setItemInHand(hand, lockTile.getKey());
                     lockTile.setKey(ItemStack.EMPTY);
+                    BlockState new_state = state.setValue(HAS_KEY, false);
+                    new_state = new_state.setValue(LOCKED, false);
+                    world.setBlockAndUpdate(pos, new_state);
                 }
                 else if(!lockTile.hasKey() && lockTile.isKey(player.getItemInHand(hand).getItem())){
                     // insert key
@@ -95,6 +116,9 @@ public class RemoteLockBlock extends HorizontalBlock {
                     if(id == t.getGlobalID()){
                         lockTile.setKey(player.getItemInHand(hand));
                         player.setItemInHand(hand, ItemStack.EMPTY);
+                        BlockState new_state = state.setValue(HAS_KEY, true);
+                        new_state = new_state.setValue(LOCKED, t.isLocked());
+                        world.setBlockAndUpdate(pos, new_state);
                     }
                     else{
                         return ActionResultType.FAIL;
@@ -118,36 +142,36 @@ public class RemoteLockBlock extends HorizontalBlock {
         allowInteract = true;
         super.tick(blockState, world, blockPos, random);
     }
-
    public void neighborChanged(BlockState state, World world, BlockPos blockPos, Block block, BlockPos blockPos1, boolean isMoving) {
         if (!world.isClientSide) {
             boolean nPower = world.hasNeighborSignal(blockPos);
-
-            if(powered != nPower && nPower && world.dimension() == DMDimensions.TARDIS){
-                RemoteLockTile key = (RemoteLockTile)world.getBlockEntity(blockPos);
-
-                if(key.hasKey()){
-                    TardisData data = DMTardis.getTardis(DMTardis.getIDForXZ(blockPos.getX(), blockPos.getZ()));
-                    BlockPos pos = data.getCurrentLocation().getBlockPosition();
-                    ServerWorld serverWorld = world.getServer().getLevel(data.getCurrentLocation().dimensionWorldKey());
-                    if (serverWorld != null) {
-                        TileEntity t_entity = serverWorld.getBlockEntity(pos);
-                        TardisTileEntity tardis = (TardisTileEntity) t_entity;
-
-                        boolean locked = data.isLocked();
-                        data.setLocked(!locked);
-
-                        if (!locked && tardis.doorOpenLeft || tardis.doorOpenRight){
-                            tardis.closeDoor(TardisDoor.BOTH, TardisTileEntity.DoorSource.INTERIOR);
-                            tardis.closeDoor(TardisDoor.BOTH, TardisTileEntity.DoorSource.TARDIS);
-                            world.playSound((PlayerEntity) null, blockPos, tardis.getCloseSound(), SoundCategory.BLOCKS, 0.5F, 1.0F);
-                        }
-                    }
-                }
-
-            }
-
+            if(powered != nPower && nPower) turn_key(state, world, blockPos);
             powered = nPower;
+        }
+    }
+
+    public void turn_key(BlockState state, World world, BlockPos blockPos){
+        if(world.dimension() != DMDimensions.TARDIS) return;
+        RemoteLockTile key = (RemoteLockTile)world.getBlockEntity(blockPos);
+
+        if(key.hasKey()){
+            TardisData data = DMTardis.getTardis(DMTardis.getIDForXZ(blockPos.getX(), blockPos.getZ()));
+            BlockPos pos = data.getCurrentLocation().getBlockPosition();
+            ServerWorld serverWorld = world.getServer().getLevel(data.getCurrentLocation().dimensionWorldKey());
+            if (serverWorld != null) {
+                TileEntity t_entity = serverWorld.getBlockEntity(pos);
+                TardisTileEntity tardis = (TardisTileEntity) t_entity;
+
+                boolean locked = data.isLocked();
+                data.setLocked(!locked);
+                world.setBlockAndUpdate(blockPos, state.setValue(LOCKED, !locked));
+
+                if (!locked && tardis.doorOpenLeft || tardis.doorOpenRight){
+                    tardis.closeDoor(TardisDoor.BOTH, TardisTileEntity.DoorSource.INTERIOR);
+                    tardis.closeDoor(TardisDoor.BOTH, TardisTileEntity.DoorSource.TARDIS);
+                    world.playSound((PlayerEntity) null, blockPos, tardis.getCloseSound(), SoundCategory.BLOCKS, 0.5F, 1.0F);
+                }
+            }
         }
     }
 }

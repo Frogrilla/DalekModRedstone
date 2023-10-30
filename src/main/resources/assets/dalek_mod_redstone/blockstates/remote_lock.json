@@ -1,19 +1,51 @@
 {
   "variants": {
-    "facing=north": {
-      "model": "dalek_mod_redstone:block/remote_lock",
+    "facing=north,key=false": {
+      "model": "dalek_mod_redstone:block/remote_lock/remote_lock",
       "y": 0
     },
-    "facing=east": {
-      "model": "dalek_mod_redstone:block/remote_lock",
+    "facing=north,key=true,locked=false": {
+      "model": "dalek_mod_redstone:block/remote_lock/remote_lock_key",
+      "y": 0
+    },
+    "facing=north,key=true,locked=true": {
+      "model": "dalek_mod_redstone:block/remote_lock/remote_lock_locked",
+      "y": 0
+    },
+    "facing=east,key=false": {
+      "model": "dalek_mod_redstone:block/remote_lock/remote_lock",
       "y": 90
     },
-    "facing=south": {
-      "model": "dalek_mod_redstone:block/remote_lock",
+    "facing=east,key=true,locked=false": {
+      "model": "dalek_mod_redstone:block/remote_lock/remote_lock_key",
+      "y": 90
+    },
+    "facing=east,key=true,locked=true": {
+      "model": "dalek_mod_redstone:block/remote_lock/remote_lock_locked",
+      "y": 90
+    },
+    "facing=south,key=false": {
+      "model": "dalek_mod_redstone:block/remote_lock/remote_lock",
       "y": 180
     },
-    "facing=west": {
-      "model": "dalek_mod_redstone:block/remote_lock",
+    "facing=south,key=true,locked=false": {
+      "model": "dalek_mod_redstone:block/remote_lock/remote_lock_key",
+      "y": 180
+    },
+    "facing=south,key=true,locked=true": {
+      "model": "dalek_mod_redstone:block/remote_lock/remote_lock_locked",
+      "y": 180
+    },
+    "facing=west,key=false": {
+      "model": "dalek_mod_redstone:block/remote_lock/remote_lock",
+      "y": 270
+    },
+    "facing=west,key=true,locked=false": {
+      "model": "dalek_mod_redstone:block/remote_lock/remote_lock_key",
+      "y": 270
+    },
+    "facing=west,key=true,locked=true": {
+      "model": "dalek_mod_redstone:block/remote_lock/remote_lock_locked",
       "y": 270
     }
   }
