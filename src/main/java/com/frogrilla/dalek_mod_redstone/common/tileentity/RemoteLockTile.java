@@ -11,6 +11,7 @@ import net.minecraft.tileentity.TileEntityType;
 
 public class RemoteLockTile extends TileEntity {
     private ItemStack heldKey = ItemStack.EMPTY;
+    private int linkedID = -1;
     public RemoteLockTile(TileEntityType<?> tileEntityType) { super(tileEntityType); }
     public RemoteLockTile() { this(ModTileEntities.REMOTE_LOCK_TILE.get()); }
     @Override
@@ -51,7 +52,11 @@ public class RemoteLockTile extends TileEntity {
     }
 
     public void setKey(ItemStack item){
+        if(!isKey(item.getItem())) return;
         this.heldKey = item;
     }
+
+    public void setLinkedID(int id) { this.linkedID = id; };
+    public int getLinkedID() { return this.linkedID; }
 
 }

@@ -10,6 +10,7 @@ import com.swdteam.common.tardis.TardisData;
 import com.swdteam.common.tardis.TardisDoor;
 import com.swdteam.common.tardis.actions.TardisActionList;
 import com.swdteam.common.tileentity.TardisTileEntity;
+import com.swdteam.util.math.Position;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
@@ -19,6 +20,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -31,23 +33,22 @@ import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.Dimension;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
 import java.security.Key;
-import java.util.Random;
+import java.util.*;
 
 public class RemoteLockBlock extends HorizontalBlock {
     public RemoteLockBlock(Properties builder) { super(builder); }
+    public static List<Position> tilePositions = new ArrayList<>();
     private boolean allowInteract = true;
     private boolean powered = false;
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 2, 16);
-    static final BooleanProperty HAS_KEY = BooleanProperty.create("key");
-    static final BooleanProperty LOCKED = BooleanProperty.create("locked");
+    public static final BooleanProperty HAS_KEY = BooleanProperty.create("key");
+    public static final BooleanProperty LOCKED = BooleanProperty.create("locked");
+
     @Override
     public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
         return SHAPE;
@@ -92,6 +93,11 @@ public class RemoteLockBlock extends HorizontalBlock {
         if(state.getValue(LOCKED)) return 15;
         return 1;
     }
+    @Override
+    public void destroy(IWorld iWorld, BlockPos pos, BlockState state) {
+        tilePositions.remove(pos);
+        super.destroy(iWorld, pos, state);
+    }
 
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
@@ -101,13 +107,18 @@ public class RemoteLockBlock extends HorizontalBlock {
             if(tileEntity instanceof RemoteLockTile){
                 RemoteLockTile lockTile = (RemoteLockTile)tileEntity;
 
-                if(lockTile.hasKey() && hand == Hand.MAIN_HAND && player.getItemInHand(hand).isEmpty()){
-                    // take key
-                    player.setItemInHand(hand, lockTile.getKey());
-                    lockTile.setKey(ItemStack.EMPTY);
-                    BlockState new_state = state.setValue(HAS_KEY, false);
-                    new_state = new_state.setValue(LOCKED, false);
-                    world.setBlockAndUpdate(pos, new_state);
+                if(lockTile.hasKey() && hand == Hand.MAIN_HAND && player.getItemInHand(hand).isEmpty() ){
+                    if(player.isShiftKeyDown()){
+                        // take key
+                        player.setItemInHand(hand, lockTile.getKey());
+                        lockTile.setKey(ItemStack.EMPTY);
+                        lockTile.setLinkedID(-1);
+                        world.setBlockAndUpdate(pos, state.setValue(HAS_KEY, false).setValue(LOCKED, false));
+                        tilePositions.remove(new Position(pos.getX(), pos.getY(), pos.getZ()));
+                    }
+                    else{
+                        turn_key(state, world, pos);
+                    }
                 }
                 else if(!lockTile.hasKey() && lockTile.isKey(player.getItemInHand(hand).getItem())){
                     // insert key
@@ -115,10 +126,11 @@ public class RemoteLockBlock extends HorizontalBlock {
                     TardisData t = DMTardis.getTardis(DMTardis.getIDForXZ(pos.getX(), pos.getZ()));
                     if(id == t.getGlobalID()){
                         lockTile.setKey(player.getItemInHand(hand));
+                        lockTile.setLinkedID(id);
+                        System.out.println(lockTile.getLinkedID());
                         player.setItemInHand(hand, ItemStack.EMPTY);
-                        BlockState new_state = state.setValue(HAS_KEY, true);
-                        new_state = new_state.setValue(LOCKED, t.isLocked());
-                        world.setBlockAndUpdate(pos, new_state);
+                        world.setBlockAndUpdate(pos, state.setValue(HAS_KEY, true).setValue(LOCKED, t.isLocked()));
+                        tilePositions.add(new Position(pos.getX(), pos.getY(), pos.getZ()));
                     }
                     else{
                         return ActionResultType.FAIL;
@@ -151,7 +163,7 @@ public class RemoteLockBlock extends HorizontalBlock {
     }
 
     public void turn_key(BlockState state, World world, BlockPos blockPos){
-        if(world.dimension() != DMDimensions.TARDIS) return;
+        if(world.dimension() != DMDimensions.TARDIS || world.isClientSide) return;
         RemoteLockTile key = (RemoteLockTile)world.getBlockEntity(blockPos);
 
         if(key.hasKey()){
@@ -171,6 +183,8 @@ public class RemoteLockBlock extends HorizontalBlock {
                     tardis.closeDoor(TardisDoor.BOTH, TardisTileEntity.DoorSource.TARDIS);
                     world.playSound((PlayerEntity) null, blockPos, tardis.getCloseSound(), SoundCategory.BLOCKS, 0.5F, 1.0F);
                 }
+
+                //System.out.println(tilePositions);
             }
         }
     }
