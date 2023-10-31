@@ -17,7 +17,7 @@ import java.util.List;
 public class RemoteLockTile extends TileEntity {
     public static ArrayList<Position> keyTiles = new ArrayList<>();
     private ItemStack heldKey = ItemStack.EMPTY;
-    private int linkedID = 2;
+    private int linkedID = -1;
     public RemoteLockTile(TileEntityType<?> tileEntityType) { super(tileEntityType); }
     public RemoteLockTile() { this(ModTileEntities.REMOTE_LOCK_TILE.get()); }
     @Override
@@ -85,6 +85,8 @@ public class RemoteLockTile extends TileEntity {
         if(this.hasKey()){
             return this.linkedID;
         }
-        return 2;
+        return -1;
+        /* When this stuff is done by the mixin, this.hasKey returns false, and it returns -1. Even if this.hasKey()
+        returned true, it would still return the default value of linkedID. */
     }
 }
