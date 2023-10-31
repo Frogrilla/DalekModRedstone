@@ -46,8 +46,8 @@ public class RemoteLockBlock extends HorizontalBlock {
     private boolean allowInteract = true;
     private boolean powered = false;
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 2, 16);
-    static final BooleanProperty HAS_KEY = BooleanProperty.create("key");
-    static final BooleanProperty LOCKED = BooleanProperty.create("locked");
+    public static final BooleanProperty HAS_KEY = BooleanProperty.create("key");
+    public static final BooleanProperty LOCKED = BooleanProperty.create("locked");
     @Override
     public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
         return SHAPE;
@@ -104,7 +104,7 @@ public class RemoteLockBlock extends HorizontalBlock {
                 if(lockTile.hasKey() && hand == Hand.MAIN_HAND && player.getItemInHand(hand).isEmpty()){
                     // take key
                     player.setItemInHand(hand, lockTile.getKey());
-                    lockTile.setKey(ItemStack.EMPTY);
+                    lockTile.removeKey();
                     BlockState new_state = state.setValue(HAS_KEY, false);
                     new_state = new_state.setValue(LOCKED, false);
                     world.setBlockAndUpdate(pos, new_state);

@@ -2,15 +2,22 @@ package com.frogrilla.dalek_mod_redstone.common.tileentity;
 
 import com.frogrilla.dalek_mod_redstone.common.init.ModTileEntities;
 import com.swdteam.common.init.DMItems;
+import com.swdteam.util.math.Position;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.math.BlockPos;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RemoteLockTile extends TileEntity {
+    public static ArrayList<Position> keyTiles = new ArrayList<>();
     private ItemStack heldKey = ItemStack.EMPTY;
+    private int linkedID = 2;
     public RemoteLockTile(TileEntityType<?> tileEntityType) { super(tileEntityType); }
     public RemoteLockTile() { this(ModTileEntities.REMOTE_LOCK_TILE.get()); }
     @Override
@@ -35,7 +42,7 @@ public class RemoteLockTile extends TileEntity {
     }
 
     public boolean hasKey(){
-        return isKey(heldKey.getItem());
+        return heldKey != ItemStack.EMPTY;
     }
 
     public boolean isKey(Item item){
@@ -51,7 +58,33 @@ public class RemoteLockTile extends TileEntity {
     }
 
     public void setKey(ItemStack item){
-        this.heldKey = item;
+        if(isKey(item.getItem())) {
+            this.heldKey = item;
+            updateID();
+            BlockPos blockPos = getBlockPos();
+            Position pos = new Position(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+            if(!keyTiles.contains(pos)) keyTiles.add(pos);
+        }
+    }
+    public void removeKey() {
+        this.heldKey = ItemStack.EMPTY;
+        BlockPos blockPos = getBlockPos();
+        Position pos = new Position(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+        keyTiles.remove(pos);
     }
 
+    public void updateID(){
+        if(this.hasKey()){
+            if(this.getKey().getTag() != null){
+                linkedID = this.getKey().getTag().getInt("linkedID");
+            }
+        }
+    }
+
+    public int getLinkedID(){
+        if(this.hasKey()){
+            return this.linkedID;
+        }
+        return 2;
+    }
 }
