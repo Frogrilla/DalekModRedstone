@@ -145,16 +145,16 @@ public class RemoteLockBlock extends HorizontalBlock {
    public void neighborChanged(BlockState state, World world, BlockPos blockPos, Block block, BlockPos blockPos1, boolean isMoving) {
         if (!world.isClientSide) {
             boolean nPower = world.hasNeighborSignal(blockPos);
-            if(powered != nPower && nPower) turn_key(state, world, blockPos);
+            if(powered != nPower && nPower) turn_key(state, world, blockPos); // calls RemoteLockTile.updateAllTiles
             powered = nPower;
         }
     }
 
     public void turn_key(BlockState state, World world, BlockPos blockPos){
         if(world.dimension() != DMDimensions.TARDIS) return;
-        RemoteLockTile key = (RemoteLockTile)world.getBlockEntity(blockPos);
+        RemoteLockTile lock = (RemoteLockTile)world.getBlockEntity(blockPos);
 
-        if(key.hasKey()){
+        if(lock.hasKey()){
             TardisData data = DMTardis.getTardis(DMTardis.getIDForXZ(blockPos.getX(), blockPos.getZ()));
             BlockPos pos = data.getCurrentLocation().getBlockPosition();
             ServerWorld serverWorld = world.getServer().getLevel(data.getCurrentLocation().dimensionWorldKey());
@@ -165,12 +165,14 @@ public class RemoteLockBlock extends HorizontalBlock {
                 boolean locked = data.isLocked();
                 data.setLocked(!locked);
                 world.setBlockAndUpdate(blockPos, state.setValue(LOCKED, !locked));
+                RemoteLockTile.updateAllTiles(data.getGlobalID(), !locked, world);
 
                 if (!locked && tardis.doorOpenLeft || tardis.doorOpenRight){
                     tardis.closeDoor(TardisDoor.BOTH, TardisTileEntity.DoorSource.INTERIOR);
                     tardis.closeDoor(TardisDoor.BOTH, TardisTileEntity.DoorSource.TARDIS);
-                    world.playSound((PlayerEntity) null, blockPos, tardis.getCloseSound(), SoundCategory.BLOCKS, 0.5F, 1.0F);
                 }
+
+                world.playSound((PlayerEntity) null, blockPos, tardis.getCloseSound(), SoundCategory.BLOCKS, 0.5F, 1.0F);
             }
         }
     }

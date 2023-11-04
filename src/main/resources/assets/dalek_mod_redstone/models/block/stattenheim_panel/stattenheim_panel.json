@@ -1,0 +1,88 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "dalek_mod_redstone:block/stattenheim_panel",
+		"particle": "block/smooth_stone"
+	},
+	"elements": [
+		{
+			"from": [6, -0.6, 7.2],
+			"to": [10, 1.4, 11.2],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [8, 2, 12]},
+			"faces": {
+				"north": {"uv": [13.75, 1, 14.75, 1.5], "texture": "#0"},
+				"east": {"uv": [13.75, 1, 14.75, 1.5], "texture": "#0"},
+				"south": {"uv": [13.75, 2.25, 14.75, 2.75], "texture": "#0"},
+				"west": {"uv": [13.75, 1, 14.75, 1.5], "texture": "#0"},
+				"up": {"uv": [13.75, 0.5, 14.75, 1.5], "texture": "#0"},
+				"down": {"uv": [14, 3.5, 15, 4.5], "texture": "#0"}
+			}
+		},
+		{
+			"from": [5.5, -0.6, 7.2],
+			"to": [6, 2.9, 14.7],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [8, 2, 12]},
+			"faces": {
+				"north": {"uv": [13.875, 2.75, 14, 3.625], "texture": "#0"},
+				"east": {"uv": [14.125, 2.75, 16, 3.625], "texture": "#0"},
+				"south": {"uv": [13.875, 3.75, 14, 4.625], "texture": "#0"},
+				"west": {"uv": [14.125, 3.75, 16, 4.625], "texture": "#0"},
+				"up": {"uv": [15.625, 0, 15.75, 1.875], "texture": "#0"},
+				"down": {"uv": [15.875, 0, 16, 1.875], "texture": "#0"}
+			}
+		},
+		{
+			"from": [10, -0.6, 7.2],
+			"to": [10.5, 2.9, 14.7],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [8, 2, 12]},
+			"faces": {
+				"north": {"uv": [13.75, 2.75, 13.875, 3.625], "texture": "#0"},
+				"east": {"uv": [14.125, 2.75, 16, 3.625], "texture": "#0"},
+				"south": {"uv": [13.75, 3.75, 13.875, 4.625], "texture": "#0"},
+				"west": {"uv": [14.125, 3.75, 16, 4.625], "texture": "#0"},
+				"up": {"uv": [15.5, 0, 15.625, 1.875], "texture": "#0"},
+				"down": {"uv": [15.75, 0, 15.875, 1.875], "texture": "#0"}
+			}
+		},
+		{
+			"from": [6, 2.4, 7.2],
+			"to": [10, 2.9, 15.2],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [8, 2, 12]},
+			"faces": {
+				"north": {"uv": [13.75, 2.25, 14.75, 2.375], "texture": "#0"},
+				"east": {"uv": [15, 0, 15.125, 2], "rotation": 270, "texture": "#0"},
+				"south": {"uv": [13.75, 2, 14.75, 2.125], "texture": "#0"},
+				"west": {"uv": [14.75, 0, 14.875, 2], "rotation": 270, "texture": "#0"},
+				"up": {"uv": [13.75, 0, 14.75, 2], "texture": "#0"},
+				"down": {"uv": [13.75, 0, 14.75, 2], "texture": "#0"}
+			}
+		},
+		{
+			"from": [0, 0, 0],
+			"to": [16, 2, 16],
+			"faces": {
+				"north": {"uv": [4, 5, 8, 5.5], "texture": "#0"},
+				"east": {"uv": [4, 5.5, 8, 6], "texture": "#0"},
+				"south": {"uv": [4, 6, 8, 6.5], "texture": "#0"},
+				"west": {"uv": [6.5, 0, 10.5, 0.5], "texture": "#0"},
+				"up": {"uv": [4, 4, 0, 0], "texture": "#0"},
+				"down": {"uv": [4, 4, 0, 8], "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "slot",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1, 2, 3]
+		},
+		{
+			"name": "VoxelShapes",
+			"origin": [0, 0, 0],
+			"color": 0,
+			"children": [4]
+		}
+	]
+}

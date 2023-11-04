@@ -1,0 +1,71 @@
+{
+  "multipart": [
+    {
+      "when": {"facing": "north"},
+      "apply": {"model": "dalek_mod_redstone:block/stattenheim_panel/stattenheim_panel", "y": 0}
+    },
+    {
+      "when": {"facing": "east"},
+      "apply": {"model": "dalek_mod_redstone:block/stattenheim_panel/stattenheim_panel", "y": 90}
+    },
+    {
+      "when": {"facing": "south"},
+      "apply": {"model": "dalek_mod_redstone:block/stattenheim_panel/stattenheim_panel", "y": 180}
+    },
+    {
+      "when": {"facing": "west"},
+      "apply": {"model": "dalek_mod_redstone:block/stattenheim_panel/stattenheim_panel", "y": 270}
+    },
+
+    {
+      "when": {"remote": "true", "facing": "north"},
+      "apply": {"model": "dalek_mod_redstone:block/stattenheim_panel/remote", "y": 0}
+    },
+    {
+      "when": {"remote": "true", "facing": "east"},
+      "apply": {"model": "dalek_mod_redstone:block/stattenheim_panel/remote", "y": 90}
+    },
+    {
+      "when": {"remote": "true", "facing": "south"},
+      "apply": {"model": "dalek_mod_redstone:block/stattenheim_panel/remote", "y": 180}
+    },
+    {
+      "when": {"remote": "true", "facing": "west"},
+      "apply": {"model": "dalek_mod_redstone:block/stattenheim_panel/remote", "y": 270}
+    },
+
+    {
+      "when": {"data": "1", "facing": "north"},
+      "apply": {"model": "dalek_mod_redstone:block/stattenheim_panel/data_silver", "y": 0}
+    },
+    {
+      "when": {"data": "1", "facing": "east"},
+      "apply": {"model": "dalek_mod_redstone:block/stattenheim_panel/data_silver", "y": 90}
+    },
+    {
+      "when": {"data": "1", "facing": "south"},
+      "apply": {"model": "dalek_mod_redstone:block/stattenheim_panel/data_silver", "y": 180}
+    },
+    {
+      "when": {"data": "1", "facing": "west"},
+      "apply": {"model": "dalek_mod_redstone:block/stattenheim_panel/data_silver", "y": 270}
+    },
+
+    {
+      "when": {"data": "2", "facing": "north"},
+      "apply": {"model": "dalek_mod_redstone:block/stattenheim_panel/data_gold", "y": 0}
+    },
+    {
+      "when": {"data": "2", "facing": "east"},
+      "apply": {"model": "dalek_mod_redstone:block/stattenheim_panel/data_gold", "y": 90}
+    },
+    {
+      "when": {"data": "2", "facing": "south"},
+      "apply": {"model": "dalek_mod_redstone:block/stattenheim_panel/data_gold", "y": 180}
+    },
+    {
+      "when": {"data": "2", "facing": "west"},
+      "apply": {"model": "dalek_mod_redstone:block/stattenheim_panel/data_gold", "y": 270}
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "dalek_mod_redstone:block/door_controller",
+		"particle": "block/smooth_stone"
+	},
+	"elements": [
+		{
+			"from": [6, 2, 7],
+			"to": [10, 3, 13],
+			"rotation": {"angle": 0, "axis": "x", "origin": [8, 3, 13]},
+			"color": 0,
+			"faces": {
+				"north": {"uv": [0, 0, 1, 0.25], "texture": "#missing"},
+				"east": {"uv": [0, 0, 1.5, 0.25], "texture": "#missing"},
+				"south": {"uv": [0, 0, 1, 0.25], "texture": "#missing"},
+				"west": {"uv": [0, 0, 1.5, 0.25], "texture": "#missing"},
+				"up": {"uv": [0, 0, 1, 1.5], "texture": "#missing"},
+				"down": {"uv": [0, 0, 1, 1.5], "texture": "#missing"}
+			}
+		},
+		{
+			"from": [10, 0.25, 9],
+			"to": [10.25, 3, 13],
+			"rotation": {"angle": 0, "axis": "x", "origin": [8, 3, 13]},
+			"color": 0,
+			"faces": {
+				"north": {"uv": [0, 0, 0.0625, 0.6875], "texture": "#missing"},
+				"east": {"uv": [0, 0, 1, 0.6875], "texture": "#missing"},
+				"south": {"uv": [0, 0, 0.0625, 0.6875], "texture": "#missing"},
+				"west": {"uv": [0, 0, 1, 0.6875], "texture": "#missing"},
+				"up": {"uv": [0, 0, 0.0625, 1], "texture": "#missing"},
+				"down": {"uv": [0, 0, 0.0625, 1], "texture": "#missing"}
+			}
+		},
+		{
+			"from": [5.75, 1, 13],
+			"to": [10.25, 3.25, 13.25],
+			"rotation": {"angle": 0, "axis": "x", "origin": [8, 3, 13]},
+			"color": 0,
+			"faces": {
+				"north": {"uv": [0, 0, 1.125, 0.5625], "texture": "#missing"},
+				"east": {"uv": [0, 0, 0.0625, 0.5625], "texture": "#missing"},
+				"south": {"uv": [0, 0, 1.125, 0.5625], "texture": "#missing"},
+				"west": {"uv": [0, 0, 0.0625, 0.5625], "texture": "#missing"},
+				"up": {"uv": [0, 0, 1.125, 0.0625], "texture": "#missing"},
+				"down": {"uv": [0, 0, 1.125, 0.0625], "texture": "#missing"}
+			}
+		},
+		{
+			"from": [5.75, 3, 9],
+			"to": [10.25, 3.25, 13],
+			"rotation": {"angle": 0, "axis": "x", "origin": [8, 3, 13]},
+			"color": 0,
+			"faces": {
+				"north": {"uv": [0, 0, 1.125, 0.0625], "rotation": 180, "texture": "#missing"},
+				"east": {"uv": [0, 0, 0.0625, 1], "rotation": 90, "texture": "#missing"},
+				"south": {"uv": [0, 0, 1.125, 0.0625], "texture": "#missing"},
+				"west": {"uv": [0, 0, 0.0625, 1], "rotation": 270, "texture": "#missing"},
+				"up": {"uv": [0, 0, 1.125, 1], "texture": "#missing"},
+				"down": {"uv": [0, 0, 1.125, 1], "rotation": 180, "texture": "#missing"}
+			}
+		},
+		{
+			"from": [5.75, 0.25, 9],
+			"to": [6, 3, 13],
+			"rotation": {"angle": 0, "axis": "x", "origin": [8, 3, 13]},
+			"color": 0,
+			"faces": {
+				"north": {"uv": [0, 0, 0.0625, 0.6875], "texture": "#missing"},
+				"east": {"uv": [0, 0, 1, 0.6875], "texture": "#missing"},
+				"south": {"uv": [0, 0, 0.0625, 0.6875], "texture": "#missing"},
+				"west": {"uv": [0, 0, 1, 0.6875], "texture": "#missing"},
+				"up": {"uv": [0, 0, 0.0625, 1], "texture": "#missing"},
+				"down": {"uv": [0, 0, 0.0625, 1], "texture": "#missing"}
+			}
+		},
+		{
+			"from": [0, 0, 0],
+			"to": [16, 2, 16],
+			"faces": {
+				"north": {"uv": [4, 5, 8, 5.5], "texture": "#0"},
+				"east": {"uv": [4, 5.5, 8, 6], "texture": "#0"},
+				"south": {"uv": [4, 6, 8, 6.5], "texture": "#0"},
+				"west": {"uv": [6.5, 0, 10.5, 0.5], "texture": "#0"},
+				"up": {"uv": [4, 4, 0, 0], "texture": "#0"},
+				"down": {"uv": [4, 4, 0, 8], "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "cartridge",
+			"origin": [8, 2, 14],
+			"color": 0,
+			"children": [0, 1, 2, 3, 4]
+		},
+		{
+			"name": "VoxelShapes",
+			"origin": [0, 0, 0],
+			"color": 0,
+			"children": [5]
+		}
+	]
+}

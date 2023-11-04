@@ -1,7 +1,0 @@
-{
-  "parent": "block/cube_all",
-  "textures": {
-    "particle": "minecraft:block/smooth_stone",
-    "all": "dalek_mod_redstone:block/statty"
-  }
-}

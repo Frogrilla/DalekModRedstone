@@ -1,15 +1,22 @@
 package com.frogrilla.dalek_mod_redstone.common.tileentity;
 
+import com.frogrilla.dalek_mod_redstone.common.block.RemoteLockBlock;
 import com.frogrilla.dalek_mod_redstone.common.init.ModTileEntities;
+import com.swdteam.common.init.DMDimensions;
 import com.swdteam.common.init.DMItems;
+import com.swdteam.common.init.DMTardis;
+import com.swdteam.common.tardis.TardisData;
 import com.swdteam.util.math.Position;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +34,6 @@ public class RemoteLockTile extends TileEntity {
         }
         super.load(state, nbt);
     }
-
     @Override
     public CompoundNBT save(CompoundNBT nbt) {
         if(this.heldKey != null){
@@ -40,6 +46,7 @@ public class RemoteLockTile extends TileEntity {
         }
         return super.save(nbt);
     }
+
 
     public boolean hasKey(){
         return heldKey != ItemStack.EMPTY;
@@ -88,5 +95,24 @@ public class RemoteLockTile extends TileEntity {
         return -1;
         /* When this stuff is done by the mixin, this.hasKey returns false, and it returns -1. Even if this.hasKey()
         returned true, it would still return the default value of linkedID. */
+    }
+
+    public static void updateAllTiles(int id, boolean locked, World world){
+        keyTiles.forEach(position -> {
+            TileEntity tile = world.getBlockEntity(position.toBlockPos());
+            if(tile != null && tile.getType() == ModTileEntities.REMOTE_LOCK_TILE.get()){
+                RemoteLockTile lock = (RemoteLockTile) tile;
+                BlockPos blockPos = lock.getBlockPos();
+                TardisData data = DMTardis.getTardis(DMTardis.getIDForXZ(blockPos.getX(), blockPos.getZ()));
+                if(data.getGlobalID() == id){
+                    world.setBlockAndUpdate(lock.getBlockPos(), lock.getBlockState().setValue(RemoteLockBlock.LOCKED, locked));
+                    world.updateNeighbourForOutputSignal(lock.getBlockPos(), lock.getBlockState().getBlock());
+                }
+            }
+            else{
+                RemoteLockTile.keyTiles.remove(position);
+                System.out.printf("Removed position: %s%n", position);
+            }
+        });
     }
 }
