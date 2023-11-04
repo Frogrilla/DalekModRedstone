@@ -1,0 +1,31 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "dalek_mod_redstone:block/stattenheim_panel",
+		"particle": "block/smooth_stone"
+	},
+	"elements": [
+		{
+			"from": [6, 3.1, 5.4],
+			"to": [10, 4.1, 9.4],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [8, 3, 8]},
+			"faces": {
+				"north": {"uv": [12, 1.5, 13, 1.75], "texture": "#0"},
+				"east": {"uv": [12, 3.5, 13.5, 3.75], "texture": "#0"},
+				"south": {"uv": [12, 3.75, 13, 4], "texture": "#0"},
+				"west": {"uv": [12, 3.25, 13.5, 3.5], "texture": "#0"},
+				"up": {"uv": [12, 0, 13, 1.5], "texture": "#0"},
+				"down": {"uv": [12, 1.75, 13, 3.25], "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "remote",
+			"origin": [8, 2, 14],
+			"color": 0,
+			"children": [0]
+		}
+	]
+}

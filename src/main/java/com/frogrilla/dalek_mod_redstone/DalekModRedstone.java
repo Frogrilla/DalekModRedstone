@@ -44,6 +44,7 @@ public class DalekModRedstone
         event.enqueueWork(() -> {
             RenderTypeLookup.setRenderLayer(ModBlocks.CLICK_DETECTOR.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(ModBlocks.REMOTE_LOCK.get(), RenderType.cutout());
+            RenderTypeLookup.setRenderLayer(ModBlocks.STATTENHEIM_PANEL.get(), RenderType.cutout());
             ClientRegistry.bindTileEntityRenderer(ModTileEntities.REMOTE_LOCK_TILE.get(), RenderRemoteLock::new);
         });
     }
