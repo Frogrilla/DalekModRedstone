@@ -8,6 +8,7 @@ import com.swdteam.common.item.StattenheimRemoteItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
@@ -75,7 +76,7 @@ public class StattenheimPanelBlock extends HorizontalBlock {
             StattenheimPanelTile tile = (StattenheimPanelTile) t;
             if(player.getItemInHand(hand) == ItemStack.EMPTY){
                 // take data
-                if(tile.hasData()){
+                if(tile.hasData() && !(player.isShiftKeyDown() && tile.hasRemote())){
                     player.setItemInHand(hand, tile.getData());
                     tile.removeData();
                     world.setBlockAndUpdate(blockPos, blockState.setValue(DATA, 0));
@@ -118,7 +119,7 @@ public class StattenheimPanelBlock extends HorizontalBlock {
                 StattenheimPanelTile tile = (StattenheimPanelTile)world.getBlockEntity(blockPos);
                 StattenheimRemoteItem remote = (StattenheimRemoteItem)tile.getRemote().getItem();
                 DataModuleItem data = (DataModuleItem)tile.getData().getItem();
-                remote.useOn(new ItemUseContext((PlayerEntity) null, Hand.MAIN_HAND, new BlockRayTraceResult(Vector3d.ZERO, Direction.NORTH, blockPos.above(), true)));
+                remote.useOn(new ItemUseContext(world.getNearestPlayer(EntityPredicate.DEFAULT, blockPos.getX(), blockPos.getY(), blockPos.getZ()), Hand.MAIN_HAND, new BlockRayTraceResult(new Vector3d(0,-1,0), Direction.NORTH, blockPos.above(), false)));
             }
 
             powered = nPower;
