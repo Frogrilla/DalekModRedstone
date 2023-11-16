@@ -2,24 +2,33 @@ package com.frogrilla.dalek_mod_redstone.common.block;
 
 import com.frogrilla.dalek_mod_redstone.common.init.ModTileEntities;
 import com.frogrilla.dalek_mod_redstone.common.tileentity.StattenheimPanelTile;
-import com.swdteam.common.init.DMItems;
+import com.swdteam.common.init.*;
 import com.swdteam.common.item.DataModuleItem;
 import com.swdteam.common.item.StattenheimRemoteItem;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
+import com.swdteam.common.tardis.TardisData;
+import com.swdteam.common.tardis.TardisDoor;
+import com.swdteam.common.tardis.TardisState;
+import com.swdteam.common.tardis.actions.TardisActionList;
+import com.swdteam.common.tardis.data.TardisFlightPool;
+import com.swdteam.common.tileentity.TardisTileEntity;
+import com.swdteam.util.ChatUtil;
+import com.swdteam.util.WorldUtils;
+import net.minecraft.block.*;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.DirectionalPlaceContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -27,6 +36,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
 
@@ -119,10 +129,56 @@ public class StattenheimPanelBlock extends HorizontalBlock {
                 StattenheimPanelTile tile = (StattenheimPanelTile)world.getBlockEntity(blockPos);
                 StattenheimRemoteItem remote = (StattenheimRemoteItem)tile.getRemote().getItem();
                 DataModuleItem data = (DataModuleItem)tile.getData().getItem();
-                remote.useOn(new ItemUseContext(world.getNearestPlayer(EntityPredicate.DEFAULT, blockPos.getX(), blockPos.getY(), blockPos.getZ()), Hand.MAIN_HAND, new BlockRayTraceResult(new Vector3d(0,-1,0), Direction.NORTH, blockPos.above(), false)));
+                sendTardis(tile.getRemote(), world, tile.getData());
             }
 
             powered = nPower;
         }
+    }
+
+    static void sendTardis(ItemStack remote, World world, ItemStack module){
+        ListNBT list = module.getTag().getList("location", 10);
+        CompoundNBT tag = list.getCompound(0);
+        BlockPos pos = new BlockPos(tag.getInt("pos_x"),tag.getInt("pos_y"),tag.getInt("pos_z"));
+
+        if(!world.isEmptyBlock(pos)) return;
+
+        int tardisID = remote.getTag().getInt(DMNBTKeys.LINKED_ID);
+        TardisData data = DMTardis.getTardis(tardisID);
+        MinecraftServer server = world.getServer();
+        ServerWorld tardisDim = server.getLevel(DMDimensions.TARDIS);
+
+        if (tardisDim.isLoaded(data.getInteriorSpawnPosition().toBlockPos())) {
+            tardisDim.playSound((PlayerEntity)null, data.getInteriorSpawnPosition().x(), data.getInteriorSpawnPosition().y(), data.getInteriorSpawnPosition().z(), (SoundEvent) DMSoundEvents.TARDIS_REMAT.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
+        }
+
+        if (!data.isInFlight()) {
+            world.playSound((PlayerEntity)null, pos, (SoundEvent)DMSoundEvents.ENTITY_STATTENHEIM_REMOTE_SUMMON.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
+            BlockPos currentPos = data.getCurrentLocation().getBlockPosition();
+            ServerWorld serverWorld = server.getLevel(data.getCurrentLocation().dimensionWorldKey());
+            TileEntity te = serverWorld.getBlockEntity(currentPos);
+            if (te instanceof TardisTileEntity) {
+                if (TardisActionList.doAnimation(serverWorld, currentPos)) {
+                    ((TardisTileEntity)te).setState(TardisState.DEMAT);
+                } else {
+                    serverWorld.setBlockAndUpdate(currentPos, Blocks.AIR.defaultBlockState());
+                }
+            }
+        }
+
+        world.setBlockAndUpdate(pos, (BlockState)((Block)DMBlocks.TARDIS.get()).defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, world.getBlockState(pos).getBlock() instanceof FlowingFluidBlock));
+        data.setPreviousLocation(data.getCurrentLocation());
+        data.setCurrentLocation(pos, world.dimension());
+        TileEntity te = world.getBlockEntity(pos);
+        if (te instanceof TardisTileEntity) {
+            TardisTileEntity tardis = (TardisTileEntity)te;
+            tardis.globalID = tardisID;
+            tardis.closeDoor(TardisDoor.BOTH, TardisTileEntity.DoorSource.TARDIS);
+            tardis.rotation = tag.getFloat("facing");
+            tardis.setState(TardisState.REMAT);
+            data.getCurrentLocation().setFacing(tardis.rotation);
+        }
+
+        data.save();
     }
 }
