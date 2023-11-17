@@ -1,6 +1,9 @@
 package com.frogrilla.dalek_mod_redstone.common.block;
 
+import com.swdteam.common.block.tardis.TardisBlock;
 import com.swdteam.common.init.DMBlocks;
+import com.swdteam.common.tardis.TardisState;
+import com.swdteam.common.tileentity.TardisTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;
@@ -10,8 +13,10 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class TardisDetectorBlock extends Block {
     public TardisDetectorBlock(Properties builder) { super(builder); }
@@ -46,13 +51,29 @@ public class TardisDetectorBlock extends Block {
                 .setValue(DETECTED, false);
     }
 
+    @Override
+    public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
+        world.setBlockAndUpdate(pos, state.setValue(DETECTED, !state.getValue(DETECTED)));
+        super.tick(state, world, pos, rand);
+    }
+
     public void neighborChanged(BlockState state, World world, BlockPos blockPos, Block block, BlockPos blockPos1, boolean isMoving) {
         if (!world.isClientSide) {
             Block above = world.getBlockState(blockPos.offset(0,1,0)).getBlock();
             boolean isTardis = above == DMBlocks.TARDIS.get();
+            if(isTardis){
+                TardisTileEntity tardis = (TardisTileEntity) world.getBlockEntity(blockPos.above());
 
-            if(isTardis != state.getValue(DETECTED)){
-                world.setBlockAndUpdate(blockPos, state.setValue(DETECTED, isTardis));
+                if(tardis.state == TardisState.REMAT && !state.getValue(DETECTED)){
+                    world.getBlockTicks().scheduleTick(blockPos,this, 200);
+                } else if (tardis.state == TardisState.DEMAT && state.getValue(DETECTED)) {
+                    world.setBlockAndUpdate(blockPos, state.setValue(DETECTED, false));
+                }
+            }
+            else{
+                if(state.getValue(DETECTED)){
+                    world.setBlockAndUpdate(blockPos, state.setValue(DETECTED, false));
+                }
             }
         }
     }
