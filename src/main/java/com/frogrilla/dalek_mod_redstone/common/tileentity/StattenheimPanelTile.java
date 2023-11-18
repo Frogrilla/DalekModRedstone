@@ -8,6 +8,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class StattenheimPanelTile extends TileEntity {
     private ItemStack remote = ItemStack.EMPTY;
@@ -43,6 +50,16 @@ public class StattenheimPanelTile extends TileEntity {
         }
 
         return super.save(nbt);
+    }
+
+    @Nonnull
+    @Override
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY){
+            if(hasData()) return data.getCapability(cap, side);
+            else if(hasRemote()) return remote.getCapability(cap, side);
+        }
+        return super.getCapability(cap, side);
     }
 
     public ItemStack getRemote() { return remote; }

@@ -3,6 +3,7 @@
   "block.dalek_mod_redstone.remote_lock": "Remote Lock",
   "block.dalek_mod_redstone.tardis_detector": "TARDIS Detector",
   "block.dalek_mod_redstone.stattenheim_panel": "Stattenheim Panel",
+  "block.dalek_mod_redstone.door_panel": "Door Panel",
 
   "itemGroup.dmr_tab": "Dalek Mod Redstone"
 }

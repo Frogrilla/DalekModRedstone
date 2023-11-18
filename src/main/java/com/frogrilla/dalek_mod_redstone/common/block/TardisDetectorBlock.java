@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -21,7 +22,8 @@ import java.util.Random;
 public class TardisDetectorBlock extends Block {
     public TardisDetectorBlock(Properties builder) { super(builder); }
 
-    static final BooleanProperty DETECTED = BooleanProperty.create("detected");
+    private int next = 0;
+    static final IntegerProperty DETECTED = IntegerProperty.create("detected",0,2);
 
     @Override
     public boolean canConnectRedstone(BlockState state, IBlockReader world, BlockPos pos, @Nullable Direction side) {
@@ -35,7 +37,7 @@ public class TardisDetectorBlock extends Block {
 
     @Override
     public int getSignal(BlockState state, IBlockReader p_180656_2_, BlockPos p_180656_3_, Direction p_180656_4_) {
-        return state.getValue(DETECTED) ? 15 : 0;
+        return state.getValue(DETECTED) == 2 ? 15 : 0;
     }
 
     @Override
@@ -48,12 +50,12 @@ public class TardisDetectorBlock extends Block {
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         return this.defaultBlockState()
-                .setValue(DETECTED, false);
+                .setValue(DETECTED, 0);
     }
 
     @Override
     public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
-        world.setBlockAndUpdate(pos, state.setValue(DETECTED, !state.getValue(DETECTED)));
+        world.setBlockAndUpdate(pos, state.setValue(DETECTED, next));
         super.tick(state, world, pos, rand);
     }
 
@@ -64,15 +66,16 @@ public class TardisDetectorBlock extends Block {
             if(isTardis){
                 TardisTileEntity tardis = (TardisTileEntity) world.getBlockEntity(blockPos.above());
 
-                if(tardis.state == TardisState.REMAT && !state.getValue(DETECTED)){
+                if(tardis.state == TardisState.REMAT && state.getValue(DETECTED) == 0){
+                    next = 2;
                     world.getBlockTicks().scheduleTick(blockPos,this, 200);
-                } else if (tardis.state == TardisState.DEMAT && state.getValue(DETECTED)) {
-                    world.setBlockAndUpdate(blockPos, state.setValue(DETECTED, false));
+                } else if (tardis.state == TardisState.DEMAT && state.getValue(DETECTED) == 2) {
+                    world.setBlockAndUpdate(blockPos, state.setValue(DETECTED, 0));
                 }
             }
             else{
-                if(state.getValue(DETECTED)){
-                    world.setBlockAndUpdate(blockPos, state.setValue(DETECTED, false));
+                if(state.getValue(DETECTED) != 0){
+                    world.setBlockAndUpdate(blockPos, state.setValue(DETECTED, 0));
                 }
             }
         }

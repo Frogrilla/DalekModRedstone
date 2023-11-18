@@ -1,0 +1,36 @@
+{
+  "variants": {
+    "facing=north,open=false": {
+      "model": "dalek_mod_redstone:block/door_panel/door_panel",
+      "y": 0
+    },
+    "facing=east,open=false": {
+      "model": "dalek_mod_redstone:block/door_panel/door_panel",
+      "y": 90
+    },
+    "facing=south,open=false": {
+      "model": "dalek_mod_redstone:block/door_panel/door_panel",
+      "y": 180
+    },
+    "facing=west,open=false": {
+      "model": "dalek_mod_redstone:block/door_panel/door_panel",
+      "y": 270
+    },
+    "facing=north,open=true": {
+      "model": "dalek_mod_redstone:block/door_panel/door_panel_open",
+      "y": 0
+    },
+    "facing=east,open=true": {
+      "model": "dalek_mod_redstone:block/door_panel/door_panel_open",
+      "y": 90
+    },
+    "facing=south,open=true": {
+      "model": "dalek_mod_redstone:block/door_panel/door_panel_open",
+      "y": 180
+    },
+    "facing=west,open=true": {
+      "model": "dalek_mod_redstone:block/door_panel/door_panel_open",
+      "y": 270
+    }
+  }
+}

@@ -14,6 +14,7 @@ import com.swdteam.common.tileentity.TardisTileEntity;
 import com.swdteam.util.ChatUtil;
 import com.swdteam.util.WorldUtils;
 import net.minecraft.block.*;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -34,11 +35,13 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class StattenheimPanelBlock extends HorizontalBlock {
     private boolean powered = false;
@@ -119,6 +122,19 @@ public class StattenheimPanelBlock extends HorizontalBlock {
         }
 
         return ActionResultType.FAIL;
+    }
+
+    @Override
+    public boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getAnalogOutputSignal(BlockState state, World world, BlockPos pos) {
+        int i = 0;
+        if (state.getValue(REMOTE)) i += 13;
+        i += state.getValue(DATA);
+        return i;
     }
 
     public void neighborChanged(BlockState state, World world, BlockPos blockPos, Block block, BlockPos blockPos1, boolean isMoving) {

@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": {"model": "dalek_mod_redstone:block/tardis_detector"}
+    "detected=0": {"model": "dalek_mod_redstone:block/tardis_detector/tardis_detector_empty"},
+    "detected=1": {"model": "dalek_mod_redstone:block/tardis_detector/tardis_detector_filling"},
+    "detected=2": {"model": "dalek_mod_redstone:block/tardis_detector/tardis_detector_full"}
   }
 }

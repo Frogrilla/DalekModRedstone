@@ -1,10 +1,7 @@
 package com.frogrilla.dalek_mod_redstone.common.init;
 
 import com.frogrilla.dalek_mod_redstone.DalekModRedstone;
-import com.frogrilla.dalek_mod_redstone.common.block.ClickDetectorBlock;
-import com.frogrilla.dalek_mod_redstone.common.block.RemoteLockBlock;
-import com.frogrilla.dalek_mod_redstone.common.block.StattenheimPanelBlock;
-import com.frogrilla.dalek_mod_redstone.common.block.TardisDetectorBlock;
+import com.frogrilla.dalek_mod_redstone.common.block.*;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -29,7 +26,8 @@ public class ModBlocks {
             CLICK_DETECTOR = registerBlock("click_detector", () -> new ClickDetectorBlock(AbstractBlock.Properties.of(Material.STONE).instabreak()), ModTabs.DMR_TAB),
             REMOTE_LOCK = registerBlock("remote_lock", () -> new RemoteLockBlock(AbstractBlock.Properties.of(Material.STONE).instabreak()), ModTabs.DMR_TAB),
             TARDIS_DETECTOR = registerBlock("tardis_detector", () -> new TardisDetectorBlock(AbstractBlock.Properties.of(Material.HEAVY_METAL)), ModTabs.DMR_TAB),
-            STATTENHEIM_PANEL = registerBlock("stattenheim_panel", () -> new StattenheimPanelBlock(AbstractBlock.Properties.of(Material.STONE).instabreak()), ModTabs.DMR_TAB);
+            STATTENHEIM_PANEL = registerBlock("stattenheim_panel", () -> new StattenheimPanelBlock(AbstractBlock.Properties.of(Material.STONE).instabreak()), ModTabs.DMR_TAB),
+            DOOR_PANEL = registerBlock("door_panel", () -> new DoorPanelBlock(AbstractBlock.Properties.of(Material.STONE).instabreak()), ModTabs.DMR_TAB);
     ;
 
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block, ItemGroup tab){

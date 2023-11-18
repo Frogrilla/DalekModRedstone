@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube_all",
+	"textures": {
+		"particle": "dalekmod:block/stainless_steel_block",
+		"north": "dalek_mod_redstone:block/tardis_detector/tardis_detector_side_full",
+		"south": "dalek_mod_redstone:block/tardis_detector/tardis_detector_side_full",
+		"east": "dalek_mod_redstone:block/tardis_detector/tardis_detector_side_full",
+		"west": "dalek_mod_redstone:block/tardis_detector/tardis_detector_side_full",
+		"up": "dalek_mod_redstone:block/tardis_detector/tardis_detector_up",
+		"down": "dalekmod:block/stainless_steel_block"
+	}
+}
