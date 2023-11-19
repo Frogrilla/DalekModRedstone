@@ -14,6 +14,7 @@ import com.swdteam.common.tileentity.TardisTileEntity;
 import com.swdteam.util.ChatUtil;
 import com.swdteam.util.WorldUtils;
 import net.minecraft.block.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,7 +36,9 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.Dimension;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -156,7 +159,7 @@ public class StattenheimPanelBlock extends HorizontalBlock {
         ListNBT list = module.getTag().getList("location", 10);
         CompoundNBT tag = list.getCompound(0);
         BlockPos pos = new BlockPos(tag.getInt("pos_x"),tag.getInt("pos_y"),tag.getInt("pos_z"));
-
+        RegistryKey<World> dimension = RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(tag.getString("location")));
         if(!world.isEmptyBlock(pos)) return;
 
         int tardisID = remote.getTag().getInt(DMNBTKeys.LINKED_ID);
@@ -184,7 +187,7 @@ public class StattenheimPanelBlock extends HorizontalBlock {
 
         world.setBlockAndUpdate(pos, (BlockState)((Block)DMBlocks.TARDIS.get()).defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, world.getBlockState(pos).getBlock() instanceof FlowingFluidBlock));
         data.setPreviousLocation(data.getCurrentLocation());
-        data.setCurrentLocation(pos, world.dimension());
+        data.setCurrentLocation(pos, dimension);
         TileEntity te = world.getBlockEntity(pos);
         if (te instanceof TardisTileEntity) {
             TardisTileEntity tardis = (TardisTileEntity)te;

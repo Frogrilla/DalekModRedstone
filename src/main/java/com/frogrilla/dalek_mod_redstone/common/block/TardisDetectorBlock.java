@@ -66,16 +66,22 @@ public class TardisDetectorBlock extends Block {
     }
 
     @Override
+    public void onPlace(BlockState state, World world, BlockPos pos, BlockState p_220082_4_, boolean p_220082_5_) {
+        world.getBlockTicks().scheduleTick(pos, this, 1);
+    }
+
+    @Override
     public void tick(BlockState state, ServerWorld world, BlockPos pos, Random p_225534_4_) {
         checkAbove(pos, state, world);
+        world.getBlockTicks().scheduleTick(pos, this, 1);
         super.tick(state, world, pos, p_225534_4_);
     }
 
-    public void neighborChanged(BlockState state, World world, BlockPos blockPos, Block block, BlockPos blockPos1, boolean isMoving) {
-        if (!world.isClientSide){
-            checkAbove(blockPos, state, world);
-        }
-    }
+//    public void neighborChanged(BlockState state, World world, BlockPos blockPos, Block block, BlockPos blockPos1, boolean isMoving) {
+//        if (!world.isClientSide){
+//            checkAbove(blockPos, state, world);
+//        }
+//    }
 
     void checkAbove(BlockPos blockPos, BlockState state, World world){
         if (!world.isClientSide){
@@ -97,7 +103,6 @@ public class TardisDetectorBlock extends Block {
                         break;
                     case NEUTRAL:
                         target = 3;
-                        world.getBlockTicks().scheduleTick(blockPos, this, 1);
                         break;
                 }
             }

@@ -43,7 +43,7 @@ import java.util.*;
 public class RemoteLockBlock extends HorizontalBlock {
     public RemoteLockBlock(Properties builder) { super(builder); }
     public static List<Position> tilePositions = new ArrayList<>();
-    private boolean allowInteract = true;
+    private int interactTimer = 0;
     private boolean powered = false;
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 2, 16);
     public static final BooleanProperty HAS_KEY = BooleanProperty.create("key");
@@ -101,7 +101,7 @@ public class RemoteLockBlock extends HorizontalBlock {
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
-        if(!world.isClientSide && allowInteract && !powered && world.dimension() == DMDimensions.TARDIS){
+        if(!world.isClientSide && interactTimer == 0 && !powered && world.dimension() == DMDimensions.TARDIS){
             TileEntity tileEntity = world.getBlockEntity(pos);
             if(tileEntity instanceof RemoteLockTile){
                 RemoteLockTile lockTile = (RemoteLockTile)tileEntity;
@@ -112,6 +112,9 @@ public class RemoteLockBlock extends HorizontalBlock {
                     BlockState new_state = state.setValue(HAS_KEY, false);
                     new_state = new_state.setValue(LOCKED, false);
                     world.setBlockAndUpdate(pos, new_state);
+
+                    interactTimer = 4;
+                    return ActionResultType.CONSUME;
                 }
                 else if(!lockTile.hasKey() && lockTile.isKey(player.getItemInHand(hand).getItem())){
                     // insert key
@@ -123,6 +126,10 @@ public class RemoteLockBlock extends HorizontalBlock {
                         player.setItemInHand(hand, ItemStack.EMPTY);
                         world.setBlockAndUpdate(pos, state.setValue(HAS_KEY, true).setValue(LOCKED, t.isLocked()));
                         tilePositions.add(new Position(pos.getX(), pos.getY(), pos.getZ()));
+
+                        interactTimer = 4;
+                        world.getBlockTicks().scheduleTick(pos, this, 1);
+                        return ActionResultType.CONSUME;
                     }
                     else{
                         return ActionResultType.FAIL;
@@ -132,10 +139,6 @@ public class RemoteLockBlock extends HorizontalBlock {
                     // can't give or remove
                     return ActionResultType.FAIL;
                 }
-
-                allowInteract = false;
-                world.getBlockTicks().scheduleTick(pos, state.getBlock(), 4);
-                return ActionResultType.CONSUME;
             }
         }
         return ActionResultType.FAIL;
@@ -143,7 +146,21 @@ public class RemoteLockBlock extends HorizontalBlock {
 
     @Override
     public void tick(BlockState blockState, ServerWorld world, BlockPos blockPos, Random random) {
-        allowInteract = true;
+        if (interactTimer > 0) interactTimer -= 1;
+        if(blockState.getValue(HAS_KEY)){
+            RemoteLockTile lock = (RemoteLockTile)world.getBlockEntity(blockPos);
+            TardisData data = DMTardis.getTardis(DMTardis.getIDForXZ(blockPos.getX(), blockPos.getZ()));
+
+            if(lock.getBlockState().getValue(LOCKED) != data.isLocked()){
+                world.setBlockAndUpdate(blockPos, lock.getBlockState().setValue(LOCKED, data.isLocked()));
+                world.updateNeighbourForOutputSignal(blockPos, this);
+            }
+
+            world.getBlockTicks().scheduleTick(blockPos, this, 1);
+        }
+        else if(interactTimer > 0){
+            world.getBlockTicks().scheduleTick(blockPos, this, 1);
+        }
         super.tick(blockState, world, blockPos, random);
     }
 
@@ -169,7 +186,7 @@ public class RemoteLockBlock extends HorizontalBlock {
                 boolean locked = data.isLocked();
                 data.setLocked(!locked);
                 world.setBlockAndUpdate(blockPos, state.setValue(LOCKED, !locked));
-                RemoteLockTile.updateAllTiles(data.getGlobalID(), !locked, world);
+                world.updateNeighbourForOutputSignal(blockPos, this);
 
                 if (!locked && tardis.doorOpenLeft || tardis.doorOpenRight){
                     tardis.closeDoor(TardisDoor.BOTH, TardisTileEntity.DoorSource.INTERIOR);

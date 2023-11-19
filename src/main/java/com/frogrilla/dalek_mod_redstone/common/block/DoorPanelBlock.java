@@ -2,7 +2,6 @@ package com.frogrilla.dalek_mod_redstone.common.block;
 
 import com.frogrilla.dalek_mod_redstone.common.init.ModTileEntities;
 import com.frogrilla.dalek_mod_redstone.common.tileentity.RemoteLockTile;
-import com.frogrilla.dalek_mod_redstone.utils.savedata.LockPositions;
 import com.swdteam.common.init.DMDimensions;
 import com.swdteam.common.init.DMTardis;
 import com.swdteam.common.tardis.Tardis;
