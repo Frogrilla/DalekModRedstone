@@ -21,9 +21,7 @@ import java.util.Random;
 
 public class TardisDetectorBlock extends Block {
     public TardisDetectorBlock(Properties builder) { super(builder); }
-
-    private int next = 0;
-    static final IntegerProperty DETECTED = IntegerProperty.create("detected",0,2);
+    static final IntegerProperty DETECTED = IntegerProperty.create("detected",0,3);
 
     @Override
     public boolean canConnectRedstone(BlockState state, IBlockReader world, BlockPos pos, @Nullable Direction side) {
@@ -37,7 +35,21 @@ public class TardisDetectorBlock extends Block {
 
     @Override
     public int getSignal(BlockState state, IBlockReader p_180656_2_, BlockPos p_180656_3_, Direction p_180656_4_) {
-        return state.getValue(DETECTED) == 2 ? 15 : 0;
+        return state.getValue(DETECTED) == 3 ? 15 : 0;
+    }
+
+    @Override
+    public boolean hasAnalogOutputSignal(BlockState p_149740_1_) { return true; }
+
+    @Override
+    public int getAnalogOutputSignal(BlockState state, World p_180641_2_, BlockPos p_180641_3_) {
+        switch(state.getValue(DETECTED)){
+            case 0: return 0;
+            case 1: return 1;
+            case 2: return 8;
+            case 3: return 15;
+        }
+        return 0;
     }
 
     @Override
@@ -54,30 +66,46 @@ public class TardisDetectorBlock extends Block {
     }
 
     @Override
-    public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
-        world.setBlockAndUpdate(pos, state.setValue(DETECTED, next));
-        super.tick(state, world, pos, rand);
+    public void tick(BlockState state, ServerWorld world, BlockPos pos, Random p_225534_4_) {
+        checkAbove(pos, state, world);
+        super.tick(state, world, pos, p_225534_4_);
     }
 
     public void neighborChanged(BlockState state, World world, BlockPos blockPos, Block block, BlockPos blockPos1, boolean isMoving) {
-        if (!world.isClientSide) {
+        if (!world.isClientSide){
+            checkAbove(blockPos, state, world);
+        }
+    }
+
+    void checkAbove(BlockPos blockPos, BlockState state, World world){
+        if (!world.isClientSide){
             Block above = world.getBlockState(blockPos.offset(0,1,0)).getBlock();
             boolean isTardis = above == DMBlocks.TARDIS.get();
-            if(isTardis){
+
+            int target = 0;
+
+            if(isTardis) {
+                world.setBlockAndUpdate(blockPos, state);
                 TardisTileEntity tardis = (TardisTileEntity) world.getBlockEntity(blockPos.above());
 
-                if(tardis.state == TardisState.REMAT && state.getValue(DETECTED) == 0){
-                    next = 2;
-                    world.getBlockTicks().scheduleTick(blockPos,this, 200);
-                } else if (tardis.state == TardisState.DEMAT && state.getValue(DETECTED) == 2) {
-                    world.setBlockAndUpdate(blockPos, state.setValue(DETECTED, 0));
+                switch(tardis.state){
+                    case DEMAT:
+                        target = 1;
+                        break;
+                    case REMAT:
+                        target = 2;
+                        break;
+                    case NEUTRAL:
+                        target = 3;
+                        world.getBlockTicks().scheduleTick(blockPos, this, 1);
+                        break;
                 }
             }
-            else{
-                if(state.getValue(DETECTED) != 0){
-                    world.setBlockAndUpdate(blockPos, state.setValue(DETECTED, 0));
-                }
+
+            if(state.getValue(DETECTED) != target) {
+                world.setBlockAndUpdate(blockPos, state.setValue(DETECTED, target));
             }
         }
     }
+
 }
