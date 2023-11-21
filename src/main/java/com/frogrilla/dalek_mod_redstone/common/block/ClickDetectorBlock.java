@@ -30,7 +30,7 @@ public class ClickDetectorBlock extends HorizontalBlock{
         super(builder);
     }
     private boolean pulseChanged = false;
-    static final IntegerProperty PULSE = IntegerProperty.create("pulse", 0, 4);
+    static final IntegerProperty PULSE = IntegerProperty.create("pulse", 0, 3);
     static final BooleanProperty ACTIVATED = BooleanProperty.create("activated");
     static final IntegerProperty POWER = IntegerProperty.create("power", 0, 15);
 
@@ -106,12 +106,14 @@ public class ClickDetectorBlock extends HorizontalBlock{
         if (!world.isClientSide && handIn == Hand.MAIN_HAND && !pulseChanged && !state.getValue(ACTIVATED)){
             int cur = state.getValue(PULSE);
             cur++;
-            cur%=5;
+            cur%=4;
             world.setBlock(pos, state.setValue(PULSE, cur), 0);
+            pulseChanged = true;
             world.getBlockTicks().scheduleTick(pos,this, 5);
+            return ActionResultType.CONSUME;
         }
 
-        return super.use(state, world, pos, player, handIn, hit);
+        return ActionResultType.PASS;
     }
 
     @Override
@@ -143,7 +145,7 @@ public class ClickDetectorBlock extends HorizontalBlock{
         if(dist <= 15){
             int pow = 16-(int)Math.ceil(dist);
             world.setBlockAndUpdate(target, state.setValue(POWER, pow).setValue(ACTIVATED, true));
-            world.getBlockTicks().scheduleTick(target, state.getBlock(), 10*(state.getValue(PULSE)+1));
+            world.getBlockTicks().scheduleTick(target, state.getBlock(), 2*(state.getValue(PULSE)+1));
         }
     }
 

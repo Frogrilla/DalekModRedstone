@@ -1,84 +1,90 @@
 {
-  "variants": {
-    "pulse=0,facing=north": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector0",
-      "y": 0
+  "multipart":[
+    {
+      "when": {"facing": "north"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/click_detector",
+        "y": 0
+      }
     },
-    "pulse=0,facing=east": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector0",
-      "y": 90
+    {
+      "when": {"facing": "east"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/click_detector",
+        "y": 90
+      }
     },
-    "pulse=0,facing=south": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector0",
-      "y": 180
+    {
+      "when": {"facing": "south"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/click_detector",
+        "y": 180
+      }
     },
-    "pulse=0,facing=west": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector0",
-      "y": 270
+    {
+      "when": {"facing": "west"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/click_detector",
+        "y": 270
+      }
     },
-    "pulse=1,facing=north": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector1",
-      "y": 0
+
+    {
+      "when": {"activated":  true, "facing": "north"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/note",
+        "y": 0
+      }
     },
-    "pulse=1,facing=east": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector1",
-      "y": 90
+    {
+      "when": {"activated":  true, "facing": "east"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/note",
+        "y": 90
+      }
     },
-    "pulse=1,facing=south": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector1",
-      "y": 180
+    {
+      "when": {"activated":  true, "facing": "south"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/note",
+        "y": 180
+      }
     },
-    "pulse=1,facing=west": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector1",
-      "y": 270
+    {
+      "when": {"activated":  true, "facing": "west"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/note",
+        "y": 270
+      }
     },
-    "pulse=2,facing=north": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector2",
-      "y": 0
+
+    {
+      "when": {"pulse": 0, "facing": "north"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/slider",
+        "y": 0
+      }
     },
-    "pulse=2,facing=east": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector2",
-      "y": 90
+    {
+      "when": {"pulse": 0, "facing": "east"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/slider",
+        "y": 90
+      }
     },
-    "pulse=2,facing=south": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector2",
-      "y": 180
+    {
+      "when": {"pulse": 0, "facing": "south"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/slider",
+        "y": 180
+      }
     },
-    "pulse=2,facing=west": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector2",
-      "y": 270
-    },
-    "pulse=3,facing=north": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector3",
-      "y": 0
-    },
-    "pulse=3,facing=east": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector3",
-      "y": 90
-    },
-    "pulse=3,facing=south": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector3",
-      "y": 180
-    },
-    "pulse=3,facing=west": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector3",
-      "y": 270
-    },
-    "pulse=4,facing=north": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector4",
-      "y": 0
-    },
-    "pulse=4,facing=east": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector4",
-      "y": 90
-    },
-    "pulse=4,facing=south": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector4",
-      "y": 180
-    },
-    "pulse=4,facing=west": {
-      "model": "dalek_mod_redstone:block/click_detector/click_detector4",
-      "y": 270
+    {
+      "when": {"pulse": 0, "facing": "west"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/slider",
+        "y": 270
+      }
     }
-  }
+  ]
 }
