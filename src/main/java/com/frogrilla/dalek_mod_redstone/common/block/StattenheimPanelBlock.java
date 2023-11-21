@@ -146,9 +146,11 @@ public class StattenheimPanelBlock extends HorizontalBlock {
 
             if(powered != nPower && nPower){
                 StattenheimPanelTile tile = (StattenheimPanelTile)world.getBlockEntity(blockPos);
-                StattenheimRemoteItem remote = (StattenheimRemoteItem)tile.getRemote().getItem();
-                DataModuleItem data = (DataModuleItem)tile.getData().getItem();
-                sendTardis(tile.getRemote(), world, tile.getData());
+                if(tile.hasRemote() && tile.hasData()) {
+                    StattenheimRemoteItem remote = (StattenheimRemoteItem) tile.getRemote().getItem();
+                    DataModuleItem data = (DataModuleItem) tile.getData().getItem();
+                    sendTardis(tile.getRemote(), world, tile.getData());
+                }
             }
 
             powered = nPower;
