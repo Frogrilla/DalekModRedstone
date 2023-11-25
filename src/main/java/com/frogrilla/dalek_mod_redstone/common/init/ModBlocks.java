@@ -27,7 +27,8 @@ public class ModBlocks {
             REMOTE_LOCK = registerBlock("remote_lock", () -> new RemoteLockBlock(AbstractBlock.Properties.of(Material.STONE).instabreak()), ModTabs.DMR_TAB),
             TARDIS_DETECTOR = registerBlock("tardis_detector", () -> new TardisDetectorBlock(AbstractBlock.Properties.of(Material.HEAVY_METAL)), ModTabs.DMR_TAB),
             STATTENHEIM_PANEL = registerBlock("stattenheim_panel", () -> new StattenheimPanelBlock(AbstractBlock.Properties.of(Material.STONE).instabreak()), ModTabs.DMR_TAB),
-            DOOR_PANEL = registerBlock("door_panel", () -> new DoorPanelBlock(AbstractBlock.Properties.of(Material.STONE).instabreak()), ModTabs.DMR_TAB);
+            DOOR_PANEL = registerBlock("door_panel", () -> new DoorPanelBlock(AbstractBlock.Properties.of(Material.STONE).instabreak()), ModTabs.DMR_TAB),
+            SONIC_AMPLIFIER = registerBlock("sonic_amplifier", () -> new SonicAmplifierBlock(AbstractBlock.Properties.of(Material.HEAVY_METAL)), ModTabs.DMR_TAB);
     ;
 
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block, ItemGroup tab){

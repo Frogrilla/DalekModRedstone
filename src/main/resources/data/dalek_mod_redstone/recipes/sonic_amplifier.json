@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S*S",
+    "C#C",
+    "S*S"
+  ],
+  "key": {
+    "S": {
+      "item": "dalekmod:stainless_steel_ingot"
+    },
+    "C": {
+      "item": "dalekmod:circuit"
+    },
+    "#": {
+      "item": "minecraft:redstone_block"
+    },
+    "*": {
+      "item": "dalekmod:sonic_emitter"
+    }
+  },
+  "result": {
+    "item": "dalek_mod_redstone:sonic_amplifier"
+  }
+}

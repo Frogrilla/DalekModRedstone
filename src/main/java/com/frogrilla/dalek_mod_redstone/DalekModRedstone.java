@@ -4,8 +4,11 @@ import com.frogrilla.dalek_mod_redstone.common.block.RemoteLockBlock;
 import com.frogrilla.dalek_mod_redstone.common.init.ModBlocks;
 import com.frogrilla.dalek_mod_redstone.common.init.ModItems;
 import com.frogrilla.dalek_mod_redstone.common.init.ModTileEntities;
+import com.frogrilla.dalek_mod_redstone.common.sonic.SonicSonicAmplifier;
 import com.frogrilla.dalek_mod_redstone.common.tileentity.RemoteLockTile;
 import com.frogrilla.dalek_mod_redstone.render.RenderRemoteLock;
+import com.swdteam.common.init.DMOreGen;
+import com.swdteam.common.init.DMSonicRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -16,6 +19,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.ParallelDispatchEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,6 +40,7 @@ public class DalekModRedstone
         ModTileEntities.register(modEventBus);
 
         modEventBus.addListener(this::doClientStuff);
+        modEventBus.addListener(this::runLater);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -47,6 +52,12 @@ public class DalekModRedstone
             RenderTypeLookup.setRenderLayer(ModBlocks.STATTENHEIM_PANEL.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(ModBlocks.DOOR_PANEL.get(), RenderType.cutout());
             ClientRegistry.bindTileEntityRenderer(ModTileEntities.REMOTE_LOCK_TILE.get(), RenderRemoteLock::new);
+        });
+    }
+
+    private void runLater(ParallelDispatchEvent event) {
+        event.enqueueWork(() -> {
+            DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_AMPLIFIER.get(), new SonicSonicAmplifier());
         });
     }
 }
