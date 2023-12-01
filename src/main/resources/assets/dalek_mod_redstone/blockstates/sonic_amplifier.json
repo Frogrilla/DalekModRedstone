@@ -1,6 +1,0 @@
-{
-  "variants": {
-    "activated=true": {"model": "dalek_mod_redstone:block/sonic_amplifier/sonic_amplifier_on"},
-    "activated=false": {"model": "dalek_mod_redstone:block/sonic_amplifier/sonic_amplifier_off"}
-  }
-}

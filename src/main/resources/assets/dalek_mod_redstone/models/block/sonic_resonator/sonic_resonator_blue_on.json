@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "dalek_mod_redstone:block/sonic_resonator/sonic_resonator_blue_on"
+  }
+}

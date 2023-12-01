@@ -1,19 +1,13 @@
 package com.frogrilla.dalek_mod_redstone;
 
-import com.frogrilla.dalek_mod_redstone.common.block.RemoteLockBlock;
 import com.frogrilla.dalek_mod_redstone.common.init.ModBlocks;
 import com.frogrilla.dalek_mod_redstone.common.init.ModItems;
 import com.frogrilla.dalek_mod_redstone.common.init.ModTileEntities;
-import com.frogrilla.dalek_mod_redstone.common.sonic.SonicSonicAmplifier;
-import com.frogrilla.dalek_mod_redstone.common.tileentity.RemoteLockTile;
+import com.frogrilla.dalek_mod_redstone.common.sonic.SonicSonicResonator;
 import com.frogrilla.dalek_mod_redstone.render.RenderRemoteLock;
-import com.swdteam.common.init.DMOreGen;
 import com.swdteam.common.init.DMSonicRegistry;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -57,7 +51,7 @@ public class DalekModRedstone
 
     private void runLater(ParallelDispatchEvent event) {
         event.enqueueWork(() -> {
-            DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_AMPLIFIER.get(), new SonicSonicAmplifier());
+            DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_RESONATOR.get(), new SonicSonicResonator());
         });
     }
 }

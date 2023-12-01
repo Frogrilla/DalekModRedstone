@@ -1,6 +1,0 @@
-{
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "dalek_mod_redstone:block/sonic_amplifier/sonic_amplifier_on"
-  }
-}
