@@ -10,7 +10,7 @@ logoFile="DMR logo.png"
 credits="Jayson and the DM addon creators for helping me out"
 authors="Frogrilla"
 description='''
-Adds redstone features to the Dalek mod so that you can make interactive builds.
+Adds redstone features to Dalek Mod so that you can make interactive builds.
 '''
 
 [[dependencies.dalek_mod_redstone]]
