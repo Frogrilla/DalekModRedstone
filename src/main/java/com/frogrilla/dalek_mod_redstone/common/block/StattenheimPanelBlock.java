@@ -38,6 +38,8 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Dimension;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -49,8 +51,8 @@ import java.util.List;
 public class StattenheimPanelBlock extends HorizontalBlock {
     private boolean powered = false;
 
-    private static final BooleanProperty REMOTE = BooleanProperty.create("remote");
-    private static final IntegerProperty DATA = IntegerProperty.create("data", 0,2);
+    public static final BooleanProperty REMOTE = BooleanProperty.create("remote");
+    public static final IntegerProperty DATA = IntegerProperty.create("data", 0,2);
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 2, 16);
     public StattenheimPanelBlock(Properties builder) { super(builder); }
 
@@ -140,16 +142,23 @@ public class StattenheimPanelBlock extends HorizontalBlock {
         return i;
     }
 
+
     public void neighborChanged(BlockState state, World world, BlockPos blockPos, Block block, BlockPos blockPos1, boolean isMoving) {
         if (!world.isClientSide) {
             boolean nPower = world.hasNeighborSignal(blockPos);
 
             if(powered != nPower && nPower){
                 StattenheimPanelTile tile = (StattenheimPanelTile)world.getBlockEntity(blockPos);
-                if(tile.hasRemote() && tile.hasData()) {
-                    StattenheimRemoteItem remote = (StattenheimRemoteItem) tile.getRemote().getItem();
-                    DataModuleItem data = (DataModuleItem) tile.getData().getItem();
-                    sendTardis(tile.getRemote(), world, tile.getData());
+                if(tile.hasRemote()) {
+                    if(tile.hasData()){
+                        DataModuleItem data = (DataModuleItem) tile.getData().getItem();
+                        try {
+                            sendTardis(tile.getRemote(), world, tile.getData());
+                        }
+                        catch (Exception e){
+                            System.out.println("You can't use a stattenheim panel with empty data!!!");
+                        }
+                    }
                 }
             }
 
@@ -201,5 +210,21 @@ public class StattenheimPanelBlock extends HorizontalBlock {
         }
 
         data.save();
+    }
+
+    static void toggleTardis(ItemStack remote, World world){
+        int tardisID = remote.getTag().getInt(DMNBTKeys.LINKED_ID);
+        TardisData data = DMTardis.getTardis(tardisID);
+        BlockPos pos = data.getCurrentLocation().getBlockPosition();
+
+        if (data.isInFlight()) {
+            if (data.timeLeft() == 0.0) {
+                if (TardisActionList.remat(world.getPlayerByUUID(data.getOwner_uuid()), world, data)) {
+                    world.playSound((PlayerEntity)null, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), (SoundEvent)DMSoundEvents.TARDIS_REMAT.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
+                }
+            }
+        } else if (TardisActionList.demat(world.getPlayerByUUID(data.getOwner_uuid()), world, data)) {
+            world.playSound((PlayerEntity)null, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), (SoundEvent)DMSoundEvents.TARDIS_DEMAT.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
+        }
     }
 }

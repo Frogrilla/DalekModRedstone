@@ -1,10 +1,10 @@
 {
   "variants": {
-    "mode=0,activated=false": {"model": "dalek_mod_redstone:block/sonic_resonator/sonic_resonator_red_off"},
-    "mode=0,activated=true": {"model": "dalek_mod_redstone:block/sonic_resonator/sonic_resonator_red_on"},
-    "mode=1,activated=false": {"model": "dalek_mod_redstone:block/sonic_resonator/sonic_resonator_green_off"},
-    "mode=1,activated=true": {"model": "dalek_mod_redstone:block/sonic_resonator/sonic_resonator_green_on"},
-    "mode=2,activated=false": {"model": "dalek_mod_redstone:block/sonic_resonator/sonic_resonator_blue_off"},
-    "mode=2,activated=true": {"model": "dalek_mod_redstone:block/sonic_resonator/sonic_resonator_blue_on"}
+    "frequency=0,activated=false": {"model": "dalek_mod_redstone:block/sonic_resonator/sonic_resonator_red_off"},
+    "frequency=0,activated=true": {"model": "dalek_mod_redstone:block/sonic_resonator/sonic_resonator_red_on"},
+    "frequency=1,activated=false": {"model": "dalek_mod_redstone:block/sonic_resonator/sonic_resonator_green_off"},
+    "frequency=1,activated=true": {"model": "dalek_mod_redstone:block/sonic_resonator/sonic_resonator_green_on"},
+    "frequency=2,activated=false": {"model": "dalek_mod_redstone:block/sonic_resonator/sonic_resonator_blue_off"},
+    "frequency=2,activated=true": {"model": "dalek_mod_redstone:block/sonic_resonator/sonic_resonator_blue_on"}
   }
 }

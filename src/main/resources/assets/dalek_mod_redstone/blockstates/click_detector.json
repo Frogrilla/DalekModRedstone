@@ -30,59 +30,117 @@
     },
 
     {
-      "when": {"activated":  true, "facing": "north"},
-      "apply":{
-        "model": "dalek_mod_redstone:block/click_detector/note",
-        "y": 0
-      }
-    },
-    {
-      "when": {"activated":  true, "facing": "east"},
-      "apply":{
-        "model": "dalek_mod_redstone:block/click_detector/note",
-        "y": 90
-      }
-    },
-    {
-      "when": {"activated":  true, "facing": "south"},
-      "apply":{
-        "model": "dalek_mod_redstone:block/click_detector/note",
-        "y": 180
-      }
-    },
-    {
-      "when": {"activated":  true, "facing": "west"},
-      "apply":{
-        "model": "dalek_mod_redstone:block/click_detector/note",
-        "y": 270
-      }
-    },
-
-    {
       "when": {"pulse": 0, "facing": "north"},
       "apply":{
-        "model": "dalek_mod_redstone:block/click_detector/slider",
+        "model": "dalek_mod_redstone:block/click_detector/slider/slider_0",
         "y": 0
       }
     },
     {
       "when": {"pulse": 0, "facing": "east"},
       "apply":{
-        "model": "dalek_mod_redstone:block/click_detector/slider",
+        "model": "dalek_mod_redstone:block/click_detector/slider/slider_0",
         "y": 90
       }
     },
     {
       "when": {"pulse": 0, "facing": "south"},
       "apply":{
-        "model": "dalek_mod_redstone:block/click_detector/slider",
+        "model": "dalek_mod_redstone:block/click_detector/slider/slider_0",
         "y": 180
       }
     },
     {
       "when": {"pulse": 0, "facing": "west"},
       "apply":{
-        "model": "dalek_mod_redstone:block/click_detector/slider",
+        "model": "dalek_mod_redstone:block/click_detector/slider/slider_0",
+        "y": 270
+      }
+    },
+
+    {
+      "when": {"pulse": 1, "facing": "north"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/slider/slider_1",
+        "y": 0
+      }
+    },
+    {
+      "when": {"pulse": 1, "facing": "east"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/slider/slider_1",
+        "y": 90
+      }
+    },
+    {
+      "when": {"pulse": 1, "facing": "south"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/slider/slider_1",
+        "y": 180
+      }
+    },
+    {
+      "when": {"pulse": 1, "facing": "west"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/slider/slider_1",
+        "y": 270
+      }
+    },
+
+    {
+      "when": {"pulse": 2, "facing": "north"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/slider/slider_2",
+        "y": 0
+      }
+    },
+    {
+      "when": {"pulse": 2, "facing": "east"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/slider/slider_2",
+        "y": 90
+      }
+    },
+    {
+      "when": {"pulse": 2, "facing": "south"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/slider/slider_2",
+        "y": 180
+      }
+    },
+    {
+      "when": {"pulse": 2, "facing": "west"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/slider/slider_2",
+        "y": 270
+      }
+    },
+
+    {
+      "when": {"pulse": 3, "facing": "north"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/slider/slider_3",
+        "y": 0
+      }
+    },
+    {
+      "when": {"pulse": 3, "facing": "east"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/slider/slider_3",
+        "y": 90
+      }
+    },
+    {
+      "when": {"pulse": 3, "facing": "south"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/slider/slider_3",
+        "y": 180
+      }
+    },
+    {
+      "when": {"pulse": 3, "facing": "west"},
+      "apply":{
+        "model": "dalek_mod_redstone:block/click_detector/slider/slider_3",
         "y": 270
       }
     }

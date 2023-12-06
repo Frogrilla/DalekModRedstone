@@ -1,11 +1,17 @@
 package com.frogrilla.dalek_mod_redstone.common.tileentity;
 
+import com.frogrilla.dalek_mod_redstone.common.block.StattenheimPanelBlock;
 import com.frogrilla.dalek_mod_redstone.common.init.ModTileEntities;
 import com.swdteam.common.init.DMItems;
+import com.swdteam.common.item.DataModuleItem;
+import com.swdteam.common.item.StattenheimRemoteItem;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
@@ -16,7 +22,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class StattenheimPanelTile extends TileEntity {
+public class StattenheimPanelTile extends TileEntity implements IInventory {
     private ItemStack remote = ItemStack.EMPTY;
     private ItemStack data = ItemStack.EMPTY;
     public StattenheimPanelTile(TileEntityType<?> tileEntityType) { super(tileEntityType); }
@@ -81,5 +87,61 @@ public class StattenheimPanelTile extends TileEntity {
         if(type == DMItems.DATA_MODULE.get()) return 1;
         if(type == DMItems.DATA_MODULE_GOLD.get()) return 2;
         return 0;
+    }
+
+    @Override
+    public int getContainerSize() {
+        return 1;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return !hasData();
+    }
+
+    @Override
+    public ItemStack getItem(int slot) {
+        return getData();
+    }
+
+    @Override
+    public ItemStack removeItem(int slot, int count) {
+        ItemStack d_remove = getData();
+        removeData();
+        updateBlock();
+        return d_remove;
+    }
+
+    @Override
+    public ItemStack removeItemNoUpdate(int slot) {
+        removeData();
+        updateBlock();
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    public void setItem(int slot, ItemStack itemStack) {
+        Item item = itemStack.getItem();
+        if(item instanceof DataModuleItem){
+            setData(itemStack);
+            updateBlock();
+        }
+
+    }
+
+    @Override
+    public boolean stillValid(PlayerEntity player) {
+        if (level.getBlockEntity(worldPosition) != this) return false;
+        return !(player.distanceToSqr(worldPosition.getX() + 0.5D, worldPosition.getY() + 0.5D, worldPosition.getZ() + 0.5D) > 64.0D);
+    }
+
+    @Override
+    public void clearContent() {
+        removeData();
+        updateBlock();
+    }
+
+    public void updateBlock(){
+        getLevel().setBlockAndUpdate(getBlockPos(), getBlockState().setValue(StattenheimPanelBlock.REMOTE, hasRemote()).setValue(StattenheimPanelBlock.DATA, StattenheimPanelTile.dataType(getData())));
     }
 }

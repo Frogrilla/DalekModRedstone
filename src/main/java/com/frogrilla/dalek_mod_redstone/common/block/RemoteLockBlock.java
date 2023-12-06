@@ -113,7 +113,6 @@ public class RemoteLockBlock extends HorizontalBlock {
                     new_state = new_state.setValue(LOCKED, false);
                     world.setBlockAndUpdate(pos, new_state);
 
-                    interactTimer = 4;
                     return ActionResultType.CONSUME;
                 }
                 else if(!lockTile.hasKey() && lockTile.isKey(player.getItemInHand(hand).getItem())){
@@ -127,7 +126,6 @@ public class RemoteLockBlock extends HorizontalBlock {
                         world.setBlockAndUpdate(pos, state.setValue(HAS_KEY, true).setValue(LOCKED, t.isLocked()));
                         tilePositions.add(new Position(pos.getX(), pos.getY(), pos.getZ()));
 
-                        interactTimer = 4;
                         world.getBlockTicks().scheduleTick(pos, this, 1);
                         return ActionResultType.CONSUME;
                     }
@@ -146,7 +144,6 @@ public class RemoteLockBlock extends HorizontalBlock {
 
     @Override
     public void tick(BlockState blockState, ServerWorld world, BlockPos blockPos, Random random) {
-        if (interactTimer > 0) interactTimer -= 1;
         if(blockState.getValue(HAS_KEY)){
             RemoteLockTile lock = (RemoteLockTile)world.getBlockEntity(blockPos);
             TardisData data = DMTardis.getTardis(DMTardis.getIDForXZ(blockPos.getX(), blockPos.getZ()));
@@ -156,9 +153,6 @@ public class RemoteLockBlock extends HorizontalBlock {
                 world.updateNeighbourForOutputSignal(blockPos, this);
             }
 
-            world.getBlockTicks().scheduleTick(blockPos, this, 1);
-        }
-        else if(interactTimer > 0){
             world.getBlockTicks().scheduleTick(blockPos, this, 1);
         }
         super.tick(blockState, world, blockPos, random);

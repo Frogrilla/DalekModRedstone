@@ -2,14 +2,16 @@ package com.frogrilla.dalek_mod_redstone.common.block;
 
 import com.frogrilla.dalek_mod_redstone.common.init.ModBlocks;
 import net.minecraft.block.*;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.IBooleanFunction;
@@ -29,31 +31,14 @@ public class ClickDetectorBlock extends HorizontalBlock{
     public ClickDetectorBlock(Properties builder) {
         super(builder);
     }
-    private boolean pulseChanged = false;
     static final IntegerProperty PULSE = IntegerProperty.create("pulse", 0, 3);
     static final BooleanProperty ACTIVATED = BooleanProperty.create("activated");
     static final IntegerProperty POWER = IntegerProperty.create("power", 0, 15);
 
-    private static final VoxelShape SHAPE_N = Stream.of(
-            Block.box(7, 1, 7, 14, 2.9999999999999996, 14),
-            Block.box(0, 0, 0, 16, 2, 16),
-            Block.box(7, 1, 2, 14, 3.0000000000000004, 6)
-    ).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
-    private static final VoxelShape SHAPE_E = Stream.of(
-            Block.box(2, 1, 7, 9, 2.9999999999999996, 14),
-            Block.box(0, 0, 0, 16, 2, 16),
-            Block.box(10, 1, 7, 14, 3.0000000000000004, 14)
-    ).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
-    private static final VoxelShape SHAPE_S = Stream.of(
-            Block.box(2, 1, 2, 9, 2.9999999999999996, 9),
-            Block.box(0, 0, 0, 16, 2, 16),
-            Block.box(2, 1, 10, 9, 3.0000000000000004, 14)
-    ).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
-    private static final VoxelShape SHAPE_W = Stream.of(
-            Block.box(7, 1, 2, 14, 2.9999999999999996, 9),
-            Block.box(0, 0, 0, 16, 2, 16),
-            Block.box(2, 1, 2, 6, 3.0000000000000004, 9)
-    ).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
+    private static final VoxelShape SHAPE_N = VoxelShapes.join(Block.box(4, 1, 3, 14, 3, 13), Block.box(0, 0, 0, 16, 2, 16), IBooleanFunction.OR);
+    private static final VoxelShape SHAPE_E = VoxelShapes.join(Block.box(3, 1, 4, 13, 3, 14), Block.box(0, 0, 0, 16, 2, 16), IBooleanFunction.OR);
+    private static final VoxelShape SHAPE_S = VoxelShapes.join(Block.box(2, 1, 3, 12, 3, 13), Block.box(0, 0, 0, 16, 2, 16), IBooleanFunction.OR);
+    private static final VoxelShape SHAPE_W = VoxelShapes.join(Block.box(3, 1, 2, 13, 3, 12), Block.box(0, 0, 0, 16, 2, 16), IBooleanFunction.OR);
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
@@ -103,27 +88,17 @@ public class ClickDetectorBlock extends HorizontalBlock{
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 
-        if (!world.isClientSide && handIn == Hand.MAIN_HAND && !pulseChanged && !state.getValue(ACTIVATED)){
-            int cur = state.getValue(PULSE);
-            cur++;
-            cur%=4;
-            world.setBlock(pos, state.setValue(PULSE, cur), 0);
-            pulseChanged = true;
-            world.getBlockTicks().scheduleTick(pos,this, 5);
-            return ActionResultType.CONSUME;
+        if (!world.isClientSide && handIn == Hand.MAIN_HAND){
+            world.setBlockAndUpdate(pos, state.cycle(PULSE));
+            return ActionResultType.SUCCESS;
         }
 
-        return ActionResultType.PASS;
+        return ActionResultType.FAIL;
     }
 
     @Override
     public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
-        if(this.pulseChanged) {
-            this.pulseChanged = false;
-        }
-        else {
-            world.setBlockAndUpdate(pos, state.setValue(POWER, 0).setValue(ACTIVATED, false));
-        }
+        world.setBlockAndUpdate(pos, state.setValue(POWER, 0).setValue(ACTIVATED, false));
         super.tick(state, world, pos, rand);
     }
 
@@ -146,6 +121,8 @@ public class ClickDetectorBlock extends HorizontalBlock{
             int pow = 16-(int)Math.ceil(dist);
             world.setBlockAndUpdate(target, state.setValue(POWER, pow).setValue(ACTIVATED, true));
             world.getBlockTicks().scheduleTick(target, state.getBlock(), 2*(state.getValue(PULSE)+1));
+            world.getServer().getLevel(world.dimension()).sendParticles(ParticleTypes.NOTE, target.getX()+.5,target.getY()+.35,target.getZ()+.5,1,0,0,0,0);
+            world.playSound(null, target, SoundEvents.STONE_PRESSURE_PLATE_CLICK_ON, SoundCategory.BLOCKS, 1, 1);
         }
     }
 

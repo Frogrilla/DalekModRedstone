@@ -4,13 +4,11 @@ import com.frogrilla.dalek_mod_redstone.common.init.ModBlocks;
 import com.frogrilla.dalek_mod_redstone.common.init.ModItems;
 import com.frogrilla.dalek_mod_redstone.common.init.ModTileEntities;
 import com.frogrilla.dalek_mod_redstone.common.sonic.SonicSonicResonator;
-import com.frogrilla.dalek_mod_redstone.render.RenderRemoteLock;
 import com.swdteam.common.init.DMSonicRegistry;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.ParallelDispatchEvent;
@@ -44,8 +42,6 @@ public class DalekModRedstone
             RenderTypeLookup.setRenderLayer(ModBlocks.CLICK_DETECTOR.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(ModBlocks.REMOTE_LOCK.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(ModBlocks.STATTENHEIM_PANEL.get(), RenderType.cutout());
-            RenderTypeLookup.setRenderLayer(ModBlocks.DOOR_PANEL.get(), RenderType.cutout());
-            ClientRegistry.bindTileEntityRenderer(ModTileEntities.REMOTE_LOCK_TILE.get(), RenderRemoteLock::new);
         });
     }
 

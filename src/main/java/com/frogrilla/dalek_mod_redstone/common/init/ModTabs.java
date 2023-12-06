@@ -9,8 +9,8 @@ public class ModTabs {
     public static final ItemGroup DMR_TAB = new ItemGroup("dmr_tab") {
         @Override
         public ItemStack makeIcon() {
-            if(ModBlocks.CLICK_DETECTOR.isPresent()) {
-                return new ItemStack(ModBlocks.CLICK_DETECTOR.get());
+            if(ModBlocks.SONIC_RESONATOR.isPresent()) {
+                return new ItemStack(ModBlocks.SONIC_RESONATOR.get());
             }
             return new ItemStack(Items.REDSTONE);
         }

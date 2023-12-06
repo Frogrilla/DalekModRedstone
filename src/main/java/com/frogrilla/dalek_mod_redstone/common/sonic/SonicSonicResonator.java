@@ -21,7 +21,7 @@ public class SonicSonicResonator implements DMSonicRegistry.ISonicInteraction{
             if(state.getBlock() == ModBlocks.SONIC_RESONATOR.get()){
                 if(!state.getValue(SonicResonatorBlock.ACTIVATED)){
                     world.setBlockAndUpdate(p, state.setValue(SonicResonatorBlock.ACTIVATED, true));
-                    int mode = state.getValue(SonicResonatorBlock.MODE);
+                    int mode = state.getValue(SonicResonatorBlock.FREQUENCY);
                     world.getBlockTicks().scheduleTick(p, ModBlocks.SONIC_RESONATOR.get(), (mode+1)*20);
                 }
             }

@@ -21,9 +21,8 @@ import java.util.Random;
 
 public class SonicResonatorBlock extends Block {
     public SonicResonatorBlock(Properties builder) { super(builder); }
-
     public static final BooleanProperty ACTIVATED = BooleanProperty.create("activated");
-    public static final IntegerProperty MODE = IntegerProperty.create("mode",0,2);
+    public static final IntegerProperty FREQUENCY = IntegerProperty.create("frequency",0,2);
     @Override
     public boolean canConnectRedstone(BlockState state, IBlockReader world, BlockPos pos, @Nullable Direction side) {
         return true;
@@ -41,7 +40,7 @@ public class SonicResonatorBlock extends Block {
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(ACTIVATED);
-        builder.add(MODE);
+        builder.add(FREQUENCY);
         super.createBlockStateDefinition(builder);
     }
 
@@ -50,7 +49,7 @@ public class SonicResonatorBlock extends Block {
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         return this.defaultBlockState()
                 .setValue(ACTIVATED, false)
-                .setValue(MODE, 0);
+                .setValue(FREQUENCY, 0);
     }
 
     @Override
@@ -62,11 +61,9 @@ public class SonicResonatorBlock extends Block {
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 
-        if (!world.isClientSide && handIn == Hand.MAIN_HAND && player.getItemInHand(handIn).isEmpty() && !state.getValue(ACTIVATED)){
-            int cur = state.getValue(MODE);
-            cur++;
-            cur%=3;
-            world.setBlockAndUpdate(pos, state.setValue(MODE, cur));
+        if (!world.isClientSide && handIn == Hand.MAIN_HAND && player.getItemInHand(handIn).isEmpty()){
+            world.setBlockAndUpdate(pos, state.cycle(FREQUENCY));
+            world.getBlockTicks().scheduleTick(pos, this, 7);
             return ActionResultType.SUCCESS;
         }
 
