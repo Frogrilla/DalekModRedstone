@@ -1,6 +1,6 @@
 modLoader="javafml"
 loaderVersion="[36,)"
-license="All rights reserved"
+license="GPL-3.0"
 
 [[mods]]
 modId="dalek_mod_redstone"

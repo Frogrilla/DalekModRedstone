@@ -61,7 +61,7 @@ public class SonicResonatorBlock extends Block {
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 
-        if (!world.isClientSide && handIn == Hand.MAIN_HAND && player.getItemInHand(handIn).isEmpty()){
+        if (!world.isClientSide && handIn == Hand.MAIN_HAND && player.getItemInHand(handIn).isEmpty() && !state.getValue(ACTIVATED)){
             world.setBlockAndUpdate(pos, state.cycle(FREQUENCY));
             world.getBlockTicks().scheduleTick(pos, this, 7);
             return ActionResultType.SUCCESS;
