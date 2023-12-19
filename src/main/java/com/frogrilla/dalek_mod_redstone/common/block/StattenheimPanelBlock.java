@@ -171,6 +171,7 @@ public class StattenheimPanelBlock extends HorizontalBlock {
         CompoundNBT tag = list.getCompound(0);
         BlockPos pos = new BlockPos(tag.getInt("pos_x"),tag.getInt("pos_y"),tag.getInt("pos_z"));
         RegistryKey<World> dimension = RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(tag.getString("location")));
+        world = world.getServer().getLevel(dimension);
         if(!world.isEmptyBlock(pos)) return;
 
         int tardisID = remote.getTag().getInt(DMNBTKeys.LINKED_ID);
