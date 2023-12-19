@@ -11,6 +11,7 @@ import com.swdteam.util.math.Position;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
@@ -181,5 +182,20 @@ public class RemoteLockBlock extends HorizontalBlock {
                 world.playSound((PlayerEntity) null, blockPos, tardis.getCloseSound(), SoundCategory.BLOCKS, 0.5F, 1.0F);
             }
         }
+    }
+
+    @Override
+    public void onRemove(BlockState blockState, World world, BlockPos pos, BlockState blockState1, boolean harvest) {
+        if(!world.isClientSide && blockState1.getBlock() != this.getBlock()){
+            TileEntity te = world.getBlockEntity(pos);
+            if(te instanceof RemoteLockTile){
+                RemoteLockTile lock = (RemoteLockTile) te;
+                if(lock.hasKey()){
+                    ItemEntity key = new ItemEntity(world, pos.getX()+0.5, pos.getY()+0.3, pos.getZ()+0.5, lock.getKey());
+                    world.addFreshEntity(key);
+                }
+            }
+        }
+        super.onRemove(blockState, world, pos, blockState1, harvest);
     }
 }

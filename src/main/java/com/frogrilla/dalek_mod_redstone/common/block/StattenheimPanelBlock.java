@@ -4,13 +4,13 @@ import com.frogrilla.dalek_mod_redstone.DalekModRedstone;
 import com.frogrilla.dalek_mod_redstone.common.init.ModTileEntities;
 import com.frogrilla.dalek_mod_redstone.common.tileentity.StattenheimPanelTile;
 import com.swdteam.common.init.*;
-import com.swdteam.common.item.DataModuleItem;
 import com.swdteam.common.tardis.TardisData;
 import com.swdteam.common.tardis.TardisDoor;
 import com.swdteam.common.tardis.TardisState;
 import com.swdteam.common.tardis.actions.TardisActionList;
 import com.swdteam.common.tileentity.TardisTileEntity;
 import net.minecraft.block.*;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
@@ -213,5 +213,24 @@ public class StattenheimPanelBlock extends HorizontalBlock {
         } else if (TardisActionList.demat(world.getPlayerByUUID(data.getOwner_uuid()), world, data)) {
             world.playSound((PlayerEntity)null, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), (SoundEvent)DMSoundEvents.TARDIS_DEMAT.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
         }
+    }
+
+    @Override
+    public void onRemove(BlockState blockState, World world, BlockPos pos, BlockState blockState1, boolean harvest) {
+        if(!world.isClientSide && blockState1.getBlock() != this.getBlock()){
+            TileEntity te = world.getBlockEntity(pos);
+            if(te instanceof StattenheimPanelTile){
+               StattenheimPanelTile panel = (StattenheimPanelTile) te;
+               if(panel.hasRemote()){
+                   ItemEntity remote = new ItemEntity(world, pos.getX()+0.5, pos.getY()+0.3, pos.getZ()+0.5, panel.getRemote());
+                   world.addFreshEntity(remote);
+               }
+               if(panel.hasData()){
+                   ItemEntity data = new ItemEntity(world, pos.getX()+0.5, pos.getY()+0.3, pos.getZ()+0.5, panel.getData());
+                   world.addFreshEntity(data);
+               }
+            }
+        }
+        super.onRemove(blockState, world, pos, blockState1, harvest);
     }
 }
