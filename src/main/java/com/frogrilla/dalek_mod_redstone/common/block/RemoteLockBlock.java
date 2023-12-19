@@ -43,11 +43,10 @@ import java.util.*;
 public class RemoteLockBlock extends HorizontalBlock {
     public RemoteLockBlock(Properties builder) { super(builder); }
     public static List<Position> tilePositions = new ArrayList<>();
-    private int interactTimer = 0;
-    private boolean powered = false;
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 2, 16);
     public static final BooleanProperty HAS_KEY = BooleanProperty.create("key");
     public static final BooleanProperty LOCKED = BooleanProperty.create("locked");
+    public static final BooleanProperty POWERED = BooleanProperty.create("powered");
     @Override
     public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
         return SHAPE;
@@ -58,6 +57,7 @@ public class RemoteLockBlock extends HorizontalBlock {
         builder.add(FACING);
         builder.add(HAS_KEY);
         builder.add(LOCKED);
+        builder.add(POWERED);
         super.createBlockStateDefinition(builder);
     }
 
@@ -67,7 +67,8 @@ public class RemoteLockBlock extends HorizontalBlock {
         return this.defaultBlockState()
                 .setValue(FACING, context.getHorizontalDirection().getOpposite())
                 .setValue(HAS_KEY, false)
-                .setValue(LOCKED, false);
+                .setValue(LOCKED, false)
+                .setValue(POWERED, false);
     }
 
     @Override
@@ -101,7 +102,7 @@ public class RemoteLockBlock extends HorizontalBlock {
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
-        if(!world.isClientSide && interactTimer == 0 && !powered && world.dimension() == DMDimensions.TARDIS){
+        if(!world.isClientSide && world.dimension() == DMDimensions.TARDIS){
             TileEntity tileEntity = world.getBlockEntity(pos);
             if(tileEntity instanceof RemoteLockTile){
                 RemoteLockTile lockTile = (RemoteLockTile)tileEntity;
@@ -161,8 +162,8 @@ public class RemoteLockBlock extends HorizontalBlock {
    public void neighborChanged(BlockState state, World world, BlockPos blockPos, Block block, BlockPos blockPos1, boolean isMoving) {
         if (!world.isClientSide) {
             boolean nPower = world.hasNeighborSignal(blockPos);
-            if(powered != nPower && nPower) turn_key(state, world, blockPos); // calls RemoteLockTile.updateAllTiles
-            powered = nPower;
+            if(state.getValue(POWERED) != nPower && nPower) turn_key(state, world, blockPos); // calls RemoteLockTile.updateAllTiles
+            world.setBlockAndUpdate(blockPos, state.setValue(POWERED, nPower));
         }
     }
 

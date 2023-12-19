@@ -49,10 +49,9 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class StattenheimPanelBlock extends HorizontalBlock {
-    private boolean powered = false;
-
     public static final BooleanProperty REMOTE = BooleanProperty.create("remote");
     public static final IntegerProperty DATA = IntegerProperty.create("data", 0,2);
+    public static final BooleanProperty POWERED = BooleanProperty.create("powered");
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 2, 16);
     public StattenheimPanelBlock(Properties builder) { super(builder); }
 
@@ -65,6 +64,7 @@ public class StattenheimPanelBlock extends HorizontalBlock {
         builder.add(FACING);
         builder.add(REMOTE);
         builder.add(DATA);
+        builder.add(POWERED);
         super.createBlockStateDefinition(builder);
     }
 
@@ -74,7 +74,8 @@ public class StattenheimPanelBlock extends HorizontalBlock {
         return this.defaultBlockState()
                 .setValue(FACING, context.getHorizontalDirection().getOpposite())
                 .setValue(REMOTE, false)
-                .setValue(DATA, 0);
+                .setValue(DATA, 0)
+                .setValue(POWERED, false);
     }
 
     @Override
@@ -147,7 +148,7 @@ public class StattenheimPanelBlock extends HorizontalBlock {
         if (!world.isClientSide) {
             boolean nPower = world.hasNeighborSignal(blockPos);
 
-            if(powered != nPower && nPower){
+            if(state.getValue(POWERED) != nPower && nPower){
                 StattenheimPanelTile tile = (StattenheimPanelTile)world.getBlockEntity(blockPos);
                 if(tile.hasRemote()) {
                     if(tile.hasData()){
@@ -162,7 +163,7 @@ public class StattenheimPanelBlock extends HorizontalBlock {
                 }
             }
 
-            powered = nPower;
+            world.setBlockAndUpdate(blockPos, state.setValue(POWERED, nPower));
         }
     }
 
