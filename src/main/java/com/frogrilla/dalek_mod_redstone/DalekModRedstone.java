@@ -20,7 +20,7 @@ import org.apache.logging.log4j.Logger;
 public class DalekModRedstone
 {
     //test
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "dalek_mod_redstone";
 
     public DalekModRedstone() {

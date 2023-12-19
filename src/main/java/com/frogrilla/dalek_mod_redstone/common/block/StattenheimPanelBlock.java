@@ -1,5 +1,6 @@
 package com.frogrilla.dalek_mod_redstone.common.block;
 
+import com.frogrilla.dalek_mod_redstone.DalekModRedstone;
 import com.frogrilla.dalek_mod_redstone.common.init.ModTileEntities;
 import com.frogrilla.dalek_mod_redstone.common.tileentity.StattenheimPanelTile;
 import com.swdteam.common.init.*;
@@ -137,12 +138,11 @@ public class StattenheimPanelBlock extends HorizontalBlock {
                 StattenheimPanelTile tile = (StattenheimPanelTile)world.getBlockEntity(blockPos);
                 if(tile.hasRemote()) {
                     if(tile.hasData()){
-                        DataModuleItem data = (DataModuleItem) tile.getData().getItem();
                         try {
                             sendTardis(tile.getRemote(), world, tile.getData());
                         }
                         catch (Exception e){
-                            System.out.println("You can't use a stattenheim panel with empty data!!!");
+                            DalekModRedstone.LOGGER.warn("Something went wrong when sending the TARDIS with a stattenheim panel");
                         }
                     }
                 }
