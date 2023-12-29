@@ -3,6 +3,7 @@ package com.frogrilla.dalek_mod_redstone;
 import com.frogrilla.dalek_mod_redstone.common.init.ModBlocks;
 import com.frogrilla.dalek_mod_redstone.common.init.ModItems;
 import com.frogrilla.dalek_mod_redstone.common.init.ModTileEntities;
+import com.frogrilla.dalek_mod_redstone.common.sonic.SonicSonicRelay;
 import com.frogrilla.dalek_mod_redstone.common.sonic.SonicSonicResonator;
 import com.swdteam.common.init.DMSonicRegistry;
 import net.minecraft.client.renderer.RenderType;
@@ -42,12 +43,14 @@ public class DalekModRedstone
             RenderTypeLookup.setRenderLayer(ModBlocks.CLICK_DETECTOR.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(ModBlocks.REMOTE_LOCK.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(ModBlocks.STATTENHEIM_PANEL.get(), RenderType.cutout());
+            RenderTypeLookup.setRenderLayer(ModBlocks.SONIC_RELAY.get(), RenderType.cutout());
         });
     }
 
     private void runLater(ParallelDispatchEvent event) {
         event.enqueueWork(() -> {
             DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_RESONATOR.get(), new SonicSonicResonator());
+            DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_RELAY.get(), new SonicSonicRelay());
         });
     }
 }

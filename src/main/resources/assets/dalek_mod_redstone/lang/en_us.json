@@ -5,6 +5,7 @@
   "block.dalek_mod_redstone.stattenheim_panel": "Stattenheim Panel",
   "block.dalek_mod_redstone.door_panel": "Door Panel",
   "block.dalek_mod_redstone.sonic_resonator": "Sonic Resonator",
+  "block.dalek_mod_redstone.sonic_relay": "Sonic Relay",
 
   "itemGroup.dmr_tab": "Dalek Mod Redstone"
 }
