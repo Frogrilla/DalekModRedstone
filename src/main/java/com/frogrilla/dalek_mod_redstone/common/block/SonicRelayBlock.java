@@ -3,12 +3,17 @@ package com.frogrilla.dalek_mod_redstone.common.block;
 import com.frogrilla.dalek_mod_redstone.common.init.ModBlocks;
 import com.swdteam.common.init.DMSonicRegistry;
 import net.minecraft.block.*;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -32,9 +37,19 @@ public class SonicRelayBlock extends Block {
     public static final DirectionProperty FACING = DirectionProperty.create("facing", direction -> true);
     public static final BooleanProperty ACTIVATED = BooleanProperty.create("activated");
     public static final DirectionProperty BLOCK_DIR = DirectionProperty.create("block_dir", direction -> true);
+    public static final IntegerProperty MODE = IntegerProperty.create("mode", 0, 2);
+    public static final IntegerProperty DELAY = IntegerProperty.create("delay", 0, 8);
 
     public SonicRelayBlock(Properties builder) {
         super(builder);
+        this.registerDefaultState(
+                getStateDefinition().any()
+                        .setValue(FACING, Direction.UP)
+                        .setValue(ACTIVATED, false)
+                        .setValue(BLOCK_DIR, Direction.DOWN)
+                        .setValue(MODE, 0)
+                        .setValue(DELAY, 0)
+        );
     }
 
     @Override
@@ -61,6 +76,8 @@ public class SonicRelayBlock extends Block {
         builder.add(FACING);
         builder.add(ACTIVATED);
         builder.add(BLOCK_DIR);
+        builder.add(MODE);
+        builder.add(DELAY);
         super.createBlockStateDefinition(builder);
     }
 
@@ -69,16 +86,33 @@ public class SonicRelayBlock extends Block {
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         BlockState state = defaultBlockState();
         return state
-            .setValue(ACTIVATED, false)
             .setValue(FACING, context.getClickedFace())
             .setValue(BLOCK_DIR, context.getClickedFace().getOpposite())
         ;
     }
 
     @Override
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
+        if (world.isClientSide || hand != Hand.MAIN_HAND) return ActionResultType.PASS;
+
+        if (player.getItemInHand(hand).isEmpty()){
+            world.setBlockAndUpdate(pos, state.cycle(MODE));
+            return ActionResultType.SUCCESS;
+        }
+
+        return ActionResultType.PASS;
+    }
+
+    @Override
     public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if(state.getValue(ACTIVATED)){
-            world.setBlockAndUpdate(pos, state.setValue(ACTIVATED, false).setValue(BLOCK_DIR, state.getValue(FACING).getOpposite()));
+            if(state.getValue(DELAY) == 1){
+                world.setBlockAndUpdate(pos, state.setValue(ACTIVATED, false).setValue(BLOCK_DIR, state.getValue(FACING).getOpposite()).setValue(DELAY, 0));
+            }
+            else {
+                world.setBlockAndUpdate(pos, state.setValue(DELAY, state.getValue(DELAY)-1));
+                world.getBlockTicks().scheduleTick(pos, this, 1);
+            }
         }
         else{
             world.setBlockAndUpdate(pos, state.setValue(ACTIVATED, true));
@@ -88,18 +122,24 @@ public class SonicRelayBlock extends Block {
                 DMSonicRegistry.ISonicInteraction son = (DMSonicRegistry.ISonicInteraction)DMSonicRegistry.SONIC_LOOKUP.get(underState.getBlock());
                 if(son != null) son.interact(world, null, null, under);
             }
-            createSignal(world, state, pos);
-            world.getBlockTicks().scheduleTick(pos, this, 8);
+            createSignals(world, state, pos);
+            world.setBlockAndUpdate(pos, state.setValue(DELAY, 4).setValue(ACTIVATED, true));
+            world.getBlockTicks().scheduleTick(pos, this, 1);
         }
     }
 
-    public void createSignal(World world, BlockState state, BlockPos pos){
-        BLOCK_DIR.getAllValues().forEach(pair -> {
-            Direction direction = pair.value();
-            if(direction == state.getValue(BLOCK_DIR)) return;
-            if(direction == state.getValue(FACING).getOpposite()) return;
-            sendSignal(world, state, pos, direction);
-        });
+    public void createSignals(World world, BlockState state, BlockPos pos){
+        if(state.getValue(MODE) == 1){
+            sendSignal(world, state, pos, state.getValue(FACING));
+        }
+        else {
+            BLOCK_DIR.getAllValues().forEach(pair -> {
+                Direction direction = pair.value();
+                if(state.getValue(MODE) == 0 && direction == state.getValue(BLOCK_DIR)) return;
+                if(direction == state.getValue(FACING).getOpposite()) return;
+                sendSignal(world, state, pos, direction);
+            });
+        }
     }
 
     public boolean sendSignal(World world, BlockState state, BlockPos pos, Direction dir){
@@ -107,9 +147,9 @@ public class SonicRelayBlock extends Block {
             BlockPos checkPos = pos.relative(dir, i);
             BlockState checkState = world.getBlockState(checkPos);
 
-            if(checkState.getBlock() == Blocks.BEDROCK) return false;
+            if(checkState.getBlock() == ModBlocks.SONIC_BARRIER.get() && !SonicBarrierBlock.getStateFromDirection(dir.getOpposite(), checkState)) return false;
             if(checkState.getBlock() == ModBlocks.SONIC_RELAY.get()){
-                if(!checkState.getValue(ACTIVATED)){
+                if(checkState.getValue(DELAY) <= i){
                     world.setBlockAndUpdate(checkPos, checkState.setValue(BLOCK_DIR, dir.getOpposite()));
                     world.getBlockTicks().scheduleTick(checkPos, this, i);
                     return true;

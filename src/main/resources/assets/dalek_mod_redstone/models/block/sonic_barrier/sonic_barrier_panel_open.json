@@ -1,0 +1,6 @@
+{
+	"parent": "dalek_mod_redstone:block/sonic_barrier/sonic_barrier_panel",
+	"textures": {
+		"base": "dalek_mod_redstone:block/sonic_barrier/sonic_barrier_open"
+	}
+}

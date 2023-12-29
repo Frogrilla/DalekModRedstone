@@ -29,7 +29,8 @@ public class ModBlocks {
             TARDIS_DETECTOR = registerBlock("tardis_detector", () -> new TardisDetectorBlock(AbstractBlock.Properties.of(Material.METAL).strength(2.0F, 20.0F).requiresCorrectToolForDrops().sound(SoundType.METAL)), ModTabs.DMR_TAB),
             STATTENHEIM_PANEL = registerBlock("stattenheim_panel", () -> new StattenheimPanelBlock(AbstractBlock.Properties.of(Material.WOOD).instabreak().sound(SoundType.WOOD)), ModTabs.DMR_TAB),
             SONIC_RESONATOR = registerBlock("sonic_resonator", () -> new SonicResonatorBlock(AbstractBlock.Properties.of(Material.METAL).strength(2.0F, 20.0F).requiresCorrectToolForDrops().sound(SoundType.METAL)), ModTabs.DMR_TAB),
-            SONIC_RELAY = registerBlock("sonic_relay", () -> new SonicRelayBlock(AbstractBlock.Properties.of(Material.GLASS).instabreak().sound(SoundType.GLASS)), ModTabs.DMR_TAB)
+            SONIC_RELAY = registerBlock("sonic_relay", () -> new SonicRelayBlock(AbstractBlock.Properties.of(Material.GLASS).instabreak().sound(SoundType.GLASS)), ModTabs.DMR_TAB),
+            SONIC_BARRIER = registerBlock("sonic_barrier", () -> new SonicBarrierBlock(AbstractBlock.Properties.of(Material.WOOD).sound(SoundType.WOOD)), ModTabs.DMR_TAB)
     ;;
 
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block, ItemGroup tab){

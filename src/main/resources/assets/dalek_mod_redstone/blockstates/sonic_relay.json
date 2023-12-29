@@ -1,56 +1,167 @@
 {
   "variants": {
-    "facing=up,activated=false": {
-      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay"
+    "facing=up,activated=false,mode=0": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_default"
     },
-    "facing=up,activated=true": {
-      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_on"
-    },
-
-    "facing=down,activated=false": {
-      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay",
-      "x": 180
-    },
-    "facing=down,activated=true": {
-      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_on",
-      "x": 180
+    "facing=up,activated=true,mode=0": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_default_on"
     },
 
-    "facing=east,activated=false": {
-      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay",
+    "facing=down,activated=false,mode=0": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_default",
+      "x": 180
+    },
+    "facing=down,activated=true,mode=0": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_default_on",
+      "x": 180
+    },
+
+    "facing=east,activated=false,mode=0": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_default",
       "y": 90,
       "x": 90
     },
-    "facing=north,activated=false": {
-      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay",
+    "facing=north,activated=false,mode=0": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_default",
       "x": 90
     },
-    "facing=south,activated=false": {
-      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay",
+    "facing=south,activated=false,mode=0": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_default",
       "y": 180,
       "x": 90
     },
-    "facing=west,activated=false": {
-      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay",
+    "facing=west,activated=false,mode=0": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_default",
       "y": 270,
       "x": 90
     },
-    "facing=east,activated=true": {
-      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_on",
+    "facing=east,activated=true,mode=0": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_default_on",
       "y": 90,
       "x": 90
     },
-    "facing=north,activated=true": {
-      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_on",
+    "facing=north,activated=true,mode=0": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_default_on",
       "x": 90
     },
-    "facing=south,activated=true": {
-      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_on",
+    "facing=south,activated=true,mode=0": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_default_on",
       "y": 180,
       "x": 90
     },
-    "facing=west,activated=true": {
-      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_on",
+    "facing=west,activated=true,mode=0": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_default_on",
+      "y": 270,
+      "x": 90
+    },
+
+
+    "facing=up,activated=false,mode=1": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_direct"
+    },
+    "facing=up,activated=true,mode=1": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_direct_on"
+    },
+
+    "facing=down,activated=false,mode=1": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_direct",
+      "x": 180
+    },
+    "facing=down,activated=true,mode=1": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_direct_on",
+      "x": 180
+    },
+
+    "facing=east,activated=false,mode=1": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_direct",
+      "y": 90,
+      "x": 90
+    },
+    "facing=north,activated=false,mode=1": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_direct",
+      "x": 90
+    },
+    "facing=south,activated=false,mode=1": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_direct",
+      "y": 180,
+      "x": 90
+    },
+    "facing=west,activated=false,mode=1": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_direct",
+      "y": 270,
+      "x": 90
+    },
+    "facing=east,activated=true,mode=1": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_direct_on",
+      "y": 90,
+      "x": 90
+    },
+    "facing=north,activated=true,mode=1": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_direct_on",
+      "x": 90
+    },
+    "facing=south,activated=true,mode=1": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_direct_on",
+      "y": 180,
+      "x": 90
+    },
+    "facing=west,activated=true,mode=1": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_direct_on",
+      "y": 270,
+      "x": 90
+    },
+
+    "facing=up,activated=false,mode=2": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_omni"
+    },
+    "facing=up,activated=true,mode=2": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_omni_on"
+    },
+
+    "facing=down,activated=false,mode=2": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_omni",
+      "x": 180
+    },
+    "facing=down,activated=true,mode=2": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_omni_on",
+      "x": 180
+    },
+
+    "facing=east,activated=false,mode=2": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_omni",
+      "y": 90,
+      "x": 90
+    },
+    "facing=north,activated=false,mode=2": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_omni",
+      "x": 90
+    },
+    "facing=south,activated=false,mode=2": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_omni",
+      "y": 180,
+      "x": 90
+    },
+    "facing=west,activated=false,mode=2": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_omni",
+      "y": 270,
+      "x": 90
+    },
+    "facing=east,activated=true,mode=2": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_omni_on",
+      "y": 90,
+      "x": 90
+    },
+    "facing=north,activated=true,mode=2": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_omni_on",
+      "x": 90
+    },
+    "facing=south,activated=true,mode=2": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_omni_on",
+      "y": 180,
+      "x": 90
+    },
+    "facing=west,activated=true,mode=2": {
+      "model": "dalek_mod_redstone:block/sonic_relay/sonic_relay_omni_on",
       "y": 270,
       "x": 90
     }
