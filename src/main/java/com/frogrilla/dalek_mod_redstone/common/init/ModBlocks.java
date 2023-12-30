@@ -2,6 +2,8 @@ package com.frogrilla.dalek_mod_redstone.common.init;
 
 import com.frogrilla.dalek_mod_redstone.DalekModRedstone;
 import com.frogrilla.dalek_mod_redstone.common.block.*;
+import com.frogrilla.dalek_mod_redstone.common.block.SonicResonatorBlock;
+import com.frogrilla.dalek_mod_redstone.common.block.sonicstone.SonicRelayBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;

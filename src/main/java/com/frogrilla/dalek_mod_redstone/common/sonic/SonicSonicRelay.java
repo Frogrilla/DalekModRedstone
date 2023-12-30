@@ -1,6 +1,6 @@
 package com.frogrilla.dalek_mod_redstone.common.sonic;
 
-import com.frogrilla.dalek_mod_redstone.common.block.SonicRelayBlock;
+import com.frogrilla.dalek_mod_redstone.common.block.sonicstone.SonicRelayBlock;
 import com.frogrilla.dalek_mod_redstone.common.init.ModBlocks;
 import com.swdteam.common.init.DMSonicRegistry;
 import com.swdteam.common.sonic.SonicCategory;
