@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"relay": "dalek_mod_redstone:block/sonic_relay/sonic_relay_default",
+		"relay": "dalek_mod_redstone:block/sonic_relay/sonic_relay",
 		"particle": "dalekmod:block/zeiton_block"
 	},
 	"elements": [

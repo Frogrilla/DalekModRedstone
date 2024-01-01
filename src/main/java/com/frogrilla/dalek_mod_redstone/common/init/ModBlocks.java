@@ -3,6 +3,7 @@ package com.frogrilla.dalek_mod_redstone.common.init;
 import com.frogrilla.dalek_mod_redstone.DalekModRedstone;
 import com.frogrilla.dalek_mod_redstone.common.block.*;
 import com.frogrilla.dalek_mod_redstone.common.block.SonicResonatorBlock;
+import com.frogrilla.dalek_mod_redstone.common.block.sonicstone.SonicDirectorBlock;
 import com.frogrilla.dalek_mod_redstone.common.block.sonicstone.SonicRelayBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -32,6 +33,7 @@ public class ModBlocks {
             STATTENHEIM_PANEL = registerBlock("stattenheim_panel", () -> new StattenheimPanelBlock(AbstractBlock.Properties.of(Material.WOOD).instabreak().sound(SoundType.WOOD)), ModTabs.DMR_TAB),
             SONIC_RESONATOR = registerBlock("sonic_resonator", () -> new SonicResonatorBlock(AbstractBlock.Properties.of(Material.METAL).strength(2.0F, 20.0F).requiresCorrectToolForDrops().sound(SoundType.METAL)), ModTabs.DMR_TAB),
             SONIC_RELAY = registerBlock("sonic_relay", () -> new SonicRelayBlock(AbstractBlock.Properties.of(Material.GLASS).instabreak().sound(SoundType.GLASS)), ModTabs.DMR_TAB),
+            SONIC_DIRECTOR = registerBlock("sonic_director", () -> new SonicDirectorBlock(AbstractBlock.Properties.of(Material.GLASS).instabreak().sound(SoundType.GLASS)), ModTabs.DMR_TAB),
             SONIC_BARRIER = registerBlock("sonic_barrier", () -> new SonicBarrierBlock(AbstractBlock.Properties.of(Material.WOOD).sound(SoundType.WOOD)), ModTabs.DMR_TAB)
     ;;
 

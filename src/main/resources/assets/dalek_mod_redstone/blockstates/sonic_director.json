@@ -1,0 +1,58 @@
+{
+  "variants": {
+    "facing=up,activated=false": {
+      "model": "dalek_mod_redstone:block/sonic_director/sonic_director"
+    },
+    "facing=up,activated=true": {
+      "model": "dalek_mod_redstone:block/sonic_director/sonic_director_on"
+    },
+
+    "facing=down,activated=false": {
+      "model": "dalek_mod_redstone:block/sonic_director/sonic_director",
+      "x": 180
+    },
+    "facing=down,activated=true": {
+      "model": "dalek_mod_redstone:block/sonic_director/sonic_director_on",
+      "x": 180
+    },
+
+    "facing=east,activated=false": {
+      "model": "dalek_mod_redstone:block/sonic_director/sonic_director",
+      "y": 90,
+      "x": 90
+    },
+    "facing=north,activated=false": {
+      "model": "dalek_mod_redstone:block/sonic_director/sonic_director",
+      "x": 90
+    },
+    "facing=south,activated=false": {
+      "model": "dalek_mod_redstone:block/sonic_director/sonic_director",
+      "y": 180,
+      "x": 90
+    },
+    "facing=west,activated=false": {
+      "model": "dalek_mod_redstone:block/sonic_director/sonic_director",
+      "y": 270,
+      "x": 90
+    },
+    "facing=east,activated=true": {
+      "model": "dalek_mod_redstone:block/sonic_director/sonic_director_on",
+      "y": 90,
+      "x": 90
+    },
+    "facing=north,activated=true": {
+      "model": "dalek_mod_redstone:block/sonic_director/sonic_director_on",
+      "x": 90
+    },
+    "facing=south,activated=true": {
+      "model": "dalek_mod_redstone:block/sonic_director/sonic_director_on",
+      "y": 180,
+      "x": 90
+    },
+    "facing=west,activated=true": {
+      "model": "dalek_mod_redstone:block/sonic_director/sonic_director_on",
+      "y": 270,
+      "x": 90
+    }
+  }
+}

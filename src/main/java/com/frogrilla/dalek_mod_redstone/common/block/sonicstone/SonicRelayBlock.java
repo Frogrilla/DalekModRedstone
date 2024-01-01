@@ -37,10 +37,7 @@ public class SonicRelayBlock extends SonicStoneBlock {
     public static final VoxelShape SHAPE_WEST = VoxelShapes.join(Block.box(13.5, 1, 1, 16, 15, 15), Block.box(0.5, 5, 5, 13.5, 11, 11), IBooleanFunction.OR);
 
     public static final DirectionProperty FACING = DirectionProperty.create("facing", direction -> true);
-    public static final IntegerProperty MODE = IntegerProperty.create("mode", 0, 2);
     public static final BooleanProperty POWERED = BooleanProperty.create("powered");
-
-    public static final int SEARCH_DISTANCE = 8;
 
     public SonicRelayBlock(Properties builder) {
         super(builder);
@@ -50,7 +47,6 @@ public class SonicRelayBlock extends SonicStoneBlock {
                         .setValue(DELAY, 0)
                         .setValue(RECEIVE_DIR, Direction.DOWN)
                         .setValue(FACING, Direction.UP)
-                        .setValue(MODE, 0)
                         .setValue(POWERED, false)
         );
     }
@@ -77,7 +73,6 @@ public class SonicRelayBlock extends SonicStoneBlock {
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(FACING);
-        builder.add(MODE);
         builder.add(POWERED);
         super.createBlockStateDefinition(builder);
     }
@@ -92,32 +87,6 @@ public class SonicRelayBlock extends SonicStoneBlock {
         ;
     }
 
-    @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
-        if (world.isClientSide || hand != Hand.MAIN_HAND) return ActionResultType.PASS;
-
-        if (player.getItemInHand(hand).isEmpty()){
-            world.setBlockAndUpdate(pos, state.cycle(MODE));
-            return ActionResultType.SUCCESS;
-        }
-
-        return ActionResultType.PASS;
-    }
-
-    public void createSignals(World world, BlockState state, BlockPos pos){
-        if(state.getValue(MODE) == 1){
-            sendSignal(world, state, pos, state.getValue(FACING), SEARCH_DISTANCE);
-        }
-        else {
-            RECEIVE_DIR.getAllValues().forEach(pair -> {
-                Direction direction = pair.value();
-                if(state.getValue(MODE) == 0 && direction == state.getValue(RECEIVE_DIR)) return;
-                if(direction == state.getValue(FACING).getOpposite()) return;
-                sendSignal(world, state, pos, direction, SEARCH_DISTANCE);
-            });
-        }
-    }
-
     public void neighborChanged(BlockState state, World world, BlockPos blockPos, Block block, BlockPos blockPos1, boolean isMoving) {
         if (!world.isClientSide) {
             boolean nPower = world.hasNeighborSignal(blockPos);
@@ -130,20 +99,22 @@ public class SonicRelayBlock extends SonicStoneBlock {
 
     @Override
     public void onDeactivate(World world, BlockPos pos, BlockState state) {
-        world.setBlockAndUpdate(pos, state.setValue(ACTIVATED, false).setValue(RECEIVE_DIR, state.getValue(FACING).getOpposite()).setValue(DELAY, 0));
+        world.setBlockAndUpdate(pos, state.setValue(RECEIVE_DIR, state.getValue(FACING).getOpposite()));
     }
 
     @Override
     public void onActivate(World world, BlockPos pos, BlockState state) {
-        world.setBlockAndUpdate(pos, state.setValue(ACTIVATED, true));
         BlockPos under = pos.relative(state.getValue(FACING).getOpposite());
         BlockState underState = world.getBlockState(under);
-        if (DMSonicRegistry.SONIC_LOOKUP.containsKey(underState.getBlock()) && underState.getBlock() != ModBlocks.SONIC_RELAY.get()) {
-            DMSonicRegistry.ISonicInteraction son = (DMSonicRegistry.ISonicInteraction)DMSonicRegistry.SONIC_LOOKUP.get(underState.getBlock());
-            if(son != null) son.interact(world, null, null, under);
+        if (!(underState.getBlock() instanceof SonicStoneBlock)) {
+            sonicBlock(world, under, underState);
         }
-        createSignals(world, state, pos);
-        world.setBlockAndUpdate(pos, state.setValue(DELAY, 4).setValue(ACTIVATED, true));
+        FACING.getAllValues().forEach(pair -> {
+            Direction direction = pair.value();
+            if(direction == state.getValue(RECEIVE_DIR)) return;
+            if(direction == state.getValue(FACING).getOpposite()) return;
+            sendSignal(world, state, pos, direction, SEARCH_DISTANCE);
+        });
         world.getBlockTicks().scheduleTick(pos, this, 1);
     }
 }

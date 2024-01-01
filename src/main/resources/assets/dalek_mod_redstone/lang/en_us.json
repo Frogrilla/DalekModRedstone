@@ -9,6 +9,7 @@
 
   "block.dalek_mod_redstone.sonic_resonator": "Sonic Resonator",
   "block.dalek_mod_redstone.sonic_relay": "Sonic Relay",
+  "block.dalek_mod_redstone.sonic_director": "Sonic Director",
   "block.dalek_mod_redstone.sonic_barrier": "Sonic Barrier",
 
   "itemGroup.dmr_tab": "Dalek Mod Redstone"
