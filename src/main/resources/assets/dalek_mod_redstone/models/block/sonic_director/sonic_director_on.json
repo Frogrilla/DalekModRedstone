@@ -1,6 +1,6 @@
 {
-  "parent": "dalek_mod_redstone:block/sonic_relay/sonic_relay",
+  "parent": "dalek_mod_redstone:block/sonic_director/sonic_director",
   "textures": {
-    "relay": "dalek_mod_redstone:block/sonic_director/sonic_director_on"
+    "relay": "dalek_mod_redstone:block/sonic_director/sonic_relay_on"
   }
 }
