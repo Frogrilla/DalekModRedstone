@@ -1,4 +1,4 @@
-package com.frogrilla.dalek_mod_redstone.common.block;
+package com.frogrilla.dalek_mod_redstone.common.block.sonicstone;
 
 import com.frogrilla.dalek_mod_redstone.DalekModRedstone;
 import net.minecraft.block.Block;

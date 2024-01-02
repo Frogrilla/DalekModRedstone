@@ -1,7 +1,5 @@
 package com.frogrilla.dalek_mod_redstone.common.block.sonicstone;
 
-import com.frogrilla.dalek_mod_redstone.DalekModRedstone;
-import com.frogrilla.dalek_mod_redstone.common.block.SonicBarrierBlock;
 import com.frogrilla.dalek_mod_redstone.common.init.ModBlocks;
 import com.swdteam.common.init.DMSonicRegistry;
 import net.minecraft.block.Block;
@@ -71,9 +69,9 @@ public class SonicStoneBlock extends Block {
         for(int i = 1; i <= search; ++i){
             BlockPos checkPos = pos.relative(dir, i);
             BlockState checkState = world.getBlockState(checkPos);
+            Block checkBlock = checkState.getBlock();
 
-            if(checkState.getBlock() == ModBlocks.SONIC_BARRIER.get() && !SonicBarrierBlock.getStateFromDirection(dir.getOpposite(), checkState)) return false;
-            if(checkState.getBlock() instanceof SonicStoneBlock){
+            if(checkBlock instanceof SonicStoneBlock){
                 if(checkState.getValue(DELAY) <= i){
                     world.setBlockAndUpdate(checkPos, checkState.setValue(RECEIVE_DIR, dir.getOpposite()));
                     world.getBlockTicks().scheduleTick(checkPos, checkState.getBlock(), i);
@@ -81,11 +79,21 @@ public class SonicStoneBlock extends Block {
                 }
                 return false;
             }
+
+            if(checkBlock == ModBlocks.SONIC_BARRIER.get() && !SonicBarrierBlock.getStateFromDirection(dir.getOpposite(), checkState)) return false;
+            if(checkBlock == ModBlocks.SONIC_GATE.get()){
+                if(SonicGateBlock.directionMatchesAxis(checkState.getValue(SonicGateBlock.AXIS), dir)){
+                    world.getBlockTicks().scheduleTick(checkPos, checkState.getBlock(), i);
+                }
+                else{
+                    return false;
+                }
+            }
         }
         return false;
     }
 
-    public void sonicBlock(World world, BlockPos pos, BlockState state){
+    public static void sonicBlock(World world, BlockPos pos, BlockState state){
         if (DMSonicRegistry.SONIC_LOOKUP.containsKey(state.getBlock())) {
             DMSonicRegistry.ISonicInteraction son = (DMSonicRegistry.ISonicInteraction)DMSonicRegistry.SONIC_LOOKUP.get(state.getBlock());
             if(son != null) son.interact(world, null, null, pos);

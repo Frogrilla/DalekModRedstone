@@ -1,0 +1,6 @@
+{
+  "parent": "dalek_mod_redstone:block/sonic_booster/sonic_booster",
+  "textures": {
+    "1": "dalek_mod_redstone:block/sonic_booster/sonic_booster_on"
+  }
+}

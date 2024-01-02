@@ -1,0 +1,15 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "dalek_mod_redstone:block/sonic_gate",
+      "y": 90
+    },
+    "axis=y": {
+      "model": "dalek_mod_redstone:block/sonic_gate",
+      "x": 90
+    },
+    "axis=z": {
+      "model": "dalek_mod_redstone:block/sonic_gate"
+    }
+  }
+}
