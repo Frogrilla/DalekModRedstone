@@ -103,6 +103,5 @@ public class SonicRelayBlock extends SonicStoneBlock {
             if(direction == state.getValue(FACING).getOpposite()) return;
             sendSignal(world, state, pos, direction, SEARCH_DISTANCE);
         });
-        world.getBlockTicks().scheduleTick(pos, this, 1);
     }
 }

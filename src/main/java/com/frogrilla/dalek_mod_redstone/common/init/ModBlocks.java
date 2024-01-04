@@ -33,6 +33,7 @@ public class ModBlocks {
             SONIC_RESONATOR = registerBlock("sonic_resonator", () -> new SonicResonatorBlock(AbstractBlock.Properties.of(Material.METAL).strength(2.0F, 20.0F).requiresCorrectToolForDrops().sound(SoundType.METAL)), ModTabs.DMR_TAB),
             SONIC_RELAY = registerBlock("sonic_relay", () -> new SonicRelayBlock(AbstractBlock.Properties.of(Material.GLASS).instabreak().sound(SoundType.GLASS)), ModTabs.DMR_TAB),
             SONIC_DIRECTOR = registerBlock("sonic_director", () -> new SonicDirectorBlock(AbstractBlock.Properties.of(Material.GLASS).instabreak().sound(SoundType.GLASS)), ModTabs.DMR_TAB),
+            SONIC_TERMINAL = registerBlock("sonic_terminal", () -> new SonicTerminalBlock(AbstractBlock.Properties.of(Material.GLASS).instabreak().sound(SoundType.GLASS)), ModTabs.DMR_TAB),
             SONIC_BOOSTER = registerBlock("sonic_booster", () -> new SonicBoosterBlock(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).noOcclusion()), ModTabs.DMR_TAB),
             SONIC_BARRIER = registerBlock("sonic_barrier", () -> new SonicBarrierBlock(AbstractBlock.Properties.of(Material.WOOD).sound(SoundType.WOOD)), ModTabs.DMR_TAB),
             SONIC_GATE = registerBlock("sonic_gate", () -> new SonicGateBlock(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS)), ModTabs.DMR_TAB);

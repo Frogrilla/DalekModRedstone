@@ -1,11 +1,11 @@
 package com.frogrilla.dalek_mod_redstone.common.block.sonicstone;
 
-import net.minecraft.block.*;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class SonicDirectorBlock extends SonicRelayBlock {
-    public SonicDirectorBlock(Properties builder) {
+public class SonicTerminalBlock extends SonicRelayBlock{
+    public SonicTerminalBlock(Properties builder) {
         super(builder);
     }
 
@@ -16,6 +16,5 @@ public class SonicDirectorBlock extends SonicRelayBlock {
         if (!(underState.getBlock() instanceof SonicStoneBlock)) {
             sonicBlock(world, under, underState);
         }
-        sendSignal(world, state, pos, state.getValue(FACING), SEARCH_DISTANCE);
     }
 }

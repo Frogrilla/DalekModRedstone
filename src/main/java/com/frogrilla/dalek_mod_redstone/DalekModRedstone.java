@@ -45,6 +45,7 @@ public class DalekModRedstone
             RenderTypeLookup.setRenderLayer(ModBlocks.STATTENHEIM_PANEL.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(ModBlocks.SONIC_RELAY.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(ModBlocks.SONIC_DIRECTOR.get(), RenderType.cutout());
+            RenderTypeLookup.setRenderLayer(ModBlocks.SONIC_TERMINAL.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(ModBlocks.SONIC_BOOSTER.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(ModBlocks.SONIC_GATE.get(), RenderType.translucent());
         });
@@ -55,6 +56,7 @@ public class DalekModRedstone
             DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_RESONATOR.get(), new SonicSonicResonator());
             DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_RELAY.get(), new SonicSonicStone());
             DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_DIRECTOR.get(), new SonicSonicStone());
+            DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_TERMINAL.get(), new SonicSonicStone());
         });
     }
 }
