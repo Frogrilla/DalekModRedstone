@@ -21,10 +21,6 @@ import javax.annotation.Nullable;
 import java.util.Random;
 
 public class SonicGateBlock extends Block{
-    public static final VoxelShape SHAPE_X = Block.box(7, 0, 0, 9, 16, 16);
-    public static final VoxelShape SHAPE_Y = Block.box(0, 7, 0, 16, 9, 16);
-    public static final VoxelShape SHAPE_Z = Block.box(0, 0, 7, 16, 16, 9);
-
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
     public SonicGateBlock(Properties builder) {
         super(builder);
@@ -45,16 +41,6 @@ public class SonicGateBlock extends Block{
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         BlockState state = defaultBlockState();
         return state.setValue(AXIS, context.getClickedFace().getAxis());
-    }
-
-    @Override
-    public VoxelShape getShape(BlockState state, IBlockReader iBlockReader, BlockPos pos, ISelectionContext context) {
-        switch(state.getValue(AXIS)){
-            case X: return SHAPE_X;
-            case Y: return SHAPE_Y;
-            case Z: return SHAPE_Z;
-        }
-        return SHAPE_Y;
     }
 
     @Override
