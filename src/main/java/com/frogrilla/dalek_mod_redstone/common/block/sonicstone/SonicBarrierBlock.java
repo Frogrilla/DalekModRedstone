@@ -1,11 +1,8 @@
 package com.frogrilla.dalek_mod_redstone.common.block.sonicstone;
 
-import com.frogrilla.dalek_mod_redstone.DalekModRedstone;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.ActionResultType;
@@ -15,10 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-
-public class SonicBarrierBlock extends Block {
-
+public class SonicBarrierBlock extends Block implements ISonicStone{
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
     public static final BooleanProperty EAST = BooleanProperty.create("east");
     public static final BooleanProperty SOUTH = BooleanProperty.create("south");
@@ -28,13 +22,13 @@ public class SonicBarrierBlock extends Block {
     public SonicBarrierBlock(Properties builder) {
         super(builder);
         this.registerDefaultState(
-            getStateDefinition().any()
-                .setValue(NORTH, false)
-                .setValue(EAST, false)
-                .setValue(SOUTH, false)
-                .setValue(WEST, false)
-                .setValue(UP, false)
-                .setValue(DOWN, false)
+                getStateDefinition().any()
+                        .setValue(NORTH, false)
+                        .setValue(EAST, false)
+                        .setValue(SOUTH, false)
+                        .setValue(WEST, false)
+                        .setValue(UP, false)
+                        .setValue(DOWN, false)
         );
     }
 
@@ -60,7 +54,6 @@ public class SonicBarrierBlock extends Block {
 
         return ActionResultType.PASS;
     }
-
     public static BooleanProperty getPropertyFromDirection(Direction dir){
         switch(dir){
             case NORTH:
@@ -81,5 +74,9 @@ public class SonicBarrierBlock extends Block {
 
     public static boolean getStateFromDirection(Direction dir, BlockState state){
         return state.getValue(getPropertyFromDirection(dir));
+    }
+    @Override
+    public boolean Signal(World world, BlockPos pos, int strength, Direction direction, int distance) {
+        return !getStateFromDirection(direction.getOpposite(), world.getBlockState(pos));
     }
 }

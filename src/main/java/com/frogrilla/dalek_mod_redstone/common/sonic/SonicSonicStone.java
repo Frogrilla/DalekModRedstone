@@ -1,6 +1,6 @@
 package com.frogrilla.dalek_mod_redstone.common.sonic;
 
-import com.frogrilla.dalek_mod_redstone.common.block.sonicstone.SonicRelayBlock;
+import com.frogrilla.dalek_mod_redstone.common.block.sonicstone.ISonicStone;
 import com.swdteam.common.init.DMSonicRegistry;
 import com.swdteam.common.sonic.SonicCategory;
 import net.minecraft.block.BlockState;
@@ -16,7 +16,7 @@ public class SonicSonicStone implements DMSonicRegistry.ISonicInteraction {
         if (o instanceof BlockPos) {
             BlockPos p = (BlockPos) o;
             BlockState state = world.getBlockState(p);
-            if(!state.getValue(SonicRelayBlock.ACTIVATED)){
+            if(!state.getValue(ISonicStone.ACTIVATED)){
                 world.getBlockTicks().scheduleTick(p, state.getBlock(), 0);
             }
         }

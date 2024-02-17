@@ -5,6 +5,7 @@ import com.frogrilla.dalek_mod_redstone.common.init.ModBlocks;
 import com.swdteam.common.init.DMSonicRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.IntegerProperty;
@@ -38,7 +39,8 @@ public interface ISonicStone {
         return false;
     }
 
-    static void SonicBlock(World world, BlockPos pos, BlockState state){
+    static void SonicBlock(World world, BlockPos pos){
+        BlockState state = world.getBlockState(pos);
         if (DMSonicRegistry.SONIC_LOOKUP.containsKey(state.getBlock())) {
             DMSonicRegistry.ISonicInteraction son = (DMSonicRegistry.ISonicInteraction)DMSonicRegistry.SONIC_LOOKUP.get(state.getBlock());
             if(son != null) son.interact(world, null, null, pos);
