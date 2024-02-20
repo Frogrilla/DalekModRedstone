@@ -4,7 +4,9 @@
   "package": "com.frogrilla.dalek_mod_redstone.mixin",
   "refmap": "dalek_mod_redstone.refmap.json",
   "required": true,
-  "mixins": ["MixinPacketClickTardisDoors"],
+  "mixins": [
+    "PacketClickTardisDoorsMixin"
+  ],
   "client": [],
   "server": []
 }
