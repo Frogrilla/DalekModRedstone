@@ -1,5 +1,8 @@
 package com.frogrilla.dalek_mod_redstone.common.block.sonicstone;
 
+
+import com.frogrilla.dalek_mod_redstone.sonicstone.ISonicStone;
+import com.frogrilla.dalek_mod_redstone.sonicstone.SonicStoneInteraction;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;
@@ -16,12 +19,12 @@ import java.util.Random;
 
 public class SonicGateBlock extends Block implements ISonicStone {
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
+
     public SonicGateBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(
                 getStateDefinition().any()
                         .setValue(AXIS, Direction.Axis.Y)
-                        .setValue(DELAY, 0)
                         .setValue(ACTIVATED, false)
         );
     }
@@ -29,7 +32,6 @@ public class SonicGateBlock extends Block implements ISonicStone {
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(AXIS);
-        builder.add(DELAY);
         builder.add(ACTIVATED);
         super.createBlockStateDefinition(builder);
     }
@@ -43,35 +45,26 @@ public class SonicGateBlock extends Block implements ISonicStone {
     }
 
     @Override
-    public boolean Signal(World world, BlockPos pos, int strength, Direction direction, int distance) {
-        if(world.getBlockState(pos).getValue(ACTIVATED) || direction.getAxis() != world.getBlockState(pos).getValue(AXIS)) return true;
-        world.getBlockTicks().scheduleTick(pos, world.getBlockState(pos).getBlock(), distance);
-        return false;
+    public void Signal(SonicStoneInteraction interaction) {
+        if(DisruptSignal(interaction)) return;
+        BlockState state = interaction.world.getBlockState(interaction.blockPos);
+        BlockStateProperties.FACING.getAllValues().forEach(directionValuePair -> {
+            Direction dir = directionValuePair.value();
+            if (dir.getAxis() == state.getValue(AXIS)) return;
+            BlockPos check = interaction.blockPos.relative(dir);
+            ISonicStone.SonicBlock(interaction.world, check);
+        });
+        interaction.world.setBlockAndUpdate(interaction.blockPos, state.setValue(ACTIVATED, true));
+        interaction.world.getBlockTicks().scheduleTick(interaction.blockPos, this, DELAY_TIME);
+    }
+
+    @Override
+    public boolean DisruptSignal(SonicStoneInteraction interaction) {
+        return interaction.direction.getAxis() != interaction.world.getBlockState(interaction.blockPos).getValue(AXIS);
     }
 
     @Override
     public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        // DELAY TIMER
-        if(state.getValue(ACTIVATED)){
-            int cur = state.getValue(DELAY)-1;
-            if(cur == 0) {
-                world.setBlockAndUpdate(pos, state.setValue(DELAY, 0).setValue(ACTIVATED, false));
-            }
-            else {
-                world.setBlockAndUpdate(pos, state.setValue(DELAY, cur));
-                world.getBlockTicks().scheduleTick(pos, state.getBlock(), 1);
-            }
-            return;
-        }
-
-        // SONIC STONE PROCESS
-        BlockStateProperties.FACING.getAllValues().forEach(directionValuePair -> {
-            Direction dir = directionValuePair.value();
-            if(dir.getAxis() == state.getValue(AXIS)) return;
-            BlockPos check = pos.relative(dir);
-            ISonicStone.SonicBlock(world, check);
-        });
-        world.setBlockAndUpdate(pos, state.setValue(DELAY, DELAY_TIME).setValue(ACTIVATED, true));
-        world.getBlockTicks().scheduleTick(pos, state.getBlock(), 1);
+        world.setBlockAndUpdate(pos, state.setValue(ACTIVATED, false));
     }
 }

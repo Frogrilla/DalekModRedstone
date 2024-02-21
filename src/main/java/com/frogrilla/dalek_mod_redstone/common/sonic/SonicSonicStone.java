@@ -1,6 +1,7 @@
 package com.frogrilla.dalek_mod_redstone.common.sonic;
 
-import com.frogrilla.dalek_mod_redstone.common.block.sonicstone.ISonicStone;
+import com.frogrilla.dalek_mod_redstone.sonicstone.ISonicStone;
+import com.frogrilla.dalek_mod_redstone.sonicstone.SonicStoneInteraction;
 import com.swdteam.common.init.DMSonicRegistry;
 import com.swdteam.common.sonic.SonicCategory;
 import net.minecraft.block.BlockState;
@@ -13,11 +14,11 @@ public class SonicSonicStone implements DMSonicRegistry.ISonicInteraction {
     public SonicSonicStone(){}
     @Override
     public void interact(World world, PlayerEntity playerEntity, ItemStack itemStack, Object o) {
-        if (o instanceof BlockPos) {
+        if (o instanceof BlockPos && !world.isClientSide) {
             BlockPos p = (BlockPos) o;
             BlockState state = world.getBlockState(p);
             if(!state.getValue(ISonicStone.ACTIVATED)){
-                world.getBlockTicks().scheduleTick(p, state.getBlock(), 0);
+                ((ISonicStone)state.getBlock()).Signal(new SonicStoneInteraction(p, world, null, 15, 0, 0));
             }
         }
     }

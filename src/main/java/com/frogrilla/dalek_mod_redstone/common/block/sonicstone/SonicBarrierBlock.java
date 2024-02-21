@@ -1,5 +1,8 @@
 package com.frogrilla.dalek_mod_redstone.common.block.sonicstone;
 
+
+import com.frogrilla.dalek_mod_redstone.sonicstone.ISonicStone;
+import com.frogrilla.dalek_mod_redstone.sonicstone.SonicStoneInteraction;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
-public class SonicBarrierBlock extends Block implements ISonicStone{
+public class SonicBarrierBlock extends Block implements ISonicStone {
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
     public static final BooleanProperty EAST = BooleanProperty.create("east");
     public static final BooleanProperty SOUTH = BooleanProperty.create("south");
@@ -76,7 +79,12 @@ public class SonicBarrierBlock extends Block implements ISonicStone{
         return state.getValue(getPropertyFromDirection(dir));
     }
     @Override
-    public boolean Signal(World world, BlockPos pos, int strength, Direction direction, int distance) {
-        return !getStateFromDirection(direction.getOpposite(), world.getBlockState(pos));
+    public void Signal(SonicStoneInteraction interaction) {
+
+    }
+
+    @Override
+    public boolean DisruptSignal(SonicStoneInteraction interaction) {
+        return !getStateFromDirection(interaction.direction.getOpposite(), interaction.world.getBlockState(interaction.blockPos));
     }
 }
