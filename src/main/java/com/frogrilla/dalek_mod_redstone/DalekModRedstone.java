@@ -57,6 +57,7 @@ public class DalekModRedstone
             DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_RELAY.get(), new SonicSonicStone());
             DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_DIRECTOR.get(), new SonicSonicStone());
             DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_TERMINAL.get(), new SonicSonicStone());
+            DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_DISPLAY.get(), new SonicSonicStone());
         });
     }
 }

@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "power=0": {
+      "model": "dalek_mod_redstone:block/sonic_display/sonic_display_0"
+    },
+    "power=1": {
+      "model": "dalek_mod_redstone:block/sonic_display/sonic_display_1"
+    },
+    "power=2": {
+      "model": "dalek_mod_redstone:block/sonic_display/sonic_display_2"
+    },
+    "power=3": {
+      "model": "dalek_mod_redstone:block/sonic_display/sonic_display_3"
+    },
+    "power=4": {
+      "model": "dalek_mod_redstone:block/sonic_display/sonic_display_4"
+    },
+    "power=5": {
+      "model": "dalek_mod_redstone:block/sonic_display/sonic_display_5"
+    },
+    "power=6": {
+      "model": "dalek_mod_redstone:block/sonic_display/sonic_display_6"
+    },
+    "power=7": {
+      "model": "dalek_mod_redstone:block/sonic_display/sonic_display_7"
+    },
+    "power=8": {
+      "model": "dalek_mod_redstone:block/sonic_display/sonic_display_8"
+    },
+    "power=9": {
+      "model": "dalek_mod_redstone:block/sonic_display/sonic_display_9"
+    },
+    "power=10": {
+      "model": "dalek_mod_redstone:block/sonic_display/sonic_display_a"
+    },
+    "power=11": {
+      "model": "dalek_mod_redstone:block/sonic_display/sonic_display_b"
+    },
+    "power=12": {
+      "model": "dalek_mod_redstone:block/sonic_display/sonic_display_c"
+    },
+    "power=13": {
+      "model": "dalek_mod_redstone:block/sonic_display/sonic_display_d"
+    },
+    "power=14": {
+      "model": "dalek_mod_redstone:block/sonic_display/sonic_display_e"
+    },
+    "power=15": {
+      "model": "dalek_mod_redstone:block/sonic_display/sonic_display_f"
+    }
+  }
+}

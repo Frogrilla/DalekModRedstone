@@ -116,4 +116,6 @@ public class SonicRelayBlock extends Block implements ISonicStone {
     public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         world.setBlockAndUpdate(pos, state.setValue(ACTIVATED, false));
     }
+
+
 }

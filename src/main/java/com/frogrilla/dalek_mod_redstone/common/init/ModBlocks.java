@@ -36,8 +36,9 @@ public class ModBlocks {
             SONIC_TERMINAL = registerBlock("sonic_terminal", () -> new SonicTerminalBlock(AbstractBlock.Properties.of(Material.GLASS).instabreak().sound(SoundType.GLASS)), ModTabs.DMR_TAB),
             SONIC_BOOSTER = registerBlock("sonic_booster", () -> new SonicBoosterBlock(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).noOcclusion()), ModTabs.DMR_TAB),
             SONIC_BARRIER = registerBlock("sonic_barrier", () -> new SonicBarrierBlock(AbstractBlock.Properties.of(Material.WOOD).sound(SoundType.WOOD)), ModTabs.DMR_TAB),
-            SONIC_GATE = registerBlock("sonic_gate", () -> new SonicGateBlock(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS)), ModTabs.DMR_TAB);
-    ;;
+            SONIC_GATE = registerBlock("sonic_gate", () -> new SonicGateBlock(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS)), ModTabs.DMR_TAB),
+            SONIC_DISPLAY = registerBlock("sonic_display", () -> new SonicDisplayBlock(AbstractBlock.Properties.of(Material.WOOD).sound(SoundType.WOOD)), ModTabs.DMR_TAB)
+    ;
 
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block, ItemGroup tab){
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
