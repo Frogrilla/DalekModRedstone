@@ -48,6 +48,7 @@ public class DalekModRedstone
             RenderTypeLookup.setRenderLayer(ModBlocks.SONIC_TERMINAL.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(ModBlocks.SONIC_BOOSTER.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(ModBlocks.SONIC_GATE.get(), RenderType.translucent());
+            RenderTypeLookup.setRenderLayer(ModBlocks.SONIC_REFLECTOR.get(), RenderType.cutout());
         });
     }
 

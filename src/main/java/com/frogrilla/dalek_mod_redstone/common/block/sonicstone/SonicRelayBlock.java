@@ -20,8 +20,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class SonicRelayBlock extends Block implements ISonicStone {
@@ -100,7 +98,7 @@ public class SonicRelayBlock extends Block implements ISonicStone {
             Direction direction = pair.value();
             if(interaction.direction != null && direction == interaction.direction.getOpposite()) return;
             if(direction == state.getValue(FACING).getOpposite()) return;
-            ISonicStone.SendSignal(interaction.world, interaction.blockPos, SEARCH_DISTANCE, direction);
+            ISonicStone.SendSignal(interaction.world, interaction.blockPos, STRENGTH, direction);
         });
 
         interaction.world.setBlockAndUpdate(interaction.blockPos, state.setValue(ACTIVATED, true));

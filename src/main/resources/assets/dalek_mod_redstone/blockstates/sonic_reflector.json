@@ -1,0 +1,107 @@
+{
+  "variants": {
+    "facing=up,side_1=true,side_2=true": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_12"
+    },
+    "facing=down,side_1=true,side_2=true": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_12",
+      "y": 90
+    },
+    "facing=north,side_1=true,side_2=true": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_12",
+      "x": 90
+    },
+    "facing=east,side_1=true,side_2=true": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_12",
+      "x": 90,
+      "y": 90
+    },
+    "facing=south,side_1=true,side_2=true": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_12",
+      "x": -90
+    },
+    "facing=west,side_1=true,side_2=true": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_12",
+      "x": -90,
+      "y": 90
+    },
+
+    "facing=up,side_1=true,side_2=false": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_1"
+    },
+    "facing=down,side_1=true,side_2=false": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_1",
+      "y": 90
+    },
+    "facing=north,side_1=true,side_2=false": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_1",
+      "x": 90
+    },
+    "facing=east,side_1=true,side_2=false": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_1",
+      "x": 90,
+      "y": 90
+    },
+    "facing=south,side_1=true,side_2=false": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_1",
+      "x": -90
+    },
+    "facing=west,side_1=true,side_2=false": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_1",
+      "x": -90,
+      "y": 90
+    },
+
+    "facing=up,side_1=false,side_2=false": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector"
+    },
+    "facing=down,side_1=false,side_2=false": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector",
+      "y": 90
+    },
+    "facing=north,side_1=false,side_2=false": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector",
+      "x": 90
+    },
+    "facing=east,side_1=false,side_2=false": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector",
+      "x": 90,
+      "y": 90
+    },
+    "facing=south,side_1=false,side_2=false": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector",
+      "x": -90
+    },
+    "facing=west,side_1=false,side_2=false": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector",
+      "x": -90,
+      "y": 90
+    },
+
+    "facing=up,side_1=false,side_2=true": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_2"
+    },
+    "facing=down,side_1=false,side_2=true": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_2",
+      "y": 90
+    },
+    "facing=north,side_1=false,side_2=true": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_2",
+      "x": 90
+    },
+    "facing=east,side_1=false,side_2=true": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_2",
+      "x": 90,
+      "y": 90
+    },
+    "facing=south,side_1=false,side_2=true": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_2",
+      "x": -90
+    },
+    "facing=west,side_1=false,side_2=true": {
+      "model": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_2",
+      "x": -90,
+      "y": 90
+    }
+  }
+}

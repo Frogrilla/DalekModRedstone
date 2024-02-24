@@ -1,0 +1,7 @@
+{
+  "parent": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_12",
+  "textures": {
+    "1": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_mirror",
+    "2": "dalek_mod_redstone:block/sonic_reflector/sonic_reflector_glass"
+  }
+}

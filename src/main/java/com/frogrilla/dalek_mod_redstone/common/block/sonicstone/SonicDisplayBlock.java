@@ -4,25 +4,34 @@ import com.frogrilla.dalek_mod_redstone.sonicstone.ISonicStone;
 import com.frogrilla.dalek_mod_redstone.sonicstone.SonicStoneInteraction;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 public class SonicDisplayBlock extends Block implements ISonicStone {
 
     public static final IntegerProperty POWER = IntegerProperty.create("power", 0, 15);
+    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public SonicDisplayBlock(Properties builder) {
         super(builder);
         this.registerDefaultState(
                 getStateDefinition().any()
-                    .setValue(POWER, 0));
+                    .setValue(POWER, 0)
+                    .setValue(POWERED, false)
+        );
     }
 
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(POWER);
+        builder.add(POWERED);
         super.createBlockStateDefinition(builder);
     }
 
@@ -36,14 +45,33 @@ public class SonicDisplayBlock extends Block implements ISonicStone {
         return state.getValue(POWER);
     }
 
+    public void neighborChanged(BlockState state, World world, BlockPos blockPos, Block block, BlockPos blockPos1, boolean isMoving) {
+        if (!world.isClientSide) {
+            int singalStrength = world.getBestNeighborSignal(blockPos);
+            boolean powered = singalStrength > 0;
+            if(powered){
+                world.setBlockAndUpdate(blockPos, state.setValue(POWERED, powered).setValue(POWER, singalStrength));
+            }
+            else{
+                world.setBlockAndUpdate(blockPos, state.setValue(POWERED, powered));
+            }
+        }
+    }
+
+    @Override
+    public boolean canConnectRedstone(BlockState state, IBlockReader world, BlockPos pos, @Nullable Direction side) {
+        return true;
+    }
+
     @Override
     public void Signal(SonicStoneInteraction interaction) {
         BlockState state = interaction.world.getBlockState(interaction.blockPos);
-        interaction.world.setBlockAndUpdate(interaction.blockPos, state.setValue(POWER, interaction.strength+1 - interaction.distance));
+        if(state.getValue(POWERED)) return;
+        interaction.world.setBlockAndUpdate(interaction.blockPos, state.setValue(POWER, interaction.strength - interaction.distance));
     }
 
     @Override
     public boolean DisruptSignal(SonicStoneInteraction interaction) {
-        return true;
+        return false;
     }
 }

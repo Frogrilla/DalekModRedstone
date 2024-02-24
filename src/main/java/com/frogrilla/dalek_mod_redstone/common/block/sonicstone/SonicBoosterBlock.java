@@ -5,22 +5,10 @@ import com.frogrilla.dalek_mod_redstone.sonicstone.SonicStoneInteraction;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-import javax.annotation.Nullable;
 import java.util.Random;
 
 public class SonicBoosterBlock extends Block implements ISonicStone {
@@ -45,7 +33,7 @@ public class SonicBoosterBlock extends Block implements ISonicStone {
         BlockState state = interaction.world.getBlockState(interaction.blockPos);
         if(state.getValue(ACTIVATED)) return;
 
-        ISonicStone.SendSignal(interaction.world, interaction.blockPos, SEARCH_DISTANCE, interaction.direction);
+        ISonicStone.SendSignal(interaction.world, interaction.blockPos, STRENGTH, interaction.direction);
 
         interaction.world.setBlockAndUpdate(interaction.blockPos, state.setValue(ACTIVATED, true));
         interaction.world.getBlockTicks().scheduleTick(interaction.blockPos, this, DELAY_TIME);

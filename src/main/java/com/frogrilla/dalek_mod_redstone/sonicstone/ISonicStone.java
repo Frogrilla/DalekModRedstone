@@ -8,7 +8,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public interface ISonicStone {
     List<SonicStoneInteraction> SONIC_STONE_INTERACTIONS = new ArrayList<>();
     List<SonicStoneInteraction> INTERACTION_BUFFER = new ArrayList<>();
     BooleanProperty ACTIVATED = BooleanProperty.create("activated");
-    int SEARCH_DISTANCE = 15;
+    int STRENGTH = 16;
     int DELAY_TIME = 4;
 
     void Signal(SonicStoneInteraction interaction);
@@ -25,7 +24,7 @@ public interface ISonicStone {
 
     static boolean SendSignal(World world, BlockPos pos, int strength, Direction direction) {
         if(world.isClientSide) return false;
-        for (int i = 1; i <= strength; ++i) {
+        for (int i = 1; i < strength; ++i) {
             BlockPos checkPos = pos.relative(direction, i);
             BlockState checkState = world.getBlockState(checkPos);
             Block checkBlock = checkState.getBlock();

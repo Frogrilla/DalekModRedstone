@@ -6,6 +6,7 @@ import com.frogrilla.dalek_mod_redstone.common.block.SonicResonatorBlock;
 import com.frogrilla.dalek_mod_redstone.common.block.sonicstone.*;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
@@ -37,7 +38,8 @@ public class ModBlocks {
             SONIC_BOOSTER = registerBlock("sonic_booster", () -> new SonicBoosterBlock(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).noOcclusion()), ModTabs.DMR_TAB),
             SONIC_BARRIER = registerBlock("sonic_barrier", () -> new SonicBarrierBlock(AbstractBlock.Properties.of(Material.WOOD).sound(SoundType.WOOD)), ModTabs.DMR_TAB),
             SONIC_GATE = registerBlock("sonic_gate", () -> new SonicGateBlock(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS)), ModTabs.DMR_TAB),
-            SONIC_DISPLAY = registerBlock("sonic_display", () -> new SonicDisplayBlock(AbstractBlock.Properties.of(Material.WOOD).sound(SoundType.WOOD)), ModTabs.DMR_TAB)
+            SONIC_DISPLAY = registerBlock("sonic_display", () -> new SonicDisplayBlock(AbstractBlock.Properties.of(Material.WOOD).sound(SoundType.WOOD).isRedstoneConductor((a,b,c) -> false)), ModTabs.DMR_TAB),
+            SONIC_REFLECTOR = registerBlock("sonic_reflector", () -> new SonicReflectorBlock(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).instabreak().noOcclusion()), ModTabs.DMR_TAB)
     ;
 
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block, ItemGroup tab){
