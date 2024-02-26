@@ -31,7 +31,7 @@ public interface ISonicStone {
 
             if (checkBlock instanceof ISonicStone) {
                 ISonicStone sonicBlock = (ISonicStone)checkBlock;
-                SonicStoneInteraction interaction = new SonicStoneInteraction(checkPos, world, direction, strength, i, i*2);
+                SonicStoneInteraction interaction = new SonicStoneInteraction(checkPos, world, direction, strength, i, i*4);
                 AddSonicInteraction(interaction);
                 if(sonicBlock.DisruptSignal(interaction)) return true;
             }
