@@ -111,4 +111,10 @@ public class SonicDirectorBlock extends Block implements ISonicStone {
     public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         world.setBlockAndUpdate(pos, state.setValue(ACTIVATED, false));
     }
+
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        // Hehehehe - the piston won't see it coming
+        return true;
+    }
 }

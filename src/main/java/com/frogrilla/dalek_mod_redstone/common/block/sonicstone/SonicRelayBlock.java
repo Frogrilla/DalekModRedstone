@@ -115,5 +115,9 @@ public class SonicRelayBlock extends Block implements ISonicStone {
         world.setBlockAndUpdate(pos, state.setValue(ACTIVATED, false));
     }
 
-
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        // Hehehehe - the piston won't see it coming
+        return true;
+    }
 }

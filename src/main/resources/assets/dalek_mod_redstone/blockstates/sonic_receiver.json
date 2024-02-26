@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "powered=true": {"model": "dalek_mod_redstone:block/sonic_receiver/sonic_receiver_off"},
+    "powered=false": {"model": "dalek_mod_redstone:block/sonic_receiver/sonic_receiver_on"}
+  }
+}
