@@ -1,21 +1,11 @@
 package com.frogrilla.dalek_mod_redstone.mixin;
 
-import com.frogrilla.dalek_mod_redstone.DalekModRedstone;
+import com.frogrilla.dalek_mod_redstone.common.init.ModParticles;
 import com.frogrilla.dalek_mod_redstone.sonicstone.ISonicStone;
 import com.frogrilla.dalek_mod_redstone.sonicstone.SonicStoneInteraction;
 import net.minecraft.block.Block;
-import net.minecraft.profiler.IProfiler;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.world.DimensionType;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.ISpawnWorldInfo;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -23,7 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
-import java.util.function.Supplier;
 
 @Mixin(ServerWorld.class)
 public abstract class MixinServerWorld {
@@ -37,6 +26,7 @@ public abstract class MixinServerWorld {
                 Block block = interaction.world.getBlockState(interaction.blockPos).getBlock();
                 if(block instanceof ISonicStone){
                     ((ISonicStone)block).Signal(interaction);
+                    interaction.world.getServer().getLevel(interaction.world.dimension()).sendParticles(ModParticles.SONIC_RESONANCE.get(), interaction.blockPos.getX(), interaction.blockPos.getY(), interaction.blockPos.getZ(), 10, 0.1, 0.1,0.1, 0.01f);
                 }
                 toDelete.add(interaction);
             }

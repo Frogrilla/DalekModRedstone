@@ -2,6 +2,7 @@ package com.frogrilla.dalek_mod_redstone;
 
 import com.frogrilla.dalek_mod_redstone.common.init.ModBlocks;
 import com.frogrilla.dalek_mod_redstone.common.init.ModItems;
+import com.frogrilla.dalek_mod_redstone.common.init.ModParticles;
 import com.frogrilla.dalek_mod_redstone.common.init.ModTileEntities;
 import com.frogrilla.dalek_mod_redstone.common.sonic.SonicNoteBlock;
 import com.frogrilla.dalek_mod_redstone.common.sonic.SonicSonicStone;
@@ -33,6 +34,7 @@ public class DalekModRedstone
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModTileEntities.register(modEventBus);
+        ModParticles.register(modEventBus);
 
         modEventBus.addListener(this::doClientStuff);
         modEventBus.addListener(this::runLater);
