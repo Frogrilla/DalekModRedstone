@@ -69,4 +69,9 @@ public class SonicResonatorBlock extends Block {
 
         return ActionResultType.FAIL;
     }
+
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
 }

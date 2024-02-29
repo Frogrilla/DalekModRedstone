@@ -3,9 +3,11 @@ package com.frogrilla.dalek_mod_redstone;
 import com.frogrilla.dalek_mod_redstone.common.init.ModBlocks;
 import com.frogrilla.dalek_mod_redstone.common.init.ModItems;
 import com.frogrilla.dalek_mod_redstone.common.init.ModTileEntities;
+import com.frogrilla.dalek_mod_redstone.common.sonic.SonicNoteBlock;
 import com.frogrilla.dalek_mod_redstone.common.sonic.SonicSonicStone;
 import com.frogrilla.dalek_mod_redstone.common.sonic.SonicSonicResonator;
 import com.swdteam.common.init.DMSonicRegistry;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.common.MinecraftForge;
@@ -54,6 +56,7 @@ public class DalekModRedstone
 
     private void runLater(ParallelDispatchEvent event) {
         event.enqueueWork(() -> {
+            DMSonicRegistry.SONIC_LOOKUP.put(Blocks.NOTE_BLOCK, new SonicNoteBlock());
             DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_RESONATOR.get(), new SonicSonicResonator());
             DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_RELAY.get(), new SonicSonicStone());
             DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_DIRECTOR.get(), new SonicSonicStone());
