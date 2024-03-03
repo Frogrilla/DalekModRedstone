@@ -208,7 +208,7 @@ public class SonicReflectorBlock extends Block implements ISonicStone {
         BlockState state = interaction.world.getBlockState(interaction.blockPos);
         if(state.getValue(FACING).getAxis() == interaction.direction.getAxis() || !DisruptSignal(interaction)) return;
         Direction reflectionDirection = GetReflectionDirection(state.getValue(FACING), interaction.direction);
-        ISonicStone.SendSignal(interaction.world, interaction.blockPos, interaction.strength-interaction.distance, reflectionDirection);
+        ISonicStone.CreateSignal(interaction.world, interaction.blockPos, interaction.strength-interaction.distance, reflectionDirection);
     }
 
     @Override

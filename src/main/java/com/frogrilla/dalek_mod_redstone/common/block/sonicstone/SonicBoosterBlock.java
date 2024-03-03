@@ -27,7 +27,7 @@ public class SonicBoosterBlock extends Block implements ISonicStone {
         if(interaction.world.isClientSide()) return;
         BlockState state = interaction.world.getBlockState(interaction.blockPos);
 
-        ISonicStone.SendSignal(interaction.world, interaction.blockPos, STRENGTH, interaction.direction);
+        ISonicStone.CreateSignal(interaction.world, interaction.blockPos, STRENGTH, interaction.direction);
     }
 
     @Override

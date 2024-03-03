@@ -61,7 +61,7 @@ public class SonicRelayBlock extends Block implements ISonicStone {
             boolean nPower = world.hasNeighborSignal(blockPos);
             boolean activated = state.getValue(ACTIVATED);
             if(nPower != state.getValue(POWERED)){
-                if(nPower && !activated) Signal(new SonicStoneInteraction(blockPos, world, null, 15, 0, 0));
+                if(nPower && !activated) Signal(new SonicStoneInteraction(world, blockPos, null, 15, 0));
                 world.setBlockAndUpdate(blockPos,state.setValue(POWERED, nPower).setValue(ACTIVATED, activated || nPower));
             }
         }
@@ -98,7 +98,7 @@ public class SonicRelayBlock extends Block implements ISonicStone {
             Direction direction = pair.value();
             if(interaction.direction != null && direction == interaction.direction.getOpposite()) return;
             if(direction == state.getValue(FACING).getOpposite()) return;
-            ISonicStone.SendSignal(interaction.world, interaction.blockPos, STRENGTH, direction);
+            ISonicStone.CreateSignal(interaction.world, interaction.blockPos, STRENGTH, direction);
         });
 
         interaction.world.setBlockAndUpdate(interaction.blockPos, state.setValue(ACTIVATED, true));

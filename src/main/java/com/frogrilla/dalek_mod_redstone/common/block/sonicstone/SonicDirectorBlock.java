@@ -63,7 +63,7 @@ public class SonicDirectorBlock extends Block implements ISonicStone {
             boolean nPower = world.hasNeighborSignal(blockPos);
             boolean activated = state.getValue(ACTIVATED);
             if (nPower != state.getValue(POWERED)) {
-                if (nPower && !activated) Signal(new SonicStoneInteraction(blockPos, world, null, 15, 0, 0));
+                if (nPower && !activated) Signal(new SonicStoneInteraction(world, blockPos, null, 15, 0));
                 world.setBlockAndUpdate(blockPos, state.setValue(POWERED, nPower).setValue(ACTIVATED, activated || nPower));
             }
         }
@@ -96,7 +96,7 @@ public class SonicDirectorBlock extends Block implements ISonicStone {
 
         BlockPos under = interaction.blockPos.relative(state.getValue(FACING).getOpposite());
         ISonicStone.SonicBlock(interaction.world, under);
-        ISonicStone.SendSignal(interaction.world, interaction.blockPos, STRENGTH, state.getValue(FACING));
+        ISonicStone.CreateSignal(interaction.world, interaction.blockPos, STRENGTH, state.getValue(FACING));
 
         interaction.world.setBlockAndUpdate(interaction.blockPos, state.setValue(ACTIVATED, true));
         interaction.world.getBlockTicks().scheduleTick(interaction.blockPos, this, DELAY_TIME);

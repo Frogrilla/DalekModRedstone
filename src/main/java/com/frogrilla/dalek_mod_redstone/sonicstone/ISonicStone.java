@@ -12,31 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface ISonicStone {
-
-    List<SonicStoneInteraction> SONIC_STONE_INTERACTIONS = new ArrayList<>();
-    List<SonicStoneInteraction> INTERACTION_BUFFER = new ArrayList<>();
+    List<SonicStoneSignal> SONIC_STONE_SIGNALS = new ArrayList<>();
+    List<SonicStoneSignal> SIGNAL_BUFFER = new ArrayList<>();
     BooleanProperty ACTIVATED = BooleanProperty.create("activated");
     int STRENGTH = 16;
-    int DELAY_TIME = 4;
+    int DELAY_TIME = 16;
+    int TICKS_PER_BLOCK = 4;
 
     void Signal(SonicStoneInteraction interaction);
     boolean DisruptSignal(SonicStoneInteraction interaction);
 
-    static boolean SendSignal(World world, BlockPos pos, int strength, Direction direction) {
-        if(world.isClientSide) return false;
-        for (int i = 1; i < strength; ++i) {
-            BlockPos checkPos = pos.relative(direction, i);
-            BlockState checkState = world.getBlockState(checkPos);
-            Block checkBlock = checkState.getBlock();
-
-            if (checkBlock instanceof ISonicStone) {
-                ISonicStone sonicBlock = (ISonicStone)checkBlock;
-                SonicStoneInteraction interaction = new SonicStoneInteraction(checkPos, world, direction, strength, i, i*4);
-                AddSonicInteraction(interaction);
-                if(sonicBlock.DisruptSignal(interaction)) return true;
-            }
-        }
-        return false;
+    static void CreateSignal(World world, BlockPos pos, int strength, Direction direction) {
+        if(!world.isClientSide) SIGNAL_BUFFER.add(new SonicStoneSignal(world, pos, direction, strength));
     }
 
     static void SonicBlock(World world, BlockPos pos) {
@@ -45,9 +32,5 @@ public interface ISonicStone {
             DMSonicRegistry.ISonicInteraction son = (DMSonicRegistry.ISonicInteraction) DMSonicRegistry.SONIC_LOOKUP.get(state.getBlock());
             if (son != null) son.interact(world, null, null, pos);
         }
-    }
-
-    static void AddSonicInteraction(SonicStoneInteraction interaction){
-        INTERACTION_BUFFER.add(interaction);
     }
 }

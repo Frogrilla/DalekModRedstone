@@ -62,7 +62,7 @@ public class SonicTerminalBlock extends Block implements ISonicStone {
             boolean nPower = world.hasNeighborSignal(blockPos);
             boolean activated = state.getValue(ACTIVATED);
             if(nPower != state.getValue(POWERED)){
-                if(nPower && !activated) Signal(new SonicStoneInteraction(blockPos, world, null, 15, 0, 0));
+                if(nPower && !activated) Signal(new SonicStoneInteraction(world, blockPos, null, 15, 0));
                 world.setBlockAndUpdate(blockPos,state.setValue(POWERED, nPower).setValue(ACTIVATED, activated || nPower));
             }
         }

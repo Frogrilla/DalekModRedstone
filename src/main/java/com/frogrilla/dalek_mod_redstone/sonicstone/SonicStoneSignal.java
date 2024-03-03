@@ -1,22 +1,22 @@
 package com.frogrilla.dalek_mod_redstone.sonicstone;
 
 import net.minecraft.util.Direction;
-import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class SonicStoneInteraction {
+public class SonicStoneSignal {
     public final World world;
     public final BlockPos blockPos;
     public final Direction direction;
-    public final int distance;
     public final int strength;
+    public int distance = 0;
+    public int tickCounter;
 
-    public SonicStoneInteraction(World world, BlockPos blockPos, Direction dir, int strength, int distance){
-        this.blockPos = blockPos;
+    public SonicStoneSignal(World world, BlockPos blockPos, Direction direction, int strength){
         this.world = world;
-        this.direction = dir;
+        this.blockPos = blockPos;
+        this.direction = direction;
         this.strength = strength;
-        this.distance = distance;
+        this.tickCounter = strength*ISonicStone.TICKS_PER_BLOCK;
     }
 }

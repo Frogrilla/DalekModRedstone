@@ -3,7 +3,10 @@ package com.frogrilla.dalek_mod_redstone.mixin;
 import com.frogrilla.dalek_mod_redstone.common.init.ModParticles;
 import com.frogrilla.dalek_mod_redstone.sonicstone.ISonicStone;
 import com.frogrilla.dalek_mod_redstone.sonicstone.SonicStoneInteraction;
+import com.frogrilla.dalek_mod_redstone.sonicstone.SonicStoneSignal;
+import com.swdteam.common.init.DMSonicRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,23 +21,31 @@ import java.util.function.BooleanSupplier;
 public abstract class MixinServerWorld {
     @Inject(at = @At("TAIL"), method = "tick")
     public void tick(BooleanSupplier bs, CallbackInfo info){
-        ISonicStone.SONIC_STONE_INTERACTIONS.addAll(ISonicStone.INTERACTION_BUFFER);
-        ISonicStone.INTERACTION_BUFFER.clear();
-        List<SonicStoneInteraction> toDelete = new ArrayList<>();
-        ISonicStone.SONIC_STONE_INTERACTIONS.forEach(interaction -> {
-            if(interaction.ticksLeft == 0){
-                Block block = interaction.world.getBlockState(interaction.blockPos).getBlock();
+        // Thank you Jayson
+        ISonicStone.SONIC_STONE_SIGNALS.addAll(ISonicStone.SIGNAL_BUFFER);
+        ISonicStone.SIGNAL_BUFFER.clear();
+        List<SonicStoneSignal> deadSignals = new ArrayList<>();
+        ISonicStone.SONIC_STONE_SIGNALS.forEach(signal -> {
+            if(signal.tickCounter % ISonicStone.TICKS_PER_BLOCK == 0 && signal.tickCounter != signal.strength*ISonicStone.TICKS_PER_BLOCK){
+                signal.distance++;
+                BlockPos checkPos = signal.blockPos.relative(signal.direction, signal.distance);
+                SonicStoneInteraction interaction = new SonicStoneInteraction(signal.world, checkPos, signal.direction, signal.strength, signal.distance);
+                Block block = interaction.world.getBlockState(checkPos).getBlock();
                 if(block instanceof ISonicStone){
                     ((ISonicStone)block).Signal(interaction);
-                    interaction.world.getServer().getLevel(interaction.world.dimension()).sendParticles(ModParticles.SONIC_RESONANCE.get(), interaction.blockPos.getX(), interaction.blockPos.getY(), interaction.blockPos.getZ(), 10, 0.1, 0.1,0.1, 0.01f);
+                    if(((ISonicStone)block).DisruptSignal(interaction)){
+                        deadSignals.add(signal);
+                        return;
+                    }
                 }
-                toDelete.add(interaction);
+                else if (DMSonicRegistry.SONIC_LOOKUP.containsKey(block)){
+                    ISonicStone.SonicBlock(signal.world, checkPos);
+                }
             }
-            else{
-                interaction.ticksLeft--;
-            }
+            signal.tickCounter -= 1;
+            if(signal.tickCounter <= 0) deadSignals.add(signal);
         });
-        toDelete.forEach(ISonicStone.SONIC_STONE_INTERACTIONS::remove);
-        // Thank you Jayson
+        deadSignals.forEach(ISonicStone.SONIC_STONE_SIGNALS::remove);
+        deadSignals.clear();
     }
 }
