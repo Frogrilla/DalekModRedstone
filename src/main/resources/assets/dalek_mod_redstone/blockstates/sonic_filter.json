@@ -1,140 +1,140 @@
 {
   "variants": {
-    "mode=0, power=1": {
+    "mode=0,power=1": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_0_1"
     },
-    "mode=0, power=2": {
+    "mode=0,power=2": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_0_2"
     },
-    "mode=0, power=3": {
+    "mode=0,power=3": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_0_3"
     },
-    "mode=0, power=4": {
+    "mode=0,power=4": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_0_4"
     },
-    "mode=0, power=5": {
+    "mode=0,power=5": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_0_5"
     },
-    "mode=0, power=6": {
+    "mode=0,power=6": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_0_6"
     },
-    "mode=0, power=7": {
+    "mode=0,power=7": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_0_7"
     },
-    "mode=0, power=8": {
+    "mode=0,power=8": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_0_8"
     },
-    "mode=0, power=9": {
+    "mode=0,power=9": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_0_9"
     },
-    "mode=0, power=10": {
+    "mode=0,power=10": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_0_10"
     },
-    "mode=0, power=11": {
+    "mode=0,power=11": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_0_11"
     },
-    "mode=0, power=12": {
+    "mode=0,power=12": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_0_12"
     },
-    "mode=0, power=13": {
+    "mode=0,power=13": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_0_13"
     },
-    "mode=0, power=14": {
+    "mode=0,power=14": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_0_14"
     },
-    "mode=0, power=15": {
+    "mode=0,power=15": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_0_15"
     },
 
-    "mode=1, power=1": {
+    "mode=1,power=1": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_1_1"
     },
-    "mode=1, power=2": {
+    "mode=1,power=2": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_1_2"
     },
-    "mode=1, power=3": {
+    "mode=1,power=3": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_1_3"
     },
-    "mode=1, power=4": {
+    "mode=1,power=4": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_1_4"
     },
-    "mode=1, power=5": {
+    "mode=1,power=5": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_1_5"
     },
-    "mode=1, power=6": {
+    "mode=1,power=6": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_1_6"
     },
-    "mode=1, power=7": {
+    "mode=1,power=7": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_1_7"
     },
-    "mode=1, power=8": {
+    "mode=1,power=8": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_1_8"
     },
-    "mode=1, power=9": {
+    "mode=1,power=9": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_1_9"
     },
-    "mode=1, power=10": {
+    "mode=1,power=10": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_1_10"
     },
-    "mode=1, power=11": {
+    "mode=1,power=11": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_1_11"
     },
-    "mode=1, power=12": {
+    "mode=1,power=12": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_1_12"
     },
-    "mode=1, power=13": {
+    "mode=1,power=13": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_1_13"
     },
-    "mode=1, power=14": {
+    "mode=1,power=14": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_1_14"
     },
-    "mode=1, power=15": {
+    "mode=1,power=15": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_1_15"
     },
 
-    "mode=2, power=1": {
+    "mode=2,power=1": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_2_1"
     },
-    "mode=2, power=2": {
+    "mode=2,power=2": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_2_2"
     },
-    "mode=2, power=3": {
+    "mode=2,power=3": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_2_3"
     },
-    "mode=2, power=4": {
+    "mode=2,power=4": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_2_4"
     },
-    "mode=2, power=5": {
+    "mode=2,power=5": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_2_5"
     },
-    "mode=2, power=6": {
+    "mode=2,power=6": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_2_6"
     },
-    "mode=2, power=7": {
+    "mode=2,power=7": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_2_7"
     },
-    "mode=2, power=8": {
+    "mode=2,power=8": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_2_8"
     },
-    "mode=2, power=9": {
+    "mode=2,power=9": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_2_9"
     },
-    "mode=2, power=10": {
+    "mode=2,power=10": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_2_10"
     },
-    "mode=2, power=11": {
+    "mode=2,power=11": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_2_11"
     },
-    "mode=2, power=12": {
+    "mode=2,power=12": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_2_12"
     },
-    "mode=2, power=13": {
+    "mode=2,power=13": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_2_13"
     },
-    "mode=2, power=14": {
+    "mode=2,power=14": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_2_14"
     },
-    "mode=2, power=15": {
+    "mode=2,power=15": {
       "model": "dalek_mod_redstone:block/sonic_filter/sonic_filter_2_15"
     }
   }

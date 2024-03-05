@@ -41,6 +41,7 @@ public abstract class MixinServerWorld {
                 else if (DMSonicRegistry.SONIC_LOOKUP.containsKey(block)){
                     ISonicStone.SonicBlock(signal.world, checkPos);
                 }
+                signal.world.getServer().getLevel(signal.world.dimension()).sendParticles(ModParticles.SONIC_RESONANCE.get(), checkPos.getX()+0.5, checkPos.getY()+0.5, checkPos.getZ()+0.5, 10, 0.1, 0.1,0.1, 0.01f);
             }
             signal.tickCounter -= 1;
             if(signal.tickCounter <= 0) deadSignals.add(signal);
