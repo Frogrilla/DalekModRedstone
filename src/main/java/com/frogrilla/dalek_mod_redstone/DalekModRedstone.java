@@ -5,6 +5,7 @@ import com.frogrilla.dalek_mod_redstone.common.init.ModItems;
 import com.frogrilla.dalek_mod_redstone.common.init.ModParticles;
 import com.frogrilla.dalek_mod_redstone.common.init.ModTileEntities;
 import com.frogrilla.dalek_mod_redstone.common.sonic.SonicNoteBlock;
+import com.frogrilla.dalek_mod_redstone.common.sonic.SonicSonicDisplay;
 import com.frogrilla.dalek_mod_redstone.common.sonic.SonicSonicStone;
 import com.frogrilla.dalek_mod_redstone.common.sonic.SonicSonicResonator;
 import com.swdteam.common.init.DMSonicRegistry;
@@ -63,7 +64,7 @@ public class DalekModRedstone
             DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_RELAY.get(), new SonicSonicStone());
             DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_DIRECTOR.get(), new SonicSonicStone());
             DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_TERMINAL.get(), new SonicSonicStone());
-            DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_DISPLAY.get(), new SonicSonicStone());
+            DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_DISPLAY.get(), new SonicSonicDisplay());
         });
     }
 }

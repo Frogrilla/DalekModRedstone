@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "dalek_mod_redstone:block/sonic_filter/sonic_filter_1_7"
+  }
+}

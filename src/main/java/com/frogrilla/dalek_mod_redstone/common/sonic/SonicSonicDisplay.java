@@ -1,32 +1,22 @@
 package com.frogrilla.dalek_mod_redstone.common.sonic;
 
-import com.frogrilla.dalek_mod_redstone.common.block.SonicResonatorBlock;
-import com.frogrilla.dalek_mod_redstone.common.init.ModBlocks;
 import com.swdteam.common.init.DMSonicRegistry;
 import com.swdteam.common.sonic.SonicCategory;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.NoteBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class SonicNoteBlock implements DMSonicRegistry.ISonicInteraction {
+public class SonicSonicDisplay implements DMSonicRegistry.ISonicInteraction {
     @Override
     public void interact(World world, PlayerEntity playerEntity, ItemStack itemStack, Object o) {
-        if (o instanceof BlockPos) {
+        if (o instanceof BlockPos && !world.isClientSide) {
             BlockPos p = (BlockPos) o;
             BlockState state = world.getBlockState(p);
-            if(state.getBlock() == Blocks.NOTE_BLOCK){
-                int _new = net.minecraftforge.common.ForgeHooks.onNoteChange(world, p, state, state.getValue(BlockStateProperties.NOTE), state.cycle(BlockStateProperties.NOTE).getValue(BlockStateProperties.NOTE));
-                if (_new == -1) return;
-                state = state.setValue(BlockStateProperties.NOTE, _new);
-                world.setBlock(p, state, 3);
-            }
+            if(state.getValue(BlockStateProperties.POWERED)) return;
+            world.setBlockAndUpdate(p, state.setValue(BlockStateProperties.POWER, 0));
         }
     }
 
@@ -44,4 +34,5 @@ public class SonicNoteBlock implements DMSonicRegistry.ISonicInteraction {
     public SonicCategory getCategory() {
         return SonicCategory.REDSTONE;
     }
+
 }

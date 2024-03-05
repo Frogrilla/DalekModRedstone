@@ -18,7 +18,7 @@ public class SonicSonicStone implements DMSonicRegistry.ISonicInteraction {
             BlockPos p = (BlockPos) o;
             BlockState state = world.getBlockState(p);
             if(!state.getValue(ISonicStone.ACTIVATED)){
-                ((ISonicStone)state.getBlock()).Signal(new SonicStoneInteraction(world, p, null, 0, 0));
+                ((ISonicStone)state.getBlock()).Signal(new SonicStoneInteraction(world, p, null, ISonicStone.STRENGTH, 0));
             }
         }
     }

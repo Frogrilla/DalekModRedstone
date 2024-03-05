@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 
 public class SonicDisplayBlock extends Block implements ISonicStone {
 
-    public static final IntegerProperty POWER = IntegerProperty.create("power", 0, 15);
+    public static final IntegerProperty POWER = BlockStateProperties.POWER;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public SonicDisplayBlock(Properties builder) {
         super(builder);
@@ -67,7 +67,7 @@ public class SonicDisplayBlock extends Block implements ISonicStone {
     public void Signal(SonicStoneInteraction interaction) {
         BlockState state = interaction.world.getBlockState(interaction.blockPos);
         if(state.getValue(POWERED)) return;
-        interaction.world.setBlockAndUpdate(interaction.blockPos, state.setValue(POWER, interaction.strength - interaction.distance));
+        interaction.world.setBlockAndUpdate(interaction.blockPos, state.setValue(POWER, interaction.strength));
     }
 
     @Override

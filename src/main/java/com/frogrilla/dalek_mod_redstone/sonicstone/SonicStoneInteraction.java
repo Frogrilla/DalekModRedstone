@@ -11,12 +11,14 @@ public class SonicStoneInteraction {
     public final Direction direction;
     public final int distance;
     public final int strength;
+    public final int sourceStrength;
 
     public SonicStoneInteraction(World world, BlockPos blockPos, Direction dir, int strength, int distance){
         this.blockPos = blockPos;
         this.world = world;
         this.direction = dir;
-        this.strength = strength;
+        this.sourceStrength = strength;
+        this.strength = strength - distance;
         this.distance = distance;
     }
 }

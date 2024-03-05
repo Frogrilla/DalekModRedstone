@@ -4,13 +4,17 @@ package com.frogrilla.dalek_mod_redstone.common.block.sonicstone;
 import com.frogrilla.dalek_mod_redstone.sonicstone.ISonicStone;
 import com.frogrilla.dalek_mod_redstone.sonicstone.SonicStoneInteraction;
 import net.minecraft.block.*;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -39,6 +43,7 @@ public class SonicDirectorBlock extends Block implements ISonicStone {
                         .setValue(FACING, Direction.UP)
                         .setValue(POWERED, false)
                         .setValue(ACTIVATED, false)
+                        .setValue(BOOST, true)
         );
     }
 
@@ -47,6 +52,7 @@ public class SonicDirectorBlock extends Block implements ISonicStone {
         builder.add(FACING);
         builder.add(POWERED);
         builder.add(ACTIVATED);
+        builder.add(BOOST);
         super.createBlockStateDefinition(builder);
     }
 
@@ -60,11 +66,12 @@ public class SonicDirectorBlock extends Block implements ISonicStone {
 
     public void neighborChanged(BlockState state, World world, BlockPos blockPos, Block block, BlockPos blockPos1, boolean isMoving) {
         if (!world.isClientSide) {
-            boolean nPower = world.hasNeighborSignal(blockPos);
+            int nPower = world.getBestNeighborSignal(blockPos);
+            boolean powered = nPower > 0;
             boolean activated = state.getValue(ACTIVATED);
-            if (nPower != state.getValue(POWERED)) {
-                if (nPower && !activated) Signal(new SonicStoneInteraction(world, blockPos, null, 15, 0));
-                world.setBlockAndUpdate(blockPos, state.setValue(POWERED, nPower).setValue(ACTIVATED, activated || nPower));
+            if(powered != state.getValue(POWERED)){
+                if(powered && !activated) Signal(new SonicStoneInteraction(world, blockPos, null, nPower+1, 0));
+                world.setBlockAndUpdate(blockPos,state.setValue(POWERED, powered).setValue(ACTIVATED, activated || powered));
             }
         }
     }
@@ -96,7 +103,7 @@ public class SonicDirectorBlock extends Block implements ISonicStone {
 
         BlockPos under = interaction.blockPos.relative(state.getValue(FACING).getOpposite());
         ISonicStone.SonicBlock(interaction.world, under);
-        ISonicStone.CreateSignal(interaction.world, interaction.blockPos, STRENGTH, state.getValue(FACING));
+        ISonicStone.CreateSignal(interaction.world, interaction.blockPos, state.getValue(BOOST) ? interaction.sourceStrength : interaction.strength, state.getValue(FACING));
 
         interaction.world.setBlockAndUpdate(interaction.blockPos, state.setValue(ACTIVATED, true));
         interaction.world.getBlockTicks().scheduleTick(interaction.blockPos, this, DELAY_TIME);
@@ -110,6 +117,13 @@ public class SonicDirectorBlock extends Block implements ISonicStone {
     @Override
     public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         world.setBlockAndUpdate(pos, state.setValue(ACTIVATED, false));
+    }
+
+    @Override
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
+        if(world.isClientSide) return ActionResultType.PASS;
+        world.setBlockAndUpdate(pos, state.cycle(BOOST));
+        return ActionResultType.SUCCESS;
     }
 
     @Override

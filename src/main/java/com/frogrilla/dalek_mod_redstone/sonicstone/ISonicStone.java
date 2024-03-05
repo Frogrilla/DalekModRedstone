@@ -15,6 +15,7 @@ public interface ISonicStone {
     List<SonicStoneSignal> SONIC_STONE_SIGNALS = new ArrayList<>();
     List<SonicStoneSignal> SIGNAL_BUFFER = new ArrayList<>();
     BooleanProperty ACTIVATED = BooleanProperty.create("activated");
+    BooleanProperty BOOST = BooleanProperty.create("boost");
     int STRENGTH = 16;
     int DELAY_TIME = 16;
     int TICKS_PER_BLOCK = 4;
