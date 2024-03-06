@@ -41,8 +41,8 @@ public class ModBlocks {
             SONIC_DISPLAY = registerBlock("sonic_display", () -> new SonicDisplayBlock(AbstractBlock.Properties.of(Material.WOOD).sound(SoundType.WOOD).isRedstoneConductor((a,b,c) -> false)), ModTabs.DMR_TAB),
             SONIC_REFLECTOR = registerBlock("sonic_reflector", () -> new SonicReflectorBlock(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).instabreak().noOcclusion()), ModTabs.DMR_TAB),
             SONIC_RECEIVER = registerBlock("sonic_receiver", () -> new SonicReceiverBlock(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).isRedstoneConductor((a,b,c) -> false)), ModTabs.DMR_TAB),
-            SONIC_FILTER = registerBlock("sonic_filter", () -> new SonicFilterBlock(AbstractBlock.Properties.of(Material.METAL).strength(2.0F, 20.0F).sound(SoundType.METAL).isRedstoneConductor((a,b,c) -> false)), ModTabs.DMR_TAB)
-
+            SONIC_FILTER = registerBlock("sonic_filter", () -> new SonicFilterBlock(AbstractBlock.Properties.of(Material.METAL).strength(2.0F, 20.0F).sound(SoundType.METAL).isRedstoneConductor((a,b,c) -> false)), ModTabs.DMR_TAB),
+            SONIC_ADDER = registerBlock("sonic_adder", () -> new SonicAdderBlock(AbstractBlock.Properties.of(Material.METAL).strength(2.0F, 20.0F).sound(SoundType.METAL).isRedstoneConductor((a,b,c) -> false).noOcclusion()), ModTabs.DMR_TAB)
     ;
 
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block, ItemGroup tab){

@@ -1,0 +1,87 @@
+{
+  "multipart": [
+    {
+      "when": {"north": false},
+      "apply": {
+        "model": "dalek_mod_redstone:block/sonic_barrier/sonic_barrier_panel"
+      }
+    },
+    {
+      "when": {"east": false},
+      "apply": {
+        "model": "dalek_mod_redstone:block/sonic_barrier/sonic_barrier_panel",
+        "y": 90
+      }
+    },
+    {
+      "when": {"south": false},
+      "apply": {
+        "model": "dalek_mod_redstone:block/sonic_barrier/sonic_barrier_panel",
+        "y": 180
+      }
+    },
+    {
+      "when": {"west": false},
+      "apply": {
+        "model": "dalek_mod_redstone:block/sonic_barrier/sonic_barrier_panel",
+        "y": 270
+      }
+    },
+    {
+      "when": {"up": false},
+      "apply": {
+        "model": "dalek_mod_redstone:block/sonic_barrier/sonic_barrier_panel",
+        "x": 270
+      }
+    },
+    {
+      "when": {"down": false},
+      "apply": {
+        "model": "dalek_mod_redstone:block/sonic_barrier/sonic_barrier_panel",
+        "x": 90
+      }
+    },
+
+    {
+      "when": {"north": true},
+      "apply": {
+        "model": "dalek_mod_redstone:block/sonic_barrier/sonic_barrier_panel_open"
+      }
+    },
+    {
+      "when": {"east": true},
+      "apply": {
+        "model": "dalek_mod_redstone:block/sonic_barrier/sonic_barrier_panel_open",
+        "y": 90
+      }
+    },
+    {
+      "when": {"south": true},
+      "apply": {
+        "model": "dalek_mod_redstone:block/sonic_barrier/sonic_barrier_panel_open",
+        "y": 180
+      }
+    },
+    {
+      "when": {"west": true},
+      "apply": {
+        "model": "dalek_mod_redstone:block/sonic_barrier/sonic_barrier_panel_open",
+        "y": 270
+      }
+    },
+    {
+      "when": {"up": true},
+      "apply": {
+        "model": "dalek_mod_redstone:block/sonic_barrier/sonic_barrier_panel_open",
+        "x": 270
+      }
+    },
+    {
+      "when": {"down": true},
+      "apply": {
+        "model": "dalek_mod_redstone:block/sonic_barrier/sonic_barrier_panel_open",
+        "x": 90
+      }
+    }
+  ]
+}
