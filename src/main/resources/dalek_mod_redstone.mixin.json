@@ -5,8 +5,9 @@
   "refmap": "dalek_mod_redstone.refmap.json",
   "required": true,
   "mixins": [
-    "PacketClickTardisDoorsMixin",
-    "MixinServerWorld"
+    "MixinServerWorld",
+    "MixinSonicInteractionDataReloadListener",
+    "PacketClickTardisDoorsMixin"
   ],
   "client": [],
   "server": []

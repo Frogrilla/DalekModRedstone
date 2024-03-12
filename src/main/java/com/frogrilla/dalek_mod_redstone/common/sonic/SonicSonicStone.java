@@ -11,7 +11,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class SonicSonicStone implements DMSonicRegistry.ISonicInteraction {
-    public SonicSonicStone(){}
+
+    int scan_time = 0;
+    public SonicSonicStone(int scan_time) {
+        this.scan_time = scan_time;
+    }
     @Override
     public void interact(World world, PlayerEntity playerEntity, ItemStack itemStack, Object o) {
         if (o instanceof BlockPos && !world.isClientSide) {
@@ -24,9 +28,7 @@ public class SonicSonicStone implements DMSonicRegistry.ISonicInteraction {
     }
 
     @Override
-    public int scanTime() {
-        return 5;
-    }
+    public int scanTime() { return this.scan_time; }
 
     @Override
     public boolean disableDefaultInteraction(World world, PlayerEntity playerEntity, ItemStack itemStack, Object o) {

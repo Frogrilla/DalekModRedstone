@@ -110,7 +110,7 @@ public class SonicAdderBlock extends Block implements ISonicStone {
 
             BlockPos under = interaction.blockPos.relative(state.getValue(FACING).getOpposite());
             ISonicStone.SonicBlock(interaction.world, under);
-            ISonicStone.CreateSignal(interaction.world, interaction.blockPos, power+1, state.getValue(FACING));
+            ISonicStone.CreateSignal(interaction.world, interaction.blockPos, power, state.getValue(FACING));
 
             interaction.world.setBlockAndUpdate(interaction.blockPos, state.setValue(ACTIVATED, true).setValue(getPropertyFromDirection(interaction.direction.getOpposite()), true).setValue(POWER, power));
             interaction.world.getBlockTicks().scheduleTick(interaction.blockPos, this, DELAY_TIME);

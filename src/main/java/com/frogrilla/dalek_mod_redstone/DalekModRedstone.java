@@ -4,19 +4,16 @@ import com.frogrilla.dalek_mod_redstone.common.init.ModBlocks;
 import com.frogrilla.dalek_mod_redstone.common.init.ModItems;
 import com.frogrilla.dalek_mod_redstone.common.init.ModParticles;
 import com.frogrilla.dalek_mod_redstone.common.init.ModTileEntities;
-import com.frogrilla.dalek_mod_redstone.common.sonic.SonicNoteBlock;
-import com.frogrilla.dalek_mod_redstone.common.sonic.SonicSonicDisplay;
-import com.frogrilla.dalek_mod_redstone.common.sonic.SonicSonicStone;
-import com.frogrilla.dalek_mod_redstone.common.sonic.SonicSonicResonator;
-import com.swdteam.common.init.DMSonicRegistry;
-import net.minecraft.block.Blocks;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.ParallelDispatchEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,6 +24,7 @@ public class DalekModRedstone
     //test
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "dalek_mod_redstone";
+    public static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
 
     public DalekModRedstone() {
 
@@ -38,7 +36,6 @@ public class DalekModRedstone
         ModParticles.register(modEventBus);
 
         modEventBus.addListener(this::doClientStuff);
-        modEventBus.addListener(this::runLater);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -54,17 +51,7 @@ public class DalekModRedstone
             RenderTypeLookup.setRenderLayer(ModBlocks.SONIC_BOOSTER.get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(ModBlocks.SONIC_GATE.get(), RenderType.translucent());
             RenderTypeLookup.setRenderLayer(ModBlocks.SONIC_REFLECTOR.get(), RenderType.cutout());
-        });
-    }
-
-    private void runLater(ParallelDispatchEvent event) {
-        event.enqueueWork(() -> {
-            DMSonicRegistry.SONIC_LOOKUP.put(Blocks.NOTE_BLOCK, new SonicNoteBlock());
-            DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_RESONATOR.get(), new SonicSonicResonator());
-            DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_RELAY.get(), new SonicSonicStone());
-            DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_DIRECTOR.get(), new SonicSonicStone());
-            DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_TERMINAL.get(), new SonicSonicStone());
-            DMSonicRegistry.SONIC_LOOKUP.put(ModBlocks.SONIC_DISPLAY.get(), new SonicSonicDisplay());
+            RenderTypeLookup.setRenderLayer(ModBlocks.SONIC_ADDER.get(), RenderType.translucent());
         });
     }
 }

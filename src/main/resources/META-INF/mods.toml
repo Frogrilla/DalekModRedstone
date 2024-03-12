@@ -17,7 +17,6 @@ Adds redstone features to Dalek Mod so that you can make interactive builds.
     modId="forge"
     mandatory=true
     versionRange="[36,)"
-    ordering="AFTER"
     side="BOTH"
 
 [[dependencies.dalek_mod_redstone]]
@@ -30,4 +29,5 @@ Adds redstone features to Dalek Mod so that you can make interactive builds.
 [[dependencies.dalek_mod_redstone]]
     modId="dalekmod"
     mandatory=true
-    versionRange="[68.0.0,)"
+    versionRange="[69.4.2,)"
+    ordering="AFTER"
