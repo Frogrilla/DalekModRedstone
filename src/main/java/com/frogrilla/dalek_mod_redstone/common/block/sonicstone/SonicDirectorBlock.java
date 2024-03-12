@@ -121,9 +121,14 @@ public class SonicDirectorBlock extends Block implements ISonicStone {
 
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
-        if(world.isClientSide) return ActionResultType.PASS;
-        world.setBlockAndUpdate(pos, state.cycle(BOOST));
-        return ActionResultType.SUCCESS;
+        if (world.isClientSide || hand != Hand.MAIN_HAND) return ActionResultType.PASS;
+
+        if (player.getItemInHand(hand).isEmpty()) {
+            world.setBlockAndUpdate(pos, state.cycle(BOOST));
+            return ActionResultType.SUCCESS;
+        }
+
+        return ActionResultType.PASS;
     }
 
     @Override
